@@ -1944,7 +1944,7 @@ const BRAND_CONFIG = {
     voice: true,
     applications: true,
     packaging: true,
-    motion: false,
+    motion: true,
     resources: true
   }
 
