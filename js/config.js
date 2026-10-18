@@ -1745,6 +1745,183 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // MOTION GUIDELINES SYSTEM
+  // Concept 02 — Editorial Motion Framework
+  // ========================================
+
+  /*
+   * TEST CONTENT — Replace with approved client animations.
+   * Motion media can be MP4, WebM, GIF, or still previews.
+   * Keep videos muted and optimized for web delivery.
+   * Arrays may be expanded, reordered, or left empty.
+   * Example local path: "assets/motion/logo-reveal.mp4"
+   */
+
+  motionGuidelines: {
+
+    intro: {
+      eyebrow: "THE IDENTITY IN MOTION",
+      headline: "Movement with meaning.",
+      description:
+        "A purposeful motion language that brings the brand to life through rhythm, clarity, and restraint."
+    },
+
+    // 01 — MOTION PHILOSOPHY
+    // Each item creates one principle card.
+    principles: [
+      {
+        title: "Purposeful Movement",
+        description: "Every transition should guide attention or communicate a clear idea, never movement for its own sake."
+      },
+      {
+        title: "Recognizable Rhythm",
+        description: "Use a consistent pace and animation vocabulary across every touchpoint."
+      },
+      {
+        title: "Elegant Restraint",
+        description: "Favor precise, understated motion over unnecessary effects or visual noise."
+      },
+      {
+        title: "Accessible by Design",
+        description: "Ensure essential information remains available without animation and respect reduced-motion preferences."
+      }
+    ],
+
+    // 02 — LOGO ANIMATION
+    // Add video or image preview paths for approved reveals.
+    // mediaType: "video" or "image"; poster is optional for videos.
+    logoAnimations: [
+      {
+        title: "Primary Logo Reveal",
+        category: "LOGO MOTION / TEST",
+        description: "A calm, confident introduction to the primary brand mark.",
+        mediaType: "image",
+        image: "https://placehold.co/1600x900/202020/F0EDE6.png?text=PRIMARY+LOGO+REVEAL",
+        alt: "Placeholder preview for primary logo animation",
+        duration: "2–3 seconds",
+        fit: "contain",
+        layout: "full"
+      },
+      {
+        title: "Secondary Logo Transition",
+        category: "LOGO MOTION / TEST",
+        description: "A compact animation suitable for shorter digital formats.",
+        mediaType: "image",
+        image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=SECONDARY+LOGO+MOTION",
+        alt: "Placeholder preview for secondary logo animation",
+        duration: "1–2 seconds",
+        fit: "contain",
+        layout: "half"
+      }
+    ],
+
+    // 03 — MOTION BEHAVIORS
+    // Timing and easing values are examples, not approved specs.
+    behaviors: [
+      {
+        title: "Micro-interactions",
+        category: "DURATION / TEST",
+        value: "150–250 ms",
+        easing: "ease-out",
+        description: "Use brief transitions for hover, focus, and interface feedback."
+      },
+      {
+        title: "Content Reveals",
+        category: "DURATION / TEST",
+        value: "400–650 ms",
+        easing: "ease-in-out",
+        description: "Reveal content smoothly while keeping the reading experience uninterrupted."
+      },
+      {
+        title: "Scene Transitions",
+        category: "DURATION / TEST",
+        value: "600–900 ms",
+        easing: "ease-in-out",
+        description: "Use measured transitions between major visual moments."
+      },
+      {
+        title: "Logo Animation",
+        category: "DURATION / TEST",
+        value: "2–3 seconds",
+        easing: "custom / approved",
+        description: "Keep the logo reveal clear, deliberate, and faithful to the original mark."
+      }
+    ],
+
+    // 04 — MOTION APPLICATIONS
+    // layout: full, half, wide, tall, split, split-reverse.
+    // Replace image previews with approved videos where appropriate.
+    applications: [
+      {
+        title: "Social Media Motion",
+        category: "DIGITAL APPLICATION / TEST",
+        description: "A consistent animation approach for short-form branded content.",
+        mediaType: "image",
+        image: "https://placehold.co/1600x900/F0EDE6/202020.png?text=SOCIAL+MOTION",
+        alt: "Placeholder for social media motion",
+        fit: "cover",
+        layout: "full"
+      },
+      {
+        title: "Website Transitions",
+        category: "WEB EXPERIENCE / TEST",
+        description: "Quiet interface motion that reinforces hierarchy and navigation.",
+        mediaType: "image",
+        image: "https://placehold.co/1000x900/202020/F0EDE6.png?text=WEBSITE+MOTION",
+        alt: "Placeholder for website motion",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Campaign Animation",
+        category: "CAMPAIGN / TEST",
+        description: "An expressive but controlled extension of the core motion language.",
+        mediaType: "image",
+        image: "https://placehold.co/1000x900/B68B59/202020.png?text=CAMPAIGN+MOTION",
+        alt: "Placeholder for campaign motion",
+        fit: "cover",
+        layout: "half"
+      }
+    ],
+
+    // 05 — MOTION DO / DON'T
+    // Approved and avoid are paired for clear comparison.
+    comparisons: [
+      {
+        title: "Pacing",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+CONTROLLED+PACING",
+          alt: "Placeholder for approved animation pacing",
+          title: "Use Considered Timing",
+          description: "DO — Allow enough time for the message and movement to register."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+RUSHED+MOTION",
+          alt: "Placeholder for rushed animation",
+          title: "Avoid Distracting Speed",
+          description: "DON'T — Use abrupt, excessively fast, or competing transitions."
+        }
+      },
+      {
+        title: "Brand Integrity",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+PRESERVE+LOGO",
+          alt: "Placeholder for correct logo animation",
+          title: "Preserve the Mark",
+          description: "DO — Animate the approved logo without changing its proportions or geometry."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+DISTORT+LOGO",
+          alt: "Placeholder for distorted logo animation",
+          title: "Avoid Distortion",
+          description: "DON'T — Stretch, warp, or redraw the identity during motion."
+        }
+      }
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
