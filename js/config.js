@@ -1406,6 +1406,175 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // BRAND APPLICATIONS SYSTEM
+  // Concept 02 — Editorial Application Gallery
+  // ========================================
+
+  /*
+   * TEST CONTENT — Replace images and text for each client.
+   * Every collection can be expanded, reordered, or emptied.
+   * Image paths may use local files, for example:
+   * "assets/applications/business-card.jpg"
+   * The app.js renderer will use these keys in Step 22.4.
+   */
+
+  brandApplications: {
+
+    intro: {
+      eyebrow: "THE IDENTITY IN ACTION",
+      headline: "Designed for the real world.",
+      description:
+        "A flexible visual language, expressed consistently across every brand experience."
+    },
+
+    // 01 — FEATURED APPLICATION
+    // enabled: true or false; fit: cover or contain.
+    featured: {
+      enabled: true,
+      title: "The Identity in Context",
+      category: "SIGNATURE APPLICATION / TEST",
+      description:
+        "A hero presentation showing how the brand identity comes to life in a real-world setting.",
+      image: "https://placehold.co/1600x1000/F0EDE6/202020.png?text=FEATURED+BRAND+APPLICATION",
+      alt: "Placeholder for a signature brand application mockup",
+      fit: "cover"
+    },
+
+    // 02 — APPLICATION CATEGORIES
+    // Any number of categories is supported.
+    categories: [
+      {
+        title: "Print & Stationery",
+        category: "01 / PRINT",
+        description: "Business cards, letterheads, envelopes, and everyday printed materials.",
+        image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=PRINT+AND+STATIONERY",
+        alt: "Placeholder for stationery mockups",
+        fit: "cover"
+      },
+      {
+        title: "Digital Experiences",
+        category: "02 / DIGITAL",
+        description: "Websites, social media, presentations, and digital touchpoints.",
+        image: "https://placehold.co/1000x750/202020/F0EDE6.png?text=DIGITAL+EXPERIENCES",
+        alt: "Placeholder for digital brand applications",
+        fit: "cover"
+      },
+      {
+        title: "Environmental Branding",
+        category: "03 / ENVIRONMENT",
+        description: "Storefronts, signs, interiors, and branded physical spaces.",
+        image: "https://placehold.co/1000x750/B68B59/202020.png?text=ENVIRONMENTAL+BRANDING",
+        alt: "Placeholder for environmental signage",
+        fit: "cover"
+      },
+      {
+        title: "Merchandise & Apparel",
+        category: "04 / MERCHANDISE",
+        description: "Wearables, promotional objects, and branded merchandise.",
+        image: "https://placehold.co/1000x750/E8E5DE/202020.png?text=MERCHANDISE+AND+APPAREL",
+        alt: "Placeholder for branded merchandise",
+        fit: "cover"
+      }
+    ],
+
+    // 03 — APPLICATION GALLERY
+    // layout: full, half, wide, tall, split, split-reverse.
+    // fit: cover or contain.
+    gallery: [
+      {
+        title: "Stationery Collection",
+        category: "PRINT APPLICATION / TEST",
+        description: "A cohesive stationery family using the approved visual identity.",
+        image: "https://placehold.co/1600x900/F0EDE6/202020.png?text=STATIONERY+COLLECTION",
+        alt: "Placeholder for a stationery collection",
+        fit: "cover",
+        layout: "full"
+      },
+      {
+        title: "Digital Touchpoint",
+        category: "DIGITAL APPLICATION / TEST",
+        description: "A focused digital experience with consistent typography and color.",
+        image: "https://placehold.co/900x1100/202020/F0EDE6.png?text=DIGITAL+TOUCHPOINT",
+        alt: "Placeholder for a digital application",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Brand Merchandise",
+        category: "MERCHANDISE / TEST",
+        description: "A tangible expression of the identity on everyday objects.",
+        image: "https://placehold.co/900x1100/B68B59/202020.png?text=BRAND+MERCHANDISE",
+        alt: "Placeholder for brand merchandise",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Environmental Presence",
+        category: "SIGNAGE / TEST",
+        description: "The brand applied to a physical space with clear visual hierarchy.",
+        image: "https://placehold.co/1200x900/E8E5DE/202020.png?text=ENVIRONMENTAL+PRESENCE",
+        alt: "Placeholder for environmental branding",
+        fit: "cover",
+        layout: "split"
+      },
+      {
+        title: "A Consistent Experience",
+        category: "BRAND TOUCHPOINT / TEST",
+        description: "A second application demonstrating a flexible but unified identity.",
+        image: "https://placehold.co/1200x900/202020/B68B59.png?text=CONSISTENT+EXPERIENCE",
+        alt: "Placeholder for an additional brand touchpoint",
+        fit: "cover",
+        layout: "split-reverse"
+      }
+    ],
+
+    // 04 — MATERIALS & DETAILS
+    // Use close-ups of actual finishes and production methods.
+    details: [
+      {
+        title: "Paper & Print Finish",
+        category: "MATERIAL DETAIL / TEST",
+        description: "A close-up showing the tactile qualities of a printed brand application.",
+        image: "https://placehold.co/1000x800/F0EDE6/202020.png?text=PAPER+AND+PRINT+DETAIL",
+        alt: "Placeholder for a paper and print detail",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Production Detail",
+        category: "FINISHING / TEST",
+        description: "An example of how production decisions support the brand's character.",
+        image: "https://placehold.co/1000x800/202020/B68B59.png?text=PRODUCTION+DETAIL",
+        alt: "Placeholder for a production finish detail",
+        fit: "cover",
+        layout: "half"
+      }
+    ],
+
+    // 05 — APPLICATION GUIDELINES
+    // Add, remove, or reorder rules as needed.
+    guidelines: [
+      {
+        title: "Protect Brand Consistency",
+        description: "Use only approved logo variations, brand colors, and typefaces across every application."
+      },
+      {
+        title: "Respect the Format",
+        description: "Adapt scale, spacing, and composition to each medium without distorting brand elements."
+      },
+      {
+        title: "Prioritize Production Quality",
+        description: "Choose materials, print techniques, and finishes that support the intended brand experience."
+      },
+      {
+        title: "Keep the Message Clear",
+        description: "Maintain legible typography, meaningful hierarchy, and sufficient whitespace in every touchpoint."
+      }
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
