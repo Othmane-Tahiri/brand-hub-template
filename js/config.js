@@ -366,6 +366,231 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // GRAPHIC ELEMENTS SYSTEM
+  // ========================================
+
+  /*
+   * Concept 02 — Visual Identity Canvas
+   *
+   * This section presents the client's
+   * approved graphic identity assets.
+   *
+   * All content is optional.
+   *
+   * The system automatically adapts to
+   * different numbers of graphic elements.
+   *
+   * Images may be PNG, JPG, WEBP, or SVG.
+   *
+   * Example local image path:
+   *
+   * "assets/graphics/pattern-01.svg"
+   *
+   * Upload the corresponding asset to
+   * the GitHub repository before using it.
+   *
+   * IMPORTANT:
+   * The content below is demonstration
+   * content for the Sample Brand only.
+   * Replace it with actual approved
+   * client assets and guidelines.
+   */
+
+  graphicElements: {
+
+    // ------------------------------------
+    // EDITORIAL INTRODUCTION
+    // ------------------------------------
+
+    intro: {
+      eyebrow: "THE GRAPHIC LANGUAGE",
+      headline: "Identity beyond the mark.",
+      description:
+        "A collection of visual elements that bring character, consistency, and expression to the brand."
+    },
+
+    // ------------------------------------
+    // SIGNATURE GRAPHIC
+    // ------------------------------------
+
+    /*
+     * Featured artwork is optional.
+     *
+     * Set enabled to false to hide it.
+     *
+     * image:
+     *   Path to the approved graphic.
+     *
+     * background:
+     *   Background behind the image.
+     *
+     * fit:
+     *   "cover" or "contain".
+     *
+     * label:
+     *   Optional small label over artwork.
+     *
+     * labelTheme:
+     *   "light" or "dark".
+     *
+     * If image is empty, no artwork
+     * should be presented as approved.
+     */
+
+    featured: {
+      enabled: false,
+
+      title: "Signature Pattern",
+      category: "Brand Pattern",
+
+      description:
+        "A distinctive graphic expression that extends the identity beyond the logo.",
+
+      image: "",
+      background: "#F0EDE6",
+      fit: "contain",
+
+      label: "SIGNATURE GRAPHIC",
+      labelTheme: "light"
+    },
+
+    // ------------------------------------
+    // GRAPHIC ASSET GALLERY
+    // ------------------------------------
+
+    /*
+     * Add one object for each approved
+     * graphic element.
+     *
+     * There is no fixed asset limit.
+     *
+     * category examples:
+     * "Pattern"
+     * "Shape"
+     * "Iconography"
+     * "Illustration"
+     * "Texture"
+     * "Graphic Motif"
+     *
+     * layout options:
+     *
+     * "full"
+     * "half"
+     * "wide"
+     * "tall"
+     * "split"
+     * "split-reverse"
+     *
+     * image:
+     *   Actual asset file path.
+     *
+     * background:
+     *   Canvas background HEX value.
+     *
+     * fit:
+     *   "contain" keeps the whole artwork
+     *   visible.
+     *
+     *   "cover" fills the entire canvas.
+     *
+     * Empty image paths are ignored.
+     */
+
+    assets: [
+
+      // Example:
+      //
+      // {
+      //   title: "Geometric Pattern",
+      //   category: "Pattern",
+      //   description:
+      //     "A repeatable graphic pattern.",
+      //   image: "assets/graphics/pattern.svg",
+      //   background: "#F0EDE6",
+      //   fit: "cover",
+      //   layout: "full",
+      //   label: "PATTERN 01",
+      //   labelTheme: "light"
+      // }
+
+    ],
+
+    // ------------------------------------
+    // DETAILS AND APPLICATIONS
+    // ------------------------------------
+
+    /*
+     * Use this gallery for close-ups,
+     * texture details, and graphic
+     * applications.
+     *
+     * Each entry can have:
+     *
+     * title
+     * category
+     * description
+     * image
+     * background
+     * fit
+     * layout
+     *
+     * layout:
+     *   "half" or "full"
+     *
+     * Entries without image paths
+     * will not be displayed.
+     */
+
+    details: [
+
+      // Example:
+      //
+      // {
+      //   title: "Pattern Detail",
+      //   category: "Close-up",
+      //   description:
+      //     "A closer look at the pattern.",
+      //   image: "assets/graphics/detail.jpg",
+      //   background: "#F0EDE6",
+      //   fit: "cover",
+      //   layout: "half"
+      // }
+
+    ],
+
+    // ------------------------------------
+    // GRAPHIC USAGE GUIDELINES
+    // ------------------------------------
+
+    /*
+     * Add only approved rules.
+     *
+     * Each rule creates one card.
+     *
+     * Rules are optional.
+     *
+     * Example:
+     *
+     * {
+     *   title: "Maintain Clear Space",
+     *   description:
+     *     "Keep sufficient space around
+     *      the graphic motif."
+     * }
+     *
+     * Avoid adding generic rules that
+     * were not approved for the client.
+     */
+
+    guidelines: [
+
+      // Add client-specific rules here.
+
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
