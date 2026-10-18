@@ -46,7 +46,6 @@
 
     </aside>
 
-
     <!-- ====================================
          MAIN CONTENT
          ==================================== -->
@@ -86,7 +85,6 @@
 
       </section>
 
-
       <!-- ====================================
            02 — BRAND STRATEGY
            ==================================== -->
@@ -123,7 +121,6 @@
 
       </section>
 
-
       <!-- ====================================
            03 — LOGO SYSTEM
            ==================================== -->
@@ -140,7 +137,6 @@
           A consistent logo system builds recognition
           across every brand touchpoint.
         </p>
-
 
         <!-- PRIMARY LOGO -->
 
@@ -172,7 +168,6 @@
           </div>
 
         </div>
-
 
         <!-- LOGO VARIATIONS -->
 
@@ -219,7 +214,6 @@
 
         </div>
 
-
         <!-- MONOCHROME VERSIONS -->
 
         <div class="logo-feature">
@@ -265,7 +259,6 @@
 
         </div>
 
-
         <!-- CLEAR SPACE -->
 
         <div class="logo-feature">
@@ -301,7 +294,6 @@
 
         </div>
 
-
         <!-- LOGO COLOR COMPATIBILITY -->
 
         <div class="logo-feature">
@@ -331,7 +323,6 @@
 
       </section>
 
-
       <!-- ====================================
            04 — COLOR SYSTEM
            ==================================== -->
@@ -349,7 +340,6 @@
           recognition, balance, and personality
           across every brand experience.
         </p>
-
 
         <!-- MAIN BRAND COLOR PALETTE -->
 
@@ -370,11 +360,7 @@
 
           </div>
 
-          <!--
-            Dynamic brand palette cards will be
-            generated from js/config.js
-            through js/app.js.
-          -->
+          <!-- Dynamic brand palette -->
 
           <div
             id="brand-color-palette"
@@ -383,7 +369,6 @@
           </div>
 
         </div>
-
 
         <!-- TONAL COLOR SCALES -->
 
@@ -405,16 +390,7 @@
 
           </div>
 
-          <!--
-            Each client can have any number
-            of color families and shades.
-
-            JavaScript will generate each
-            scale dynamically.
-
-            Hover to view HEX codes.
-            Click to copy a HEX code.
-          -->
+          <!-- Dynamic tonal scales -->
 
           <div
             id="brand-tonal-scales"
@@ -425,7 +401,6 @@
         </div>
 
       </section>
-
 
       <!-- ====================================
            05 — TYPOGRAPHY SYSTEM
@@ -445,7 +420,6 @@
           Our typefaces bring personality and
           consistency to every brand message.
         </p>
-
 
         <!-- EDITORIAL GALLERY INTRO -->
 
@@ -469,7 +443,6 @@
 
         </div>
 
-
         <!-- 01 / TYPEFACE GALLERY -->
 
         <div class="typography-feature">
@@ -491,15 +464,7 @@
 
           </div>
 
-          <!--
-            JavaScript will generate one editorial
-            showcase for each font defined in:
-
-            BRAND_CONFIG.typography.fonts
-
-            The number of showcases automatically
-            adapts to each client's typography.
-          -->
+          <!-- Dynamic typeface showcases -->
 
           <div
             id="typography-typeface-gallery"
@@ -508,7 +473,6 @@
           </div>
 
         </div>
-
 
         <!-- 02 / CHARACTER SET -->
 
@@ -530,13 +494,7 @@
 
           </div>
 
-          <!--
-            One character-set presentation will be
-            generated for each configured typeface.
-
-            This gallery supports any number
-            of client fonts.
-          -->
+          <!-- Dynamic character sets -->
 
           <div
             id="typography-character-gallery"
@@ -545,7 +503,6 @@
           </div>
 
         </div>
-
 
         <!-- 03 / FONT WEIGHTS AND STYLES -->
 
@@ -567,13 +524,7 @@
 
           </div>
 
-          <!--
-            JavaScript will generate approved
-            weights and styles for every font.
-
-            Each client controls the available
-            styles through js/config.js.
-          -->
+          <!-- Dynamic approved font weights -->
 
           <div
             id="typography-weights-gallery"
@@ -582,7 +533,6 @@
           </div>
 
         </div>
-
 
         <!-- 04 / TYPOGRAPHY IN CONTEXT -->
 
@@ -650,10 +600,222 @@
 
       </section>
 
+      <!-- ====================================
+           06 — GRAPHIC ELEMENTS
+           Concept 02: Visual Identity Canvas
+           ==================================== -->
+
+      <section id="graphics" class="guideline-section">
+
+        <div class="page-eyebrow">
+          05 / VISUAL LANGUAGE
+        </div>
+
+        <h2>Graphic Elements</h2>
+
+        <p>
+          Beyond the logo, a distinctive visual
+          language creates recognition through
+          shape, pattern, texture, and detail.
+        </p>
+
+        <!-- EDITORIAL INTRO -->
+
+        <div class="graphics-editorial-intro">
+
+          <span
+            id="graphics-intro-eyebrow"
+            class="panel-label">
+            THE GRAPHIC LANGUAGE
+          </span>
+
+          <h3 id="graphics-intro-headline">
+            Identity beyond the mark.
+          </h3>
+
+          <p id="graphics-intro-description">
+            A collection of visual elements
+            that bring character, consistency,
+            and expression to the brand.
+          </p>
+
+        </div>
+
+        <!-- 01 / SIGNATURE ARTWORK -->
+
+        <div
+          id="graphics-hero-feature"
+          class="graphics-feature"
+          hidden>
+
+          <div class="graphics-section-heading">
+
+            <span class="panel-label">
+              01 / SIGNATURE GRAPHIC
+            </span>
+
+            <h3>The defining expression.</h3>
+
+            <p>
+              A signature visual element that
+              brings the identity to life.
+            </p>
+
+          </div>
+
+          <!--
+            JavaScript will render the featured
+            graphic element here.
+
+            The featured artwork may be a pattern,
+            symbol, texture, shape, or illustration.
+
+            This section remains hidden if the
+            client has no featured graphic.
+          -->
+
+          <div
+            id="graphics-hero-canvas"
+            class="graphics-hero-canvas"
+            aria-label="Signature brand graphic">
+          </div>
+
+        </div>
+
+        <!-- 02 / GRAPHIC ASSET GALLERY -->
+
+        <div
+          id="graphics-gallery-feature"
+          class="graphics-feature"
+          hidden>
+
+          <div class="graphics-section-heading">
+
+            <span class="panel-label">
+              02 / GRAPHIC ASSET GALLERY
+            </span>
+
+            <h3>A system of expression.</h3>
+
+            <p>
+              A flexible collection of approved
+              graphic assets, each with its own
+              purpose within the brand identity.
+            </p>
+
+          </div>
+
+          <!--
+            This gallery is generated from:
+
+            BRAND_CONFIG.graphicElements.assets
+
+            Every client can have a different
+            number and combination of assets.
+
+            Supported concepts include:
+            - Patterns
+            - Shapes
+            - Icons
+            - Illustrations
+            - Textures
+            - Other graphic elements
+
+            The gallery will support full-width,
+            split, and grid-based compositions.
+          -->
+
+          <div
+            id="graphics-asset-gallery"
+            class="graphics-asset-gallery"
+            aria-label="Approved brand graphic elements">
+          </div>
+
+        </div>
+
+        <!-- 03 / DETAILS AND APPLICATIONS -->
+
+        <div
+          id="graphics-details-feature"
+          class="graphics-feature"
+          hidden>
+
+          <div class="graphics-section-heading">
+
+            <span class="panel-label">
+              03 / DETAILS &amp; APPLICATIONS
+            </span>
+
+            <h3>Designed with intention.</h3>
+
+            <p>
+              Explore the finer details and
+              practical uses of the brand's
+              graphic language.
+            </p>
+
+          </div>
+
+          <!--
+            Optional detail images and application
+            previews will be generated here.
+
+            Clients without detail or application
+            assets will not display this subsection.
+          -->
+
+          <div
+            id="graphics-details-gallery"
+            class="graphics-details-gallery"
+            aria-label="Graphic details and applications">
+          </div>
+
+        </div>
+
+        <!-- 04 / USAGE GUIDELINES -->
+
+        <div
+          id="graphics-guidelines-feature"
+          class="graphics-feature"
+          hidden>
+
+          <div class="graphics-section-heading">
+
+            <span class="panel-label">
+              04 / USAGE GUIDELINES
+            </span>
+
+            <h3>Consistency in every detail.</h3>
+
+            <p>
+              Clear principles for applying
+              graphic elements across different
+              brand touchpoints.
+            </p>
+
+          </div>
+
+          <!--
+            Optional guidelines are generated
+            from the client's configuration.
+
+            No generic or unapproved rules
+            will be presented as brand standards.
+          -->
+
+          <div
+            id="graphics-guidelines-list"
+            class="graphics-guidelines-list"
+            aria-label="Graphic element usage guidelines">
+          </div>
+
+        </div>
+
+      </section>
+
     </main>
 
   </div>
-
 
   <!-- CLIENT CONFIGURATION -->
   <script src="js/config.js"></script>
