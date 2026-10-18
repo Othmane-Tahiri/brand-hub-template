@@ -179,6 +179,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+  // ========================================
+  // REMOVE SHADES THAT BLEND WITH BACKGROUND
+  // ========================================
+
+  /*
+   * This only affects automatically generated
+   * tonal scales.
+   *
+   * It removes near-background colors from
+   * the light end of the scale.
+   *
+   * Remaining HEX codes are not changed.
+   *
+   * A minimum of two shades is preserved.
+   */
+
+  function getDisplayedBackgroundColor() {
+
+    const color = getComputedStyle(
+      document.body
+    ).backgroundColor;
+
+    const channels = color.match(/[\d.]+/g);
+
+    if (!channels || channels.length < 3) {
+      return "#FFFFFF";
+    }
+
+    return rgbToHex(
+      Number(channels[0]),
+      Number(channels[1]),
+      Number(channels[2])
+    );
+
+  }
+
+  function getColorDistance(first, second) {
+
+    const a = hexToRgb(first);
+    const b = hexToRgb(second);
+
+    return Math.sqrt(
+      Math.pow(a.r - b.r, 2) +
+      Math.pow(a.g - b.g, 2) +
+      Math.pow(a.b - b.b, 2)
+    );
+
+  }
+
+  function removeBlendingShades(shades) {
+
+    const background = getDisplayedBackgroundColor();
+
+    // Adjust this value to control how visibly
+    // different a shade must be from the page.
+    const minimumDistance = 20;
+
+    const result = [...shades];
+
+    while (
+      result.length > 2 &&
+      getColorDistance(result[0], background) <
+        minimumDistance
+    ) {
+
+      result.shift();
+
+    }
+
+    return result;
+
+  }
+
   function getReadableTextColor(hex) {
 
     const { r, g, b } = hexToRgb(hex);
@@ -329,21 +402,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       }
 
-      // Outer compatibility card
-
       const card = document.createElement("div");
 
       card.className = "compatibility-card";
       card.style.backgroundColor = combination.background;
 
-      // Inner logo color square
-
       const square = document.createElement("div");
 
       square.className = "compatibility-square";
       square.style.backgroundColor = combination.logoColor;
-
-      // Accessible description
 
       const label = combination.label || "Color combination";
 
@@ -447,6 +514,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (scale.generate === false) {
 
+        // Manually approved shades stay unchanged.
+
         shades = Array.isArray(scale.shades)
           ? scale.shades
               .filter(isValidColor)
@@ -455,10 +524,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       } else {
 
+        // Generate the complete tonal scale.
+
         shades = generateTonalScale(
           scale.base,
           scale.steps
         );
+
+        // Remove shades that blend into the
+        // website background without changing
+        // the remaining shades.
+
+        shades = removeBlendingShades(shades);
 
       }
 
