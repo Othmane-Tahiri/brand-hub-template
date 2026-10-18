@@ -1922,6 +1922,199 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // RESOURCES & DOWNLOADS SYSTEM
+  // Concept 02 — Editorial Brand Asset Library
+  // ========================================
+
+  /*
+   * TEST CONTENT — Replace sample information with
+   * approved client assets before final handoff.
+   *
+   * This is a static GitHub Pages site: downloadable
+   * files must be uploaded to the repository or hosted
+   * at stable, publicly accessible URLs.
+   *
+   * Empty download URLs intentionally mean that no
+   * file is available yet. Never treat placeholders
+   * as completed client deliverables.
+   *
+   * Example local path:
+   * "assets/downloads/brand-logo-package.zip"
+   *
+   * Categories and their assets can be added, removed,
+   * or reordered for each client's delivery scope.
+   */
+
+  resourcesDownloads: {
+
+    intro: {
+      eyebrow: "YOUR BRAND, READY TO USE",
+      headline: "The right assets. Every time.",
+      description:
+        "A curated library of approved brand materials, organized to keep every application consistent and every handoff effortless."
+    },
+
+    // 01 — ESSENTIAL DOWNLOAD
+    // Set enabled: false if the client has no master package.
+    // url: a real ZIP/PDF download path, never a placeholder.
+    featured: {
+      enabled: true,
+      eyebrow: "COMPLETE BRAND PACKAGE / SAMPLE",
+      title: "Brand Identity Master Package",
+      description:
+        "The central collection of approved brand assets, organized for easy use across print and digital applications.",
+      fileName: "brand-identity-master.zip",
+      fileType: "ZIP ARCHIVE",
+      fileSize: "Pending final export",
+      version: "Sample / Not delivered",
+      url: "",
+      buttonLabel: "Download brand package",
+      note: "A download becomes available after the final approved archive is uploaded."
+    },
+
+    // 02 — BRAND ASSET LIBRARY
+    // Every category supports any number of files.
+    // For each asset: label, description, format, fileName,
+    // fileSize, url, and optional version.
+    categories: [
+      {
+        title: "Logo Files",
+        category: "01 / IDENTITY ASSETS",
+        description: "Approved logo variations for different backgrounds, formats, and production needs.",
+        assets: [
+          {
+            title: "Primary Logo — Vector",
+            description: "Scalable artwork for professional print and design workflows.",
+            format: "SVG / EPS / AI",
+            fileName: "primary-logo-vector.zip",
+            fileSize: "Pending export",
+            url: ""
+          },
+          {
+            title: "Logo Variations — Digital",
+            description: "Approved light, dark, and transparent versions for screens.",
+            format: "PNG / SVG",
+            fileName: "logo-digital-variations.zip",
+            fileSize: "Pending export",
+            url: ""
+          }
+        ]
+      },
+      {
+        title: "Brand Guidelines",
+        category: "02 / DOCUMENTATION",
+        description: "Reference materials for applying the identity accurately.",
+        assets: [
+          {
+            title: "Brand Guidelines PDF",
+            description: "A shareable reference for identity rules and usage standards.",
+            format: "PDF",
+            fileName: "brand-guidelines.pdf",
+            fileSize: "Pending export",
+            url: ""
+          }
+        ]
+      },
+      {
+        title: "Graphic Assets & Templates",
+        category: "03 / DESIGN RESOURCES",
+        description: "Approved supporting graphics and editable templates, where included in the project.",
+        assets: [
+          {
+            title: "Brand Graphic Elements",
+            description: "Patterns, motifs, and supporting elements for consistent brand expression.",
+            format: "SVG / PNG",
+            fileName: "brand-graphics.zip",
+            fileSize: "Pending export",
+            url: ""
+          },
+          {
+            title: "Social Media Templates",
+            description: "Editable layouts for recurring branded communication.",
+            format: "AI / PDF",
+            fileName: "social-templates.zip",
+            fileSize: "Pending export",
+            url: ""
+          }
+        ]
+      }
+    ],
+
+    // 03 — FILE FORMAT GUIDE
+    // Add only formats actually included in client delivery.
+    formats: [
+      {
+        extension: "AI",
+        title: "Adobe Illustrator",
+        category: "EDITABLE SOURCE",
+        description: "Native editable vector artwork for designers using compatible software."
+      },
+      {
+        extension: "EPS",
+        title: "Encapsulated PostScript",
+        category: "VECTOR / PRODUCTION",
+        description: "Scalable vector format used in many professional print workflows."
+      },
+      {
+        extension: "SVG",
+        title: "Scalable Vector Graphic",
+        category: "DIGITAL / VECTOR",
+        description: "Resolution-independent graphics suited to web and supported design applications."
+      },
+      {
+        extension: "PDF",
+        title: "Portable Document Format",
+        category: "DOCUMENT / PRINT",
+        description: "Shareable guidelines or production-ready artwork when exported to the correct specification."
+      },
+      {
+        extension: "PNG",
+        title: "Portable Network Graphic",
+        category: "DIGITAL / RASTER",
+        description: "Raster images that can preserve transparent backgrounds."
+      },
+      {
+        extension: "JPG",
+        title: "JPEG Image",
+        category: "DIGITAL / RASTER",
+        description: "Compressed image format for photographs and nontransparent previews."
+      }
+    ],
+
+    // 04 — USAGE & HANDOFF
+    instructions: [
+      {
+        title: "Choose the Approved Version",
+        description: "Select the logo or asset variation intended for the background, size, and application."
+      },
+      {
+        title: "Use Vector Files When Possible",
+        description: "For scalable logos and professional print production, start with the approved vector artwork."
+      },
+      {
+        title: "Keep Master Files Intact",
+        description: "Work from copies, preserve the original source files, and avoid stretching or redrawing brand elements."
+      },
+      {
+        title: "Check Production Requirements",
+        description: "Confirm print dimensions, bleed, color mode, and supplier specifications before production."
+      }
+    ],
+
+    // 05 — DELIVERY NOTES
+    // Only fill in verified project details.
+    delivery: {
+      version: "To be confirmed",
+      updated: "To be confirmed",
+      preparedBy: "Brand identity design team",
+      contact: "",
+      notes:
+        "This is a sample asset library. Replace all sample descriptions, filenames, and empty URLs with approved project deliverables before client handoff."
+    }
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
