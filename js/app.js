@@ -1,11 +1,12 @@
 
 /*
  * BRAND HUB — MAIN APPLICATION
- * Logo, Colors, Typography, Graphic Elements
- * and Sidebar Navigation
+ * Logo, Colors, Typography, Graphic Elements,
+ * Photography, and Sidebar Navigation
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+
   // ========================================
   // 01 — CLIENT CONFIGURATION
   // ========================================
@@ -45,16 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".nav-link").forEach(link => {
     const href = link.getAttribute("href") || "";
-
     if (!href.startsWith("#")) return;
 
     const sectionId = href.slice(1);
 
     if (sections[sectionId] === false) {
       link.style.display = "none";
-
       const section = document.getElementById(sectionId);
-
       if (section) section.hidden = true;
     }
   });
@@ -64,13 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========================================
 
   if (config.publishingMode === "showcase") {
-    const resourcesLink = document.querySelector(
-      'a[href="#resources"]'
-    );
-
-    const resourcesSection = document.getElementById(
-      "resources"
-    );
+    const resourcesLink = document.querySelector('a[href="#resources"]');
+    const resourcesSection = document.getElementById("resources");
 
     if (resourcesLink) resourcesLink.style.display = "none";
     if (resourcesSection) resourcesSection.hidden = true;
@@ -86,17 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createTextElement(tag, className, value) {
     const element = document.createElement(tag);
-
     if (className) element.className = className;
-
     element.textContent = String(value ?? "");
-
     return element;
   }
 
   function setElementText(id, value) {
     const element = document.getElementById(id);
-
     if (element && value !== undefined && value !== null) {
       element.textContent = String(value);
     }
@@ -147,9 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const position = index / (count - 1);
 
       if (position < 0.5) {
-        shades.push(
-          mixColors("#FFFFFF", base, position / 0.5)
-        );
+        shades.push(mixColors("#FFFFFF", base, position / 0.5));
       } else {
         shades.push(
           mixColors(
@@ -165,15 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getDisplayedBackgroundColor() {
-    const color = getComputedStyle(
-      document.body
-    ).backgroundColor;
-
+    const color = getComputedStyle(document.body).backgroundColor;
     const channels = color.match(/[\d.]+/g);
 
-    if (!channels || channels.length < 3) {
-      return "#FFFFFF";
-    }
+    if (!channels || channels.length < 3) return "#FFFFFF";
 
     return rgbToHex(
       Number(channels[0]),
@@ -212,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const channels = [r, g, b].map(value => {
       const channel = value / 255;
-
       return channel <= 0.04045
         ? channel / 12.92
         : Math.pow((channel + 0.055) / 1.055, 2.4);
@@ -231,26 +212,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(hex);
       } else {
-        const temporaryInput = document.createElement(
-          "textarea"
-        );
-
+        const temporaryInput = document.createElement("textarea");
         temporaryInput.value = hex;
         temporaryInput.style.position = "fixed";
         temporaryInput.style.opacity = "0";
-
         document.body.appendChild(temporaryInput);
-
         temporaryInput.focus();
         temporaryInput.select();
 
         const copied = document.execCommand("copy");
-
         temporaryInput.remove();
 
-        if (!copied) {
-          throw new Error("Copy command failed.");
-        }
+        if (!copied) throw new Error("Copy command failed.");
       }
 
       return true;
@@ -262,7 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createColorButton(hex, className, label) {
     const button = document.createElement("button");
-
     button.type = "button";
     button.className = className;
     button.style.backgroundColor = hex;
@@ -274,18 +246,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     button.title = `Copy ${hex}`;
 
-    const code = createTextElement(
-      "span",
-      "color-swatch-hex",
-      hex
-    );
-
+    const code = createTextElement("span", "color-swatch-hex", hex);
     code.style.color = getReadableTextColor(hex);
     button.appendChild(code);
 
     button.addEventListener("click", async () => {
       const copied = await copyHexCode(hex);
-
       code.textContent = copied ? "Copied!" : "Copy failed";
       button.classList.add("is-copied");
 
@@ -309,9 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (compatibilityGrid) {
     compatibilityGrid.replaceChildren();
 
-    const combinations = Array.isArray(
-      config.logoColorCombinations
-    )
+    const combinations = Array.isArray(config.logoColorCombinations)
       ? config.logoColorCombinations
       : [];
 
@@ -370,7 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const hex = color.hex.toUpperCase();
-
       const card = document.createElement("div");
       card.className = "brand-color-card";
 
@@ -400,11 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       details.appendChild(
-        createTextElement(
-          "span",
-          "brand-color-code",
-          hex
-        )
+        createTextElement("span", "brand-color-code", hex)
       );
 
       card.appendChild(swatch);
@@ -435,9 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (scale.generate === false) {
         shades = Array.isArray(scale.shades)
-          ? scale.shades
-              .filter(isValidColor)
-              .map(hex => hex.toUpperCase())
+          ? scale.shades.filter(isValidColor).map(hex => hex.toUpperCase())
           : [];
       } else {
         shades = removeBlendingShades(
@@ -477,11 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const row = document.createElement("div");
       row.className = "tonal-scale-row";
-
-      row.style.setProperty(
-        "--shade-count",
-        String(shades.length)
-      );
+      row.style.setProperty("--shade-count", String(shades.length));
 
       shades.forEach((hex, index) => {
         row.appendChild(
@@ -505,9 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const typographyConfig = config.typography || {};
 
-  const typographyFonts = Array.isArray(
-    typographyConfig.fonts
-  )
+  const typographyFonts = Array.isArray(typographyConfig.fonts)
     ? typographyConfig.fonts.filter(font =>
         font &&
         typeof font === "object" &&
@@ -553,10 +504,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadedSources = new Set();
 
     typographyFonts.forEach(font => {
-      const source =
-        typeof font.source === "string"
-          ? font.source.trim()
-          : "";
+      const source = typeof font.source === "string"
+        ? font.source.trim()
+        : "";
 
       if (!source || loadedSources.has(source)) return;
 
@@ -567,23 +517,16 @@ document.addEventListener("DOMContentLoaded", () => {
         source.startsWith("assets/");
 
       if (!isAllowedSource) {
-        console.warn(
-          "Skipped unsupported typography source:",
-          source
-        );
+        console.warn("Skipped unsupported typography source:", source);
         return;
       }
 
       const link = document.createElement("link");
-
       link.rel = "stylesheet";
       link.href = source;
 
       link.addEventListener("error", () => {
-        console.warn(
-          "Unable to load typography stylesheet:",
-          source
-        );
+        console.warn("Unable to load typography stylesheet:", source);
       });
 
       document.head.appendChild(link);
@@ -599,16 +542,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const typographyIntro = typographyConfig.intro || {};
 
-  setElementText(
-    "typography-intro-eyebrow",
-    typographyIntro.eyebrow
-  );
-
-  setElementText(
-    "typography-intro-headline",
-    typographyIntro.headline
-  );
-
+  setElementText("typography-intro-eyebrow", typographyIntro.eyebrow);
+  setElementText("typography-intro-headline", typographyIntro.headline);
   setElementText(
     "typography-intro-description",
     typographyIntro.description
@@ -658,11 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       topline.appendChild(
-        createTextElement(
-          "span",
-          "",
-          category.toUpperCase()
-        )
+        createTextElement("span", "", category.toUpperCase())
       );
 
       const specimen = createTextElement(
@@ -758,16 +689,11 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       header.appendChild(
-        createTextElement(
-          "span",
-          "",
-          formatIndex(index + 1)
-        )
+        createTextElement("span", "", formatIndex(index + 1))
       );
 
       const content = document.createElement("div");
       content.className = "typography-character-content";
-
       content.style.fontFamily = getFontFamily(font);
       content.style.fontWeight = String(getFontWeight(font));
 
@@ -844,7 +770,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sample.style.fontFamily = getFontFamily(font);
         sample.style.fontWeight = String(weight.value ?? 400);
-
         sample.style.fontStyle =
           weight.style === "italic" ? "italic" : "normal";
 
@@ -906,19 +831,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const brandColors = config.colors || {};
 
-    const contextBackground = isValidColor(
-      brandColors.primary
-    )
+    const contextBackground = isValidColor(brandColors.primary)
       ? brandColors.primary
       : "#202020";
 
-    const contextText = getReadableTextColor(
-      contextBackground
-    );
+    const contextText = getReadableTextColor(contextBackground);
 
-    const contextAccent = isValidColor(
-      brandColors.accent
-    )
+    const contextAccent = isValidColor(brandColors.accent)
       ? brandColors.accent
       : contextText;
 
@@ -983,9 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
         headline.appendChild(lineElement);
 
         if (index < lines.length - 1) {
-          headline.appendChild(
-            document.createElement("br")
-          );
+          headline.appendChild(document.createElement("br"));
         }
       });
     }
@@ -1005,9 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (supportingFont) {
       [description, eyebrow, contextBrand].forEach(element => {
         if (element) {
-          element.style.fontFamily = getFontFamily(
-            supportingFont
-          );
+          element.style.fontFamily = getFontFamily(supportingFont);
         }
       });
     }
@@ -1111,7 +1026,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (card) {
           const feature = card.closest(".graphics-feature");
-
           card.remove();
 
           const gallery = feature && feature.querySelector(
@@ -1151,13 +1065,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function graphicsVisual(item, frameClass, imageClass) {
       const visual = document.createElement("div");
-
       visual.className = frameClass;
 
-      graphicsBackground(
-        visual,
-        item.background
-      );
+      graphicsBackground(visual, item.background);
 
       visual.appendChild(
         graphicsImage(
@@ -1169,7 +1079,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const label = graphicsLabel(item);
-
       if (label) visual.appendChild(label);
 
       return visual;
@@ -1177,10 +1086,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function graphicsFeature(id, count) {
       const feature = document.getElementById(id);
-
-      if (feature) {
-        feature.hidden = count === 0;
-      }
+      if (feature) feature.hidden = count === 0;
     }
 
     // ========================================
@@ -1363,9 +1269,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : [];
 
       details
-        .filter(item =>
-          item && graphicsImagePath(item.image)
-        )
+        .filter(item => item && graphicsImagePath(item.image))
         .forEach(item => {
           const card = document.createElement("article");
           card.className = "graphics-detail-card";
@@ -1432,16 +1336,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (guidelinesContainer) {
       guidelinesContainer.replaceChildren();
 
-      const guidelines = Array.isArray(
-        graphicsConfig.guidelines
-      )
+      const guidelines = Array.isArray(graphicsConfig.guidelines)
         ? graphicsConfig.guidelines
         : [];
 
       guidelines
-        .filter(item =>
-          item && (item.title || item.description)
-        )
+        .filter(item => item && (item.title || item.description))
         .forEach((item, index) => {
           const card = document.createElement("article");
           card.className = "graphics-guideline-card";
@@ -1483,7 +1383,580 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 12 — ACTIVE SIDEBAR NAVIGATION
+  // 12 — DYNAMIC PHOTOGRAPHY SYSTEM
+  // Concept 02 — Editorial Photography Gallery
+  // ========================================
+
+  const photographyConfig = config.photography || {};
+  const photographySection = document.getElementById("photography");
+
+  if (photographySection && sections.photography !== false) {
+
+    const photoIntro = photographyConfig.intro || {};
+
+    setElementText(
+      "photography-intro-eyebrow",
+      photoIntro.eyebrow
+    );
+
+    setElementText(
+      "photography-intro-headline",
+      photoIntro.headline
+    );
+
+    setElementText(
+      "photography-intro-description",
+      photoIntro.description
+    );
+
+    const photoLayouts = new Set([
+      "full",
+      "half",
+      "wide",
+      "tall",
+      "split",
+      "split-reverse"
+    ]);
+
+    // ========================================
+    // 12.1 — PHOTOGRAPHY HELPERS
+    // ========================================
+
+    function photoPath(value) {
+      if (typeof value !== "string") return "";
+
+      const path = value.trim();
+
+      if (!path) return "";
+
+      if (/^(?:javascript|data|blob):/i.test(path)) {
+        return "";
+      }
+
+      if (/^https:\/\//i.test(path)) {
+        return path;
+      }
+
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) {
+        return "";
+      }
+
+      return path;
+    }
+
+    function photoFeature(id, container) {
+      const feature = document.getElementById(id);
+
+      if (feature && container) {
+        feature.hidden = container.children.length === 0;
+      }
+    }
+
+    function photoImage(
+      item,
+      className,
+      card,
+      featureId,
+      container
+    ) {
+      const source = photoPath(item.image);
+      const image = document.createElement("img");
+
+      image.className = className;
+      image.alt = item.alt || item.title || "Brand photography";
+      image.loading = "lazy";
+      image.decoding = "async";
+
+      image.style.setProperty(
+        "--photo-image-fit",
+        item.fit === "contain" ? "contain" : "cover"
+      );
+
+      image.addEventListener("error", () => {
+        console.warn(
+          "Photography image could not be loaded:",
+          source
+        );
+
+        if (card.isConnected) {
+          card.remove();
+        }
+
+        photoFeature(featureId, container);
+      });
+
+      image.src = source;
+
+      return image;
+    }
+
+    function photoVisual(
+      item,
+      visualClass,
+      imageClass,
+      card,
+      featureId,
+      container
+    ) {
+      const visual = document.createElement("div");
+      visual.className = visualClass;
+
+      visual.appendChild(
+        photoImage(
+          item,
+          imageClass,
+          card,
+          featureId,
+          container
+        )
+      );
+
+      return visual;
+    }
+
+    function photoCaption(
+      item,
+      contentClass,
+      categoryClass,
+      titleClass,
+      descriptionClass,
+      fallback
+    ) {
+      const content = document.createElement("div");
+      content.className = contentClass;
+
+      if (item.category) {
+        content.appendChild(
+          createTextElement(
+            "span",
+            categoryClass,
+            item.category
+          )
+        );
+      }
+
+      if (item.title || fallback) {
+        content.appendChild(
+          createTextElement(
+            "h4",
+            titleClass,
+            item.title || fallback
+          )
+        );
+      }
+
+      if (item.description) {
+        content.appendChild(
+          createTextElement(
+            "p",
+            descriptionClass,
+            item.description
+          )
+        );
+      }
+
+      return content;
+    }
+
+    // ========================================
+    // 12.2 — FEATURED PHOTOGRAPHY
+    // ========================================
+
+    const photoHeroContainer = document.getElementById(
+      "photography-hero-canvas"
+    );
+
+    if (photoHeroContainer) {
+      photoHeroContainer.replaceChildren();
+
+      const featuredPhoto = photographyConfig.featured || {};
+
+      if (
+        featuredPhoto.enabled === true &&
+        photoPath(featuredPhoto.image)
+      ) {
+        const card = document.createElement("article");
+        card.className = "photography-hero-card";
+
+        card.appendChild(
+          photoVisual(
+            featuredPhoto,
+            "photography-hero-visual",
+            "photography-hero-image",
+            card,
+            "photography-hero-feature",
+            photoHeroContainer
+          )
+        );
+
+        const caption = document.createElement("div");
+        caption.className = "photography-hero-caption";
+
+        caption.appendChild(
+          photoCaption(
+            featuredPhoto,
+            "photography-hero-caption-main",
+            "photography-hero-category",
+            "photography-hero-title",
+            "photography-hero-description",
+            "Signature Photography"
+          )
+        );
+
+        caption.appendChild(
+          createTextElement(
+            "span",
+            "photography-hero-index",
+            "01 / FEATURED"
+          )
+        );
+
+        card.appendChild(caption);
+        photoHeroContainer.appendChild(card);
+      }
+
+      photoFeature(
+        "photography-hero-feature",
+        photoHeroContainer
+      );
+    }
+
+    // ========================================
+    // 12.3 — PHOTOGRAPHY CATEGORIES
+    // Unlimited categories and photographs
+    // ========================================
+
+    const photoCategoriesContainer = document.getElementById(
+      "photography-categories-gallery"
+    );
+
+    if (photoCategoriesContainer) {
+      photoCategoriesContainer.replaceChildren();
+
+      const categories = Array.isArray(
+        photographyConfig.categories
+      )
+        ? photographyConfig.categories
+        : [];
+
+      categories.forEach(category => {
+        if (
+          !category ||
+          !Array.isArray(category.images)
+        ) {
+          return;
+        }
+
+        const validImages = category.images.filter(
+          item => item && photoPath(item.image)
+        );
+
+        validImages.forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "photography-category-card";
+
+          card.appendChild(
+            photoVisual(
+              item,
+              "photography-category-visual",
+              "photography-category-image",
+              card,
+              "photography-categories-feature",
+              photoCategoriesContainer
+            )
+          );
+
+          const captionItem = {
+            title:
+              item.title ||
+              category.title ||
+              "Photography category",
+
+            description:
+              item.description ||
+              category.description ||
+              "",
+
+            category:
+              category.title ||
+              "Photography"
+          };
+
+          card.appendChild(
+            photoCaption(
+              captionItem,
+              "photography-category-content",
+              "photography-category-label",
+              "photography-category-title",
+              "photography-category-description",
+              "Photography category"
+            )
+          );
+
+          card.dataset.categoryIndex = String(index);
+          photoCategoriesContainer.appendChild(card);
+        });
+      });
+
+      photoFeature(
+        "photography-categories-feature",
+        photoCategoriesContainer
+      );
+    }
+
+    // ========================================
+    // 12.4 — EDITORIAL IMAGE GALLERY
+    // ========================================
+
+    const photoGalleryContainer = document.getElementById(
+      "photography-image-gallery"
+    );
+
+    if (photoGalleryContainer) {
+      photoGalleryContainer.replaceChildren();
+
+      const gallery = Array.isArray(
+        photographyConfig.gallery
+      )
+        ? photographyConfig.gallery.filter(
+            item => item && photoPath(item.image)
+          )
+        : [];
+
+      gallery.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "photography-gallery-card";
+
+        const layout = photoLayouts.has(item.layout)
+          ? item.layout
+          : "half";
+
+        card.classList.add(
+          `photography-layout-${layout}`
+        );
+
+        card.appendChild(
+          photoVisual(
+            item,
+            "photography-gallery-visual",
+            "photography-gallery-image",
+            card,
+            "photography-gallery-feature",
+            photoGalleryContainer
+          )
+        );
+
+        card.appendChild(
+          photoCaption(
+            item,
+            "photography-gallery-content",
+            "photography-gallery-category",
+            "photography-gallery-title",
+            "photography-gallery-description",
+            ""
+          )
+        );
+
+        photoGalleryContainer.appendChild(card);
+      });
+
+      photoFeature(
+        "photography-gallery-feature",
+        photoGalleryContainer
+      );
+    }
+
+    // ========================================
+    // 12.5 — ART DIRECTION GUIDELINES
+    // ========================================
+
+    const photoDirectionContainer = document.getElementById(
+      "photography-direction-list"
+    );
+
+    if (photoDirectionContainer) {
+      photoDirectionContainer.replaceChildren();
+
+      const directions = Array.isArray(
+        photographyConfig.artDirection
+      )
+        ? photographyConfig.artDirection
+        : [];
+
+      directions
+        .filter(item =>
+          item && (item.title || item.description)
+        )
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "photography-direction-card";
+
+          card.appendChild(
+            createTextElement(
+              "span",
+              "photography-direction-number",
+              formatIndex(index + 1)
+            )
+          );
+
+          card.appendChild(
+            createTextElement(
+              "h4",
+              "photography-direction-title",
+              item.title || "Art direction"
+            )
+          );
+
+          if (item.description) {
+            card.appendChild(
+              createTextElement(
+                "p",
+                "photography-direction-description",
+                item.description
+              )
+            );
+          }
+
+          photoDirectionContainer.appendChild(card);
+        });
+
+      photoFeature(
+        "photography-direction-feature",
+        photoDirectionContainer
+      );
+    }
+
+    // ========================================
+    // 12.6 — PHOTOGRAPHY DO / DON'T
+    // ========================================
+
+    const photoComparisonContainer = document.getElementById(
+      "photography-comparison-gallery"
+    );
+
+    if (photoComparisonContainer) {
+      photoComparisonContainer.replaceChildren();
+
+      const comparisons = Array.isArray(
+        photographyConfig.comparisons
+      )
+        ? photographyConfig.comparisons
+        : [];
+
+      comparisons.forEach(comparison => {
+        if (
+          !comparison ||
+          !comparison.approved ||
+          !comparison.avoid ||
+          !photoPath(comparison.approved.image) ||
+          !photoPath(comparison.avoid.image)
+        ) {
+          return;
+        }
+
+        const pairCards = [];
+
+        const pair = document.createElement("div");
+
+        // Keeps both cards aligned with the
+        // existing two-column comparison grid.
+        pair.style.display = "contents";
+
+        const pairFailure = () => {
+          pairCards.forEach(card => card.remove());
+          pair.remove();
+
+          photoFeature(
+            "photography-comparison-feature",
+            photoComparisonContainer
+          );
+        };
+
+        [
+          {
+            item: comparison.approved,
+            approved: true
+          },
+          {
+            item: comparison.avoid,
+            approved: false
+          }
+        ].forEach(({ item, approved }) => {
+          const card = document.createElement("article");
+          card.className = "photography-comparison-card";
+
+          pairCards.push(card);
+
+          const visual = photoVisual(
+            item,
+            "photography-comparison-visual",
+            "photography-comparison-image",
+            card,
+            "photography-comparison-feature",
+            photoComparisonContainer
+          );
+
+          const image = visual.querySelector("img");
+
+          if (image) {
+            image.addEventListener("error", pairFailure);
+          }
+
+          card.appendChild(visual);
+
+          const content = document.createElement("div");
+          content.className = "photography-comparison-content";
+
+          const status = createTextElement(
+            "span",
+            "photography-comparison-status",
+            approved
+              ? "DO / APPROVED"
+              : "DON'T / AVOID"
+          );
+
+          status.classList.add(
+            approved ? "is-approved" : "is-avoid"
+          );
+
+          content.appendChild(status);
+
+          content.appendChild(
+            createTextElement(
+              "h4",
+              "photography-comparison-title",
+              item.title ||
+                comparison.title ||
+                (approved ? "Approved" : "Avoid")
+            )
+          );
+
+          if (item.description) {
+            content.appendChild(
+              createTextElement(
+                "p",
+                "photography-comparison-description",
+                item.description
+              )
+            );
+          }
+
+          card.appendChild(content);
+          pair.appendChild(card);
+        });
+
+        photoComparisonContainer.appendChild(pair);
+      });
+
+      photoFeature(
+        "photography-comparison-feature",
+        photoComparisonContainer
+      );
+    }
+  }
+
+  // ========================================
+  // 13 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
@@ -1547,4 +2020,5 @@ document.addEventListener("DOMContentLoaded", () => {
     "Brand Hub loaded:",
     brand.name
   );
+
 });
