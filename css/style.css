@@ -229,3 +229,62 @@ body {
   color: var(--muted-text);
   max-width: 650px;
 }
+
+/* =========================================
+   STEP 17.11 — LOGO SYSTEM PRESENTATION
+   ========================================= */
+
+/* Spacing between logo guideline blocks */
+#logo .logo-block {
+  margin-top: 28px;
+  padding: 36px 40px;
+  background: #f8f8f6;
+  border: 1px solid var(--border-color);
+}
+
+/* Section headings */
+#logo .logo-block h3 {
+  margin: 0 0 14px;
+  font-size: clamp(21px, 2.2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.7px;
+  color: var(--brand-text);
+}
+
+/* Supporting descriptions */
+#logo .logo-block p {
+  margin: 0;
+  max-width: 650px;
+  color: var(--muted-text);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Primary logo presentation panel */
+#logo .welcome-panel {
+  margin-top: 45px;
+  min-height: 380px;
+  background: #f2f1ed;
+  border: 1px solid #e9e7e2;
+}
+
+/* Add space before the logo variations */
+#logo .welcome-panel + .logo-block {
+  margin-top: 45px;
+}
+
+/* Subtle separation between content blocks */
+#logo .logo-block + .logo-block {
+  margin-top: 18px;
+}
+
+/* Responsive spacing */
+@media (max-width: 640px) {
+  #logo .logo-block {
+    padding: 26px 22px;
+  }
+
+  #logo .welcome-panel {
+    min-height: 300px;
+  }
+}
