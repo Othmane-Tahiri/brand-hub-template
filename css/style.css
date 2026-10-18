@@ -1,8 +1,5 @@
 
 
-
-
-
 /* =========================================
    BRAND HUB — MASTER STYLESHEET
    Theme 01: Minimal Swiss
@@ -3973,4 +3970,306 @@ span:last-child {
   #applications img { transition: none !important; }
 }
 
+/* =========================================
+   PACKAGING DESIGN — EDITORIAL PACKAGING SYSTEM
+   Step 23.2 | Client-configurable components
+   ========================================= */
 
+#packaging {
+  --packaging-paper: var(--surface-warm, #f2f1ed);
+  --packaging-soft: var(--surface-soft, #f8f8f6);
+  --packaging-ink: var(--brand-text, #202020);
+  --packaging-muted: var(--muted-text, #777777);
+  --packaging-line: var(--border-color, #e8e8e8);
+}
+
+#packaging .packaging-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 390px;
+  padding: 65px 55px;
+  background: var(--packaging-paper);
+  color: var(--packaging-ink);
+}
+#packaging .packaging-editorial-intro .panel-label { margin-bottom: 30px; }
+#packaging .packaging-editorial-intro h3 {
+  max-width: 850px;
+  margin: 0 0 22px;
+  font-size: clamp(45px, 6.5vw, 90px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+#packaging .packaging-editorial-intro p {
+  max-width: 490px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--packaging-muted);
+}
+#packaging .packaging-feature { margin-top: 85px; min-width: 0; }
+#packaging .packaging-feature[hidden] { display: none !important; }
+#packaging .packaging-section-heading { margin-bottom: 30px; }
+#packaging .packaging-section-heading .panel-label { margin-bottom: 12px; }
+#packaging .packaging-section-heading h3 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+#packaging .packaging-section-heading p {
+  max-width: 650px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--packaging-muted);
+}
+
+/* 01 — Featured packaging */
+#packaging .packaging-hero-canvas { min-width: 0; }
+#packaging .packaging-hero-card { min-width: 0; }
+#packaging .packaging-hero-visual,
+#packaging .packaging-hero-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 450px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--packaging-paper);
+}
+#packaging .packaging-hero-image,
+#packaging .packaging-collection-image,
+#packaging .packaging-material-image,
+#packaging .packaging-comparison-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--packaging-image-fit, cover);
+  object-position: center;
+}
+#packaging .packaging-hero-visual > img,
+#packaging .packaging-hero-frame > img,
+#packaging .packaging-collection-visual > img,
+#packaging .packaging-material-visual > img,
+#packaging .packaging-comparison-visual > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--packaging-image-fit, cover);
+}
+#packaging .packaging-hero-content { padding: 24px 0 8px; }
+#packaging .packaging-hero-category,
+#packaging .packaging-collection-category,
+#packaging .packaging-material-category,
+#packaging .packaging-specification-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--packaging-muted);
+}
+#packaging .packaging-hero-title { margin: 0 0 9px; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.035em; line-height: 1.2; }
+#packaging .packaging-hero-description,
+#packaging .packaging-collection-description,
+#packaging .packaging-material-description,
+#packaging .packaging-specification-description {
+  margin: 0;
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--packaging-muted);
+}
+
+/* 02 — Packaging collection */
+#packaging .packaging-collection-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+#packaging .packaging-collection-card { min-width: 0; overflow: hidden; }
+#packaging .packaging-collection-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--packaging-paper);
+}
+#packaging .packaging-collection-content { padding: 23px 2px 10px; }
+#packaging .packaging-collection-title,
+#packaging .packaging-material-title {
+  margin: 0 0 10px;
+  font-size: clamp(21px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+#packaging .packaging-layout-full,
+#packaging .packaging-layout-wide { grid-column: 1 / -1; }
+#packaging .packaging-layout-full .packaging-collection-visual { aspect-ratio: 16 / 9; }
+#packaging .packaging-layout-wide .packaging-collection-visual { aspect-ratio: 16 / 8; }
+#packaging .packaging-layout-tall .packaging-collection-visual { aspect-ratio: 3 / 4; }
+#packaging .packaging-layout-split,
+#packaging .packaging-layout-split-reverse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: stretch;
+  background: var(--packaging-paper);
+}
+#packaging .packaging-layout-split-reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); }
+#packaging .packaging-layout-split .packaging-collection-visual,
+#packaging .packaging-layout-split-reverse .packaging-collection-visual {
+  min-height: 360px;
+  height: 100%;
+  aspect-ratio: auto;
+}
+#packaging .packaging-layout-split .packaging-collection-content,
+#packaging .packaging-layout-split-reverse .packaging-collection-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 42px;
+}
+#packaging .packaging-layout-split-reverse .packaging-collection-visual { grid-column: 2; grid-row: 1; }
+#packaging .packaging-layout-split-reverse .packaging-collection-content { grid-column: 1; grid-row: 1; }
+
+/* 03 — Materials and finishes */
+#packaging .packaging-materials-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+#packaging .packaging-material-card { min-width: 0; }
+#packaging .packaging-material-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--packaging-paper);
+}
+#packaging .packaging-material-content { padding: 22px 0 8px; }
+
+/* 04 — Production specifications */
+#packaging .packaging-specifications-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#packaging .packaging-specification-card {
+  min-width: 0;
+  padding: 32px;
+  border: 1px solid var(--packaging-line);
+  background: var(--packaging-soft);
+}
+#packaging .packaging-specification-number {
+  display: block;
+  margin-bottom: 34px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--packaging-muted);
+}
+#packaging .packaging-specification-title {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+#packaging .packaging-specification-value {
+  display: block;
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 05 — Approved / avoid comparisons */
+#packaging .packaging-comparison-gallery { display: flex; flex-direction: column; gap: 32px; }
+#packaging .packaging-comparison-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#packaging .packaging-comparison-card { min-width: 0; }
+#packaging .packaging-comparison-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--packaging-paper);
+}
+#packaging .packaging-comparison-content { padding: 18px 0 6px; }
+#packaging .packaging-comparison-status {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+#packaging .packaging-comparison-approved .packaging-comparison-status { color: #41634a; }
+#packaging .packaging-comparison-avoid .packaging-comparison-status { color: #a04e4e; }
+#packaging .packaging-comparison-title { margin: 0 0 9px; font-size: 20px; line-height: 1.25; letter-spacing: -0.025em; }
+#packaging .packaging-comparison-description { margin: 0; font-size: 14px; line-height: 1.75; color: var(--packaging-muted); }
+
+@media (hover: hover) {
+  #packaging .packaging-hero-visual img,
+  #packaging .packaging-collection-visual img,
+  #packaging .packaging-material-visual img { transition: transform 0.6s ease; }
+  #packaging .packaging-hero-card:hover img,
+  #packaging .packaging-collection-card:hover img,
+  #packaging .packaging-material-card:hover img { transform: scale(1.025); }
+}
+@media (max-width: 900px) {
+  #packaging .packaging-editorial-intro { min-height: 320px; margin-top: 60px; padding: 50px 38px; }
+  #packaging .packaging-feature { margin-top: 65px; }
+  #packaging .packaging-hero-visual,
+  #packaging .packaging-hero-frame { min-height: 320px; }
+  #packaging .packaging-layout-split .packaging-collection-content,
+  #packaging .packaging-layout-split-reverse .packaging-collection-content { padding: 30px; }
+  #packaging .packaging-layout-split .packaging-collection-visual,
+  #packaging .packaging-layout-split-reverse .packaging-collection-visual { min-height: 280px; }
+}
+@media (max-width: 640px) {
+  #packaging .packaging-editorial-intro { margin-top: 50px; min-height: 280px; padding: 42px 26px; }
+  #packaging .packaging-editorial-intro h3 { font-size: clamp(40px, 11vw, 64px); }
+  #packaging .packaging-feature { margin-top: 55px; }
+  #packaging .packaging-section-heading { margin-bottom: 24px; }
+  #packaging .packaging-collection-gallery,
+  #packaging .packaging-materials-gallery,
+  #packaging .packaging-specifications-list,
+  #packaging .packaging-comparison-pair { grid-template-columns: 1fr; }
+  #packaging .packaging-layout-full,
+  #packaging .packaging-layout-half,
+  #packaging .packaging-layout-wide,
+  #packaging .packaging-layout-tall,
+  #packaging .packaging-layout-split,
+  #packaging .packaging-layout-split-reverse { grid-column: 1 / -1; }
+  #packaging .packaging-layout-split,
+  #packaging .packaging-layout-split-reverse { display: flex; flex-direction: column; }
+  #packaging .packaging-layout-split .packaging-collection-visual,
+  #packaging .packaging-layout-split-reverse .packaging-collection-visual { height: auto; min-height: 240px; aspect-ratio: 4 / 3; }
+  #packaging .packaging-layout-split .packaging-collection-content,
+  #packaging .packaging-layout-split-reverse .packaging-collection-content { padding: 26px; }
+  #packaging .packaging-hero-visual,
+  #packaging .packaging-hero-frame { min-height: 240px; aspect-ratio: 4 / 3; }
+  #packaging .packaging-layout-full .packaging-collection-visual,
+  #packaging .packaging-layout-wide .packaging-collection-visual { aspect-ratio: 4 / 3; }
+  #packaging .packaging-specification-card { padding: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #packaging img { transition: none !important; }
+}
