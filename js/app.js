@@ -1,17 +1,13 @@
 
 /*
  * BRAND HUB — MAIN APPLICATION
- *
- * Dynamic Logo Color Compatibility
- * Dynamic Brand Color Palette
- * Interactive Tonal Color Scales
- * Dynamic Editorial Typography System
+ * Logo, Colors, Typography, Graphic Elements
+ * and Sidebar Navigation
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-
   // ========================================
-  // 01 — LOAD CLIENT CONFIGURATION
+  // 01 — CLIENT CONFIGURATION
   // ========================================
 
   if (typeof BRAND_CONFIG === "undefined") {
@@ -20,62 +16,47 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const config = BRAND_CONFIG;
+  const brand = config.brand || {};
+  const sections = config.sections || {};
 
   // ========================================
   // 02 — BRAND INFORMATION
   // ========================================
 
-  document.title = `${config.brand.name} — Brand Hub`;
+  document.title = `${brand.name || "Brand"} — Brand Hub`;
 
-  const brandName =
-    document.getElementById("brand-name");
+  const brandName = document.getElementById("brand-name");
+  const sidebarBrand = document.getElementById("sidebar-brand");
+  const brandTagline = document.getElementById("brand-tagline");
 
-  const sidebarBrand =
-    document.getElementById("sidebar-brand");
-
-  const brandTagline =
-    document.getElementById("brand-tagline");
-
-  if (brandName) {
-    brandName.textContent = config.brand.name;
-  }
-
-  if (sidebarBrand) {
-    sidebarBrand.textContent = config.brand.name;
-  }
-
-  if (brandTagline) {
-    brandTagline.textContent = config.brand.tagline;
-  }
+  if (brandName) brandName.textContent = brand.name || "";
+  if (sidebarBrand) sidebarBrand.textContent = brand.name || "";
+  if (brandTagline) brandTagline.textContent = brand.tagline || "";
 
   // ========================================
-  // 03 — APPLY THE SELECTED THEME
+  // 03 — WEBSITE THEME
   // ========================================
 
-  document.body.dataset.theme = config.theme;
+  document.body.dataset.theme = config.theme || "swiss";
 
   // ========================================
-  // 04 — OPTIONAL BRAND SECTIONS
+  // 04 — OPTIONAL SECTIONS
   // ========================================
 
   document.querySelectorAll(".nav-link").forEach(link => {
+    const href = link.getAttribute("href") || "";
 
-    const sectionId =
-      link.getAttribute("href").replace("#", "");
+    if (!href.startsWith("#")) return;
 
-    if (config.sections[sectionId] === false) {
+    const sectionId = href.slice(1);
 
+    if (sections[sectionId] === false) {
       link.style.display = "none";
 
-      const section =
-        document.getElementById(sectionId);
+      const section = document.getElementById(sectionId);
 
-      if (section) {
-        section.hidden = true;
-      }
-
+      if (section) section.hidden = true;
     }
-
   });
 
   // ========================================
@@ -83,54 +64,66 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========================================
 
   if (config.publishingMode === "showcase") {
+    const resourcesLink = document.querySelector(
+      'a[href="#resources"]'
+    );
 
-    const resourcesLink =
-      document.querySelector('a[href="#resources"]');
+    const resourcesSection = document.getElementById(
+      "resources"
+    );
 
-    const resourcesSection =
-      document.getElementById("resources");
-
-    if (resourcesLink) {
-      resourcesLink.style.display = "none";
-    }
-
-    if (resourcesSection) {
-      resourcesSection.hidden = true;
-    }
-
+    if (resourcesLink) resourcesLink.style.display = "none";
+    if (resourcesSection) resourcesSection.hidden = true;
   }
 
   // ========================================
-  // 06 — SHARED COLOR UTILITIES
+  // 06 — SHARED HELPERS
   // ========================================
 
   const isValidColor = value =>
     typeof value === "string" &&
     /^#[0-9a-fA-F]{6}$/.test(value);
 
-  function hexToRgb(hex) {
+  function createTextElement(tag, className, value) {
+    const element = document.createElement(tag);
 
+    if (className) element.className = className;
+
+    element.textContent = String(value ?? "");
+
+    return element;
+  }
+
+  function setElementText(id, value) {
+    const element = document.getElementById(id);
+
+    if (element && value !== undefined && value !== null) {
+      element.textContent = String(value);
+    }
+  }
+
+  function formatIndex(number) {
+    return String(number).padStart(2, "0");
+  }
+
+  function hexToRgb(hex) {
     return {
       r: parseInt(hex.slice(1, 3), 16),
       g: parseInt(hex.slice(3, 5), 16),
       b: parseInt(hex.slice(5, 7), 16)
     };
-
   }
 
   function rgbToHex(r, g, b) {
-
     const toHex = value =>
       Math.max(0, Math.min(255, Math.round(value)))
         .toString(16)
         .padStart(2, "0");
 
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
-
   }
 
   function mixColors(first, second, amount) {
-
     const a = hexToRgb(first);
     const b = hexToRgb(second);
 
@@ -139,78 +132,39 @@ document.addEventListener("DOMContentLoaded", () => {
       a.g + (b.g - a.g) * amount,
       a.b + (b.b - a.b) * amount
     );
-
   }
 
   function generateTonalScale(base, steps = 11) {
-
-    if (!isValidColor(base)) {
-      return [];
-    }
+    if (!isValidColor(base)) return [];
 
     const count = Number.isFinite(Number(steps))
-      ? Math.max(
-          2,
-          Math.min(21, Math.round(Number(steps)))
-        )
+      ? Math.max(2, Math.min(21, Math.round(Number(steps))))
       : 11;
 
     const shades = [];
 
     for (let index = 0; index < count; index++) {
-
       const position = index / (count - 1);
 
-      let shade;
-
       if (position < 0.5) {
-
-        const strength = position / 0.5;
-
-        shade = mixColors(
-          "#FFFFFF",
-          base,
-          strength
+        shades.push(
+          mixColors("#FFFFFF", base, position / 0.5)
         );
-
       } else {
-
-        const strength = (position - 0.5) / 0.5;
-
-        shade = mixColors(
-          base,
-          "#000000",
-          strength * 0.82
+        shades.push(
+          mixColors(
+            base,
+            "#000000",
+            ((position - 0.5) / 0.5) * 0.82
+          )
         );
-
       }
-
-      shades.push(shade);
-
     }
 
     return shades;
-
   }
 
-  // ========================================
-  // REMOVE SHADES THAT BLEND WITH BACKGROUND
-  // ========================================
-
-  /*
-   * This only affects automatically generated
-   * tonal scales.
-   *
-   * It removes near-background colors from
-   * the light end of the scale.
-   *
-   * Remaining HEX codes are not changed.
-   *
-   * A minimum of two shades is preserved.
-   */
-
   function getDisplayedBackgroundColor() {
-
     const color = getComputedStyle(
       document.body
     ).backgroundColor;
@@ -226,11 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
       Number(channels[1]),
       Number(channels[2])
     );
-
   }
 
   function getColorDistance(first, second) {
-
     const a = hexToRgb(first);
     const b = hexToRgb(second);
 
@@ -239,46 +191,31 @@ document.addEventListener("DOMContentLoaded", () => {
       Math.pow(a.g - b.g, 2) +
       Math.pow(a.b - b.b, 2)
     );
-
   }
 
   function removeBlendingShades(shades) {
-
     const background = getDisplayedBackgroundColor();
-
-    const minimumDistance = 20;
-
     const result = [...shades];
 
     while (
       result.length > 2 &&
-      getColorDistance(result[0], background) <
-        minimumDistance
+      getColorDistance(result[0], background) < 20
     ) {
-
       result.shift();
-
     }
 
     return result;
-
   }
 
   function getReadableTextColor(hex) {
-
     const { r, g, b } = hexToRgb(hex);
 
     const channels = [r, g, b].map(value => {
-
       const channel = value / 255;
 
       return channel <= 0.04045
         ? channel / 12.92
-        : Math.pow(
-            (channel + 0.055) / 1.055,
-            2.4
-          );
-
+        : Math.pow((channel + 0.055) / 1.055, 2.4);
     });
 
     const luminance =
@@ -286,27 +223,17 @@ document.addEventListener("DOMContentLoaded", () => {
       channels[1] * 0.7152 +
       channels[2] * 0.0722;
 
-    return luminance > 0.179
-      ? "#202020"
-      : "#FFFFFF";
-
+    return luminance > 0.179 ? "#202020" : "#FFFFFF";
   }
 
   async function copyHexCode(hex) {
-
     try {
-
-      if (
-        navigator.clipboard &&
-        window.isSecureContext
-      ) {
-
+      if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(hex);
-
       } else {
-
-        const temporaryInput =
-          document.createElement("textarea");
+        const temporaryInput = document.createElement(
+          "textarea"
+        );
 
         temporaryInput.value = hex;
         temporaryInput.style.position = "fixed";
@@ -317,34 +244,23 @@ document.addEventListener("DOMContentLoaded", () => {
         temporaryInput.focus();
         temporaryInput.select();
 
-        const copied =
-          document.execCommand("copy");
+        const copied = document.execCommand("copy");
 
         temporaryInput.remove();
 
         if (!copied) {
           throw new Error("Copy command failed.");
         }
-
       }
 
       return true;
-
     } catch (error) {
-
-      console.warn(
-        "Unable to copy HEX code:",
-        error
-      );
-
+      console.warn("Unable to copy HEX code:", error);
       return false;
-
     }
-
   }
 
   function createColorButton(hex, className, label) {
-
     const button = document.createElement("button");
 
     button.type = "button";
@@ -358,46 +274,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     button.title = `Copy ${hex}`;
 
-    const code = document.createElement("span");
+    const code = createTextElement(
+      "span",
+      "color-swatch-hex",
+      hex
+    );
 
-    code.className = "color-swatch-hex";
-    code.textContent = hex;
     code.style.color = getReadableTextColor(hex);
-
     button.appendChild(code);
 
     button.addEventListener("click", async () => {
-
       const copied = await copyHexCode(hex);
 
-      code.textContent = copied
-        ? "Copied!"
-        : "Copy failed";
-
+      code.textContent = copied ? "Copied!" : "Copy failed";
       button.classList.add("is-copied");
 
       window.setTimeout(() => {
-
         code.textContent = hex;
         button.classList.remove("is-copied");
-
       }, 1400);
-
     });
 
     return button;
-
   }
 
   // ========================================
-  // 07 — LOGO COLOR COMPATIBILITY GRID
+  // 07 — LOGO COLOR COMPATIBILITY
   // ========================================
 
-  const compatibilityGrid =
-    document.getElementById("logo-compatibility-grid");
+  const compatibilityGrid = document.getElementById(
+    "logo-compatibility-grid"
+  );
 
   if (compatibilityGrid) {
-
     compatibilityGrid.replaceChildren();
 
     const combinations = Array.isArray(
@@ -407,35 +316,27 @@ document.addEventListener("DOMContentLoaded", () => {
       : [];
 
     combinations.forEach(combination => {
-
       if (
+        !combination ||
         !isValidColor(combination.background) ||
         !isValidColor(combination.logoColor)
       ) {
-
         console.warn(
           "Skipped invalid logo color combination:",
           combination
         );
-
         return;
-
       }
 
       const card = document.createElement("div");
-
       card.className = "compatibility-card";
-      card.style.backgroundColor =
-        combination.background;
+      card.style.backgroundColor = combination.background;
 
       const square = document.createElement("div");
-
       square.className = "compatibility-square";
-      square.style.backgroundColor =
-        combination.logoColor;
+      square.style.backgroundColor = combination.logoColor;
 
-      const label =
-        combination.label || "Color combination";
+      const label = combination.label || "Color combination";
 
       card.setAttribute(
         "aria-label",
@@ -444,20 +345,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.appendChild(square);
       compatibilityGrid.appendChild(card);
-
     });
-
   }
 
   // ========================================
   // 08 — MAIN BRAND COLOR PALETTE
   // ========================================
 
-  const brandPaletteContainer =
-    document.getElementById("brand-color-palette");
+  const brandPaletteContainer = document.getElementById(
+    "brand-color-palette"
+  );
 
   if (brandPaletteContainer) {
-
     brandPaletteContainer.replaceChildren();
 
     const palette = Array.isArray(config.brandPalette)
@@ -465,16 +364,9 @@ document.addEventListener("DOMContentLoaded", () => {
       : [];
 
     palette.forEach(color => {
-
-      if (!isValidColor(color.hex)) {
-
-        console.warn(
-          "Skipped invalid brand palette color:",
-          color
-        );
-
+      if (!color || !isValidColor(color.hex)) {
+        console.warn("Skipped invalid brand palette color:", color);
         return;
-
       }
 
       const hex = color.hex.toUpperCase();
@@ -491,88 +383,74 @@ document.addEventListener("DOMContentLoaded", () => {
       const details = document.createElement("div");
       details.className = "brand-color-details";
 
-      const role = document.createElement("span");
-      role.className = "brand-color-role";
-      role.textContent = color.role || "Brand color";
+      details.appendChild(
+        createTextElement(
+          "span",
+          "brand-color-role",
+          color.role || "Brand color"
+        )
+      );
 
-      const name = document.createElement("h4");
-      name.className = "brand-color-name";
-      name.textContent = color.name || "Unnamed Color";
+      details.appendChild(
+        createTextElement(
+          "h4",
+          "brand-color-name",
+          color.name || "Unnamed Color"
+        )
+      );
 
-      const hexLabel = document.createElement("span");
-      hexLabel.className = "brand-color-code";
-      hexLabel.textContent = hex;
-
-      details.appendChild(role);
-      details.appendChild(name);
-      details.appendChild(hexLabel);
+      details.appendChild(
+        createTextElement(
+          "span",
+          "brand-color-code",
+          hex
+        )
+      );
 
       card.appendChild(swatch);
       card.appendChild(details);
-
       brandPaletteContainer.appendChild(card);
-
     });
-
   }
 
   // ========================================
   // 09 — TONAL COLOR SCALES
   // ========================================
 
-  const tonalScalesContainer =
-    document.getElementById("brand-tonal-scales");
+  const tonalScalesContainer = document.getElementById(
+    "brand-tonal-scales"
+  );
 
   if (tonalScalesContainer) {
-
     tonalScalesContainer.replaceChildren();
 
-    const tonalScales = Array.isArray(
-      config.tonalScales
-    )
+    const tonalScales = Array.isArray(config.tonalScales)
       ? config.tonalScales
       : [];
 
     tonalScales.forEach(scale => {
+      if (!scale) return;
 
       let shades = [];
 
       if (scale.generate === false) {
-
-        // Manually approved shades stay unchanged.
-
         shades = Array.isArray(scale.shades)
           ? scale.shades
               .filter(isValidColor)
               .map(hex => hex.toUpperCase())
           : [];
-
       } else {
-
-        // Generate the complete tonal scale.
-
-        shades = generateTonalScale(
-          scale.base,
-          scale.steps
+        shades = removeBlendingShades(
+          generateTonalScale(scale.base, scale.steps)
         );
-
-        // Remove shades that blend into the
-        // website background without changing
-        // the remaining shades.
-
-        shades = removeBlendingShades(shades);
-
       }
 
-      if (shades.length === 0) {
-
+      if (!shades.length) {
         console.warn(
           "Skipped tonal scale without valid shades:",
           scale
         );
-
         return;
-
       }
 
       const group = document.createElement("div");
@@ -581,16 +459,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const heading = document.createElement("div");
       heading.className = "tonal-scale-heading";
 
-      const name = document.createElement("h4");
-      name.className = "tonal-scale-name";
-      name.textContent = scale.name || "Color Scale";
+      heading.appendChild(
+        createTextElement(
+          "h4",
+          "tonal-scale-name",
+          scale.name || "Color Scale"
+        )
+      );
 
-      const count = document.createElement("span");
-      count.className = "tonal-scale-count";
-      count.textContent = `${shades.length} shades`;
-
-      heading.appendChild(name);
-      heading.appendChild(count);
+      heading.appendChild(
+        createTextElement(
+          "span",
+          "tonal-scale-count",
+          `${shades.length} shades`
+        )
+      );
 
       const row = document.createElement("div");
       row.className = "tonal-scale-row";
@@ -601,46 +484,24 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       shades.forEach((hex, index) => {
-
-        const swatch = createColorButton(
-          hex,
-          "tonal-scale-swatch",
-          `${scale.name || "Color"} shade ${index + 1}`
+        row.appendChild(
+          createColorButton(
+            hex,
+            "tonal-scale-swatch",
+            `${scale.name || "Color"} shade ${index + 1}`
+          )
         );
-
-        row.appendChild(swatch);
-
       });
 
       group.appendChild(heading);
       group.appendChild(row);
-
       tonalScalesContainer.appendChild(group);
-
     });
-
   }
 
   // ========================================
   // 10 — DYNAMIC TYPOGRAPHY SYSTEM
   // ========================================
-
-  /*
-   * Typography is generated from:
-   *
-   * BRAND_CONFIG.typography
-   *
-   * The system supports any number of fonts.
-   *
-   * Each font has its own:
-   * - Editorial showcase
-   * - Character set
-   * - Approved weights and styles
-   *
-   * The typography context uses the first
-   * configured font for the headline and
-   * the second (or first) for supporting text.
-   */
 
   const typographyConfig = config.typography || {};
 
@@ -655,108 +516,49 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     : [];
 
-  // ========================================
-  // 10.1 — TYPOGRAPHY HELPERS
-  // ========================================
-
-  function setElementText(id, value) {
-
-    const element = document.getElementById(id);
-
-    if (
-      element &&
-      value !== undefined &&
-      value !== null
-    ) {
-      element.textContent = String(value);
-    }
-
-  }
-
-  function createTextElement(tag, className, value) {
-
-    const element = document.createElement(tag);
-
-    if (className) {
-      element.className = className;
-    }
-
-    element.textContent = String(value ?? "");
-
-    return element;
-
-  }
-
-  function formatIndex(number) {
-    return String(number).padStart(2, "0");
-  }
-
   function getFontFamily(font) {
-
     return font && font.family
       ? font.family
       : "Arial, sans-serif";
-
   }
 
   function getFontWeight(font) {
-
     if (
       font &&
       Array.isArray(font.weights) &&
       font.weights.length > 0
     ) {
-
       const regular = font.weights.find(weight =>
         Number(weight.value) === 400 &&
         weight.style !== "italic"
       );
 
-      if (regular) {
-        return 400;
-      }
+      if (regular) return 400;
 
       const firstWeight = font.weights[0];
 
       if (Number.isFinite(Number(firstWeight.value))) {
         return Number(firstWeight.value);
       }
-
     }
 
     return 400;
-
   }
 
   // ========================================
-  // 10.2 — LOAD CLIENT FONTS
+  // 10.1 — LOAD CLIENT FONTS
   // ========================================
 
-  /*
-   * A font's source can be a CSS stylesheet URL,
-   * such as a Google Fonts stylesheet.
-   *
-   * For self-hosted fonts, load a CSS file
-   * containing @font-face declarations.
-   *
-   * If source is empty, the browser uses the
-   * configured font-family and its fallbacks.
-   */
-
   function loadTypographyFonts() {
-
     const loadedSources = new Set();
 
     typographyFonts.forEach(font => {
-
       const source =
         typeof font.source === "string"
           ? font.source.trim()
           : "";
 
-      if (!source || loadedSources.has(source)) {
-        return;
-      }
+      if (!source || loadedSources.has(source)) return;
 
       const isAllowedSource =
         source.startsWith("https://") ||
@@ -765,14 +567,11 @@ document.addEventListener("DOMContentLoaded", () => {
         source.startsWith("assets/");
 
       if (!isAllowedSource) {
-
         console.warn(
           "Skipped unsupported typography source:",
           source
         );
-
         return;
-
       }
 
       const link = document.createElement("link");
@@ -781,26 +580,21 @@ document.addEventListener("DOMContentLoaded", () => {
       link.href = source;
 
       link.addEventListener("error", () => {
-
         console.warn(
           "Unable to load typography stylesheet:",
           source
         );
-
       });
 
       document.head.appendChild(link);
-
       loadedSources.add(source);
-
     });
-
   }
 
   loadTypographyFonts();
 
   // ========================================
-  // 10.3 — EDITORIAL INTRO
+  // 10.2 — TYPOGRAPHY INTRO
   // ========================================
 
   const typographyIntro = typographyConfig.intro || {};
@@ -821,20 +615,17 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // ========================================
-  // 10.4 — EDITORIAL TYPEFACE GALLERY
+  // 10.3 — EDITORIAL TYPEFACE GALLERY
   // ========================================
 
-  const typefaceGallery =
-    document.getElementById(
-      "typography-typeface-gallery"
-    );
+  const typefaceGallery = document.getElementById(
+    "typography-typeface-gallery"
+  );
 
   if (typefaceGallery) {
-
     typefaceGallery.replaceChildren();
 
     typographyFonts.forEach((font, index) => {
-
       const number = formatIndex(index + 1);
       const total = formatIndex(typographyFonts.length);
 
@@ -842,23 +633,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const category = font.category || "Typeface";
 
       const showcase = document.createElement("div");
+      showcase.className = "typography-typeface-showcase";
 
-      showcase.className =
-        "typography-typeface-showcase";
-
-      if (index === 0) {
-
-        showcase.classList.add(
-          "typography-primary-showcase"
-        );
-
-      } else {
-
-        showcase.classList.add(
-          "typography-secondary-showcase"
-        );
-
-      }
+      showcase.classList.add(
+        index === 0
+          ? "typography-primary-showcase"
+          : "typography-secondary-showcase"
+      );
 
       showcase.style.setProperty(
         "--typeface-family",
@@ -866,24 +647,23 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const topline = document.createElement("div");
+      topline.className = "typography-showcase-topline";
 
-      topline.className =
-        "typography-showcase-topline";
-
-      const roleLabel = createTextElement(
-        "span",
-        "",
-        `${role.toUpperCase()} / ${category.toUpperCase()}`
+      topline.appendChild(
+        createTextElement(
+          "span",
+          "",
+          `${role.toUpperCase()} / ${category.toUpperCase()}`
+        )
       );
 
-      const categoryLabel = createTextElement(
-        "span",
-        "",
-        category.toUpperCase()
+      topline.appendChild(
+        createTextElement(
+          "span",
+          "",
+          category.toUpperCase()
+        )
       );
-
-      topline.appendChild(roleLabel);
-      topline.appendChild(categoryLabel);
 
       const specimen = createTextElement(
         "div",
@@ -891,225 +671,170 @@ document.addEventListener("DOMContentLoaded", () => {
         font.specimen || "Ag"
       );
 
-      specimen.style.fontFamily =
-        getFontFamily(font);
-
-      specimen.style.fontWeight =
-        String(getFontWeight(font));
+      specimen.style.fontFamily = getFontFamily(font);
+      specimen.style.fontWeight = String(getFontWeight(font));
 
       const bottom = document.createElement("div");
-
-      bottom.className =
-        "typography-showcase-bottom";
+      bottom.className = "typography-showcase-bottom";
 
       const details = document.createElement("div");
 
-      const fontName = createTextElement(
-        "h4",
-        "",
-        font.name || "Unnamed Typeface"
+      details.appendChild(
+        createTextElement(
+          "h4",
+          "",
+          font.name || "Unnamed Typeface"
+        )
       );
 
-      const description = createTextElement(
-        "p",
-        "",
-        font.description || role
-      );
-
-      details.appendChild(fontName);
-      details.appendChild(description);
-
-      const counter = createTextElement(
-        "span",
-        "typography-showcase-index",
-        `${number} / ${total}`
+      details.appendChild(
+        createTextElement(
+          "p",
+          "",
+          font.description || role
+        )
       );
 
       bottom.appendChild(details);
-      bottom.appendChild(counter);
+
+      bottom.appendChild(
+        createTextElement(
+          "span",
+          "typography-showcase-index",
+          `${number} / ${total}`
+        )
+      );
 
       showcase.appendChild(topline);
       showcase.appendChild(specimen);
       showcase.appendChild(bottom);
 
       typefaceGallery.appendChild(showcase);
-
     });
-
   }
 
   // ========================================
-  // 10.5 — CHARACTER SET GALLERY
+  // 10.4 — CHARACTER SET GALLERY
   // ========================================
 
-  const characterGallery =
-    document.getElementById(
-      "typography-character-gallery"
-    );
+  const characterGallery = document.getElementById(
+    "typography-character-gallery"
+  );
 
-  const characterSet =
-    typographyConfig.characterSet || {};
+  const characterSet = typographyConfig.characterSet || {};
 
   const uppercase =
-    characterSet.uppercase ||
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    characterSet.uppercase || "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const lowercase =
-    characterSet.lowercase ||
-    "abcdefghijklmnopqrstuvwxyz";
+    characterSet.lowercase || "abcdefghijklmnopqrstuvwxyz";
 
   const numbers =
-    characterSet.numbers ||
-    "0123456789";
+    characterSet.numbers || "0123456789";
 
   const punctuation =
-    characterSet.punctuation ||
-    "&@!?%*";
+    characterSet.punctuation || "&@!?%*";
 
   if (characterGallery) {
-
     characterGallery.replaceChildren();
 
     typographyFonts.forEach((font, index) => {
-
       const block = document.createElement("div");
-
-      block.className =
-        "typography-character-block";
+      block.className = "typography-character-block";
 
       if (index > 0) {
-        block.classList.add(
-          "typography-character-secondary"
-        );
+        block.classList.add("typography-character-secondary");
       }
 
       const header = document.createElement("div");
+      header.className = "typography-character-header";
 
-      header.className =
-        "typography-character-header";
-
-      const label = createTextElement(
-        "span",
-        "",
-        `${(font.role || "Brand").toUpperCase()} TYPEFACE — ${font.name || "Unnamed"}`
+      header.appendChild(
+        createTextElement(
+          "span",
+          "",
+          `${(font.role || "Brand").toUpperCase()} TYPEFACE — ${font.name || "Unnamed"}`
+        )
       );
 
-      const number = createTextElement(
-        "span",
-        "",
-        formatIndex(index + 1)
+      header.appendChild(
+        createTextElement(
+          "span",
+          "",
+          formatIndex(index + 1)
+        )
       );
-
-      header.appendChild(label);
-      header.appendChild(number);
 
       const content = document.createElement("div");
+      content.className = "typography-character-content";
 
-      content.className =
-        "typography-character-content";
+      content.style.fontFamily = getFontFamily(font);
+      content.style.fontWeight = String(getFontWeight(font));
 
-      content.style.fontFamily =
-        getFontFamily(font);
-
-      content.style.fontWeight =
-        String(getFontWeight(font));
-
-      const uppercaseMidpoint =
-        Math.ceil(uppercase.length / 2);
-
-      const firstUppercase = uppercase.slice(
-        0,
-        uppercaseMidpoint
-      );
-
-      const secondUppercase = uppercase.slice(
-        uppercaseMidpoint
-      );
+      const midpoint = Math.ceil(uppercase.length / 2);
 
       [
-        firstUppercase,
-        secondUppercase,
+        uppercase.slice(0, midpoint),
+        uppercase.slice(midpoint),
         lowercase,
         `${numbers} ${punctuation}`
       ].forEach(characters => {
-
-        const row = createTextElement(
-          "p",
-          "",
-          characters
+        content.appendChild(
+          createTextElement("p", "", characters)
         );
-
-        content.appendChild(row);
-
       });
 
       block.appendChild(header);
       block.appendChild(content);
-
       characterGallery.appendChild(block);
-
     });
-
   }
 
   // ========================================
-  // 10.6 — APPROVED FONT WEIGHTS
+  // 10.5 — APPROVED FONT WEIGHTS
   // ========================================
 
-  const weightsGallery =
-    document.getElementById(
-      "typography-weights-gallery"
-    );
+  const weightsGallery = document.getElementById(
+    "typography-weights-gallery"
+  );
 
   if (weightsGallery) {
-
     weightsGallery.replaceChildren();
 
     typographyFonts.forEach((font, fontIndex) => {
-
       const group = document.createElement("div");
-
-      group.className =
-        "typography-weight-group";
+      group.className = "typography-weight-group";
 
       const groupHeader = document.createElement("div");
+      groupHeader.className = "typography-weight-header";
 
-      groupHeader.className =
-        "typography-weight-header";
-
-      const groupName = createTextElement(
-        "h4",
-        "",
-        font.name || "Unnamed Typeface"
+      groupHeader.appendChild(
+        createTextElement(
+          "h4",
+          "",
+          font.name || "Unnamed Typeface"
+        )
       );
 
-      const groupRole = createTextElement(
-        "span",
-        "",
-        `${formatIndex(fontIndex + 1)} / ${(font.role || "Brand").toUpperCase()}`
+      groupHeader.appendChild(
+        createTextElement(
+          "span",
+          "",
+          `${formatIndex(fontIndex + 1)} / ${(font.role || "Brand").toUpperCase()}`
+        )
       );
-
-      groupHeader.appendChild(groupName);
-      groupHeader.appendChild(groupRole);
 
       group.appendChild(groupHeader);
 
-      const approvedWeights = Array.isArray(
-        font.weights
-      )
+      const approvedWeights = Array.isArray(font.weights)
         ? font.weights
         : [];
 
       approvedWeights.forEach(weight => {
-
-        if (!weight || typeof weight !== "object") {
-          return;
-        }
+        if (!weight || typeof weight !== "object") return;
 
         const row = document.createElement("div");
-
-        row.className =
-          "typography-weight-row";
+        row.className = "typography-weight-row";
 
         const sample = createTextElement(
           "span",
@@ -1117,108 +842,88 @@ document.addEventListener("DOMContentLoaded", () => {
           "The quick brown fox"
         );
 
-        sample.style.fontFamily =
-          getFontFamily(font);
-
-        sample.style.fontWeight =
-          String(weight.value ?? 400);
+        sample.style.fontFamily = getFontFamily(font);
+        sample.style.fontWeight = String(weight.value ?? 400);
 
         sample.style.fontStyle =
-          weight.style === "italic"
-            ? "italic"
-            : "normal";
+          weight.style === "italic" ? "italic" : "normal";
 
-        const information =
-          document.createElement("div");
+        const information = document.createElement("div");
+        information.className = "typography-weight-info";
 
-        information.className =
-          "typography-weight-info";
-
-        const weightName = createTextElement(
-          "span",
-          "typography-weight-name",
-          weight.name || "Regular"
+        information.appendChild(
+          createTextElement(
+            "span",
+            "typography-weight-name",
+            weight.name || "Regular"
+          )
         );
 
-        const weightValue = createTextElement(
-          "span",
-          "typography-weight-value",
-          `${weight.value ?? 400} / ${weight.style || "normal"}`
+        information.appendChild(
+          createTextElement(
+            "span",
+            "typography-weight-value",
+            `${weight.value ?? 400} / ${weight.style || "normal"}`
+          )
         );
-
-        information.appendChild(weightName);
-        information.appendChild(weightValue);
 
         row.appendChild(sample);
         row.appendChild(information);
-
         group.appendChild(row);
-
       });
 
       weightsGallery.appendChild(group);
-
     });
-
   }
 
   // ========================================
-  // 10.7 — TYPOGRAPHY IN CONTEXT
+  // 10.6 — TYPOGRAPHY IN CONTEXT
   // ========================================
 
-  const contextConfig =
-    typographyConfig.context || {};
+  const contextConfig = typographyConfig.context || {};
 
-  const contextShowcase =
-    document.getElementById(
-      "typography-context-showcase"
-    );
+  const contextShowcase = document.getElementById(
+    "typography-context-showcase"
+  );
 
   if (contextShowcase) {
-
     const primaryFont = typographyFonts[0];
-
-    const supportingFont =
-      typographyFonts[1] || primaryFont;
+    const supportingFont = typographyFonts[1] || primaryFont;
 
     if (primaryFont) {
-
       contextShowcase.style.setProperty(
         "--context-display-font",
         getFontFamily(primaryFont)
       );
-
     }
 
     if (supportingFont) {
-
       contextShowcase.style.setProperty(
         "--context-body-font",
         getFontFamily(supportingFont)
       );
-
     }
 
     const brandColors = config.colors || {};
 
-    const contextBackground =
-      isValidColor(brandColors.primary)
-        ? brandColors.primary
-        : "#202020";
+    const contextBackground = isValidColor(
+      brandColors.primary
+    )
+      ? brandColors.primary
+      : "#202020";
 
-    const contextText =
-      getReadableTextColor(contextBackground);
+    const contextText = getReadableTextColor(
+      contextBackground
+    );
 
-    const contextAccent =
-      isValidColor(brandColors.accent)
-        ? brandColors.accent
-        : contextText;
+    const contextAccent = isValidColor(
+      brandColors.accent
+    )
+      ? brandColors.accent
+      : contextText;
 
-    contextShowcase.style.backgroundColor =
-      contextBackground;
-
-    contextShowcase.style.color =
-      contextText;
+    contextShowcase.style.backgroundColor = contextBackground;
+    contextShowcase.style.color = contextText;
 
     contextShowcase.style.setProperty(
       "--context-text-color",
@@ -1242,41 +947,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setElementText(
       "typography-context-brand",
-      config.brand.name.toUpperCase()
+      (brand.name || "").toUpperCase()
     );
 
-    const headline =
-      document.getElementById(
-        "typography-context-headline"
-      );
+    const headline = document.getElementById(
+      "typography-context-headline"
+    );
 
     if (headline) {
-
       const lines = String(
-        contextConfig.headline ||
-        "Made to\nbe remembered."
+        contextConfig.headline || "Made to\nbe remembered."
       ).split("\n");
 
-      const italicLine = Number(
-        contextConfig.italicLine
-      );
+      const italicLine = Number(contextConfig.italicLine);
 
       headline.replaceChildren();
 
-      headline.style.fontFamily =
-        primaryFont
-          ? getFontFamily(primaryFont)
-          : "Georgia, serif";
+      headline.style.fontFamily = primaryFont
+        ? getFontFamily(primaryFont)
+        : "Georgia, serif";
 
       lines.forEach((line, index) => {
+        const isItalic = italicLine === index + 1;
 
-        const isItalic =
-          italicLine === index + 1;
-
-        const lineElement =
-          document.createElement(
-            isItalic ? "em" : "span"
-          );
+        const lineElement = document.createElement(
+          isItalic ? "em" : "span"
+        );
 
         lineElement.textContent = line;
 
@@ -1287,57 +983,507 @@ document.addEventListener("DOMContentLoaded", () => {
         headline.appendChild(lineElement);
 
         if (index < lines.length - 1) {
-
           headline.appendChild(
             document.createElement("br")
           );
-
         }
-
       });
-
     }
 
-    const description =
-      document.getElementById(
-        "typography-context-description"
-      );
+    const description = document.getElementById(
+      "typography-context-description"
+    );
 
-    if (description && supportingFont) {
+    const eyebrow = document.getElementById(
+      "typography-context-eyebrow"
+    );
 
-      description.style.fontFamily =
-        getFontFamily(supportingFont);
+    const contextBrand = document.getElementById(
+      "typography-context-brand"
+    );
 
+    if (supportingFont) {
+      [description, eyebrow, contextBrand].forEach(element => {
+        if (element) {
+          element.style.fontFamily = getFontFamily(
+            supportingFont
+          );
+        }
+      });
     }
-
-    const eyebrow =
-      document.getElementById(
-        "typography-context-eyebrow"
-      );
-
-    if (eyebrow && supportingFont) {
-
-      eyebrow.style.fontFamily =
-        getFontFamily(supportingFont);
-
-    }
-
-    const contextBrand =
-      document.getElementById(
-        "typography-context-brand"
-      );
-
-    if (contextBrand && supportingFont) {
-
-      contextBrand.style.fontFamily =
-        getFontFamily(supportingFont);
-
-    }
-
   }
 
   // ========================================
-  // 11 — ACTIVE SIDEBAR NAVIGATION
+  // 11 — GRAPHIC ELEMENTS SYSTEM
+  // Concept 02 — Visual Identity Canvas
+  // ========================================
+
+  const graphicsConfig = config.graphicElements || {};
+  const graphicsSection = document.getElementById("graphics");
+
+  if (graphicsSection && sections.graphics !== false) {
+    const graphicsIntro = graphicsConfig.intro || {};
+
+    setElementText(
+      "graphics-intro-eyebrow",
+      graphicsIntro.eyebrow
+    );
+
+    setElementText(
+      "graphics-intro-headline",
+      graphicsIntro.headline
+    );
+
+    setElementText(
+      "graphics-intro-description",
+      graphicsIntro.description
+    );
+
+    const graphicsLayouts = new Set([
+      "full",
+      "half",
+      "wide",
+      "tall",
+      "split",
+      "split-reverse"
+    ]);
+
+    // ----------------------------------------
+    // 11.1 — GRAPHIC HELPERS
+    // ----------------------------------------
+
+    function graphicsImagePath(value) {
+      if (typeof value !== "string") return "";
+
+      const path = value.trim();
+
+      if (!path) return "";
+
+      if (/^(?:javascript|data|blob):/i.test(path)) {
+        return "";
+      }
+
+      if (/^https:\/\//i.test(path)) {
+        return path;
+      }
+
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) {
+        return "";
+      }
+
+      return path;
+    }
+
+    function graphicsBackground(node, color) {
+      if (isValidColor(color)) {
+        node.style.setProperty(
+          "--graphics-artwork-background",
+          color
+        );
+      }
+    }
+
+    function graphicsImage(source, className, title, fit) {
+      const image = document.createElement("img");
+
+      image.className = className;
+      image.src = source;
+      image.alt = title || "Brand graphic element";
+      image.loading = "lazy";
+      image.decoding = "async";
+
+      image.style.setProperty(
+        "--graphics-image-fit",
+        fit === "contain" ? "contain" : "cover"
+      );
+
+      image.addEventListener("error", () => {
+        console.warn(
+          "Graphic asset could not be loaded:",
+          source
+        );
+
+        const card = image.closest(
+          ".graphics-hero-artwork, " +
+          ".graphics-asset-card, " +
+          ".graphics-detail-card"
+        );
+
+        if (card) {
+          const feature = card.closest(".graphics-feature");
+
+          card.remove();
+
+          const gallery = feature && feature.querySelector(
+            ".graphics-hero-canvas, " +
+            ".graphics-asset-gallery, " +
+            ".graphics-details-gallery"
+          );
+
+          if (
+            feature &&
+            gallery &&
+            gallery.children.length === 0
+          ) {
+            feature.hidden = true;
+          }
+        }
+      });
+
+      return image;
+    }
+
+    function graphicsLabel(item) {
+      if (!item.label) return null;
+
+      const label = createTextElement(
+        "span",
+        "graphics-artwork-label",
+        item.label
+      );
+
+      if (item.labelTheme === "dark") {
+        label.classList.add("is-dark");
+      }
+
+      return label;
+    }
+
+    function graphicsVisual(item, frameClass, imageClass) {
+      const visual = document.createElement("div");
+
+      visual.className = frameClass;
+
+      graphicsBackground(
+        visual,
+        item.background
+      );
+
+      visual.appendChild(
+        graphicsImage(
+          graphicsImagePath(item.image),
+          imageClass,
+          item.title,
+          item.fit
+        )
+      );
+
+      const label = graphicsLabel(item);
+
+      if (label) visual.appendChild(label);
+
+      return visual;
+    }
+
+    function graphicsFeature(id, count) {
+      const feature = document.getElementById(id);
+
+      if (feature) {
+        feature.hidden = count === 0;
+      }
+    }
+
+    // ========================================
+    // 11.2 — SIGNATURE ARTWORK
+    // ========================================
+
+    const heroContainer = document.getElementById(
+      "graphics-hero-canvas"
+    );
+
+    const featured = graphicsConfig.featured || {};
+
+    if (heroContainer) {
+      heroContainer.replaceChildren();
+
+      if (
+        featured.enabled === true &&
+        graphicsImagePath(featured.image)
+      ) {
+        const artwork = document.createElement("article");
+        artwork.className = "graphics-hero-artwork";
+
+        artwork.appendChild(
+          graphicsVisual(
+            featured,
+            "graphics-artwork-frame",
+            "graphics-artwork-image"
+          )
+        );
+
+        const caption = document.createElement("div");
+        caption.className = "graphics-hero-caption";
+
+        const main = document.createElement("div");
+        main.className = "graphics-hero-caption-main";
+
+        main.appendChild(
+          createTextElement(
+            "span",
+            "graphics-hero-category",
+            featured.category || "Signature graphic"
+          )
+        );
+
+        main.appendChild(
+          createTextElement(
+            "h4",
+            "graphics-hero-title",
+            featured.title || "Signature artwork"
+          )
+        );
+
+        if (featured.description) {
+          main.appendChild(
+            createTextElement(
+              "p",
+              "graphics-hero-description",
+              featured.description
+            )
+          );
+        }
+
+        caption.appendChild(main);
+
+        caption.appendChild(
+          createTextElement(
+            "span",
+            "graphics-hero-index",
+            "01 / FEATURED"
+          )
+        );
+
+        artwork.appendChild(caption);
+        heroContainer.appendChild(artwork);
+      }
+
+      graphicsFeature(
+        "graphics-hero-feature",
+        heroContainer.children.length
+      );
+    }
+
+    // ========================================
+    // 11.3 — GRAPHIC ASSET GALLERY
+    // ========================================
+
+    const assetsContainer = document.getElementById(
+      "graphics-asset-gallery"
+    );
+
+    if (assetsContainer) {
+      assetsContainer.replaceChildren();
+
+      const assets = Array.isArray(graphicsConfig.assets)
+        ? graphicsConfig.assets
+        : [];
+
+      const validAssets = assets.filter(item =>
+        item && graphicsImagePath(item.image)
+      );
+
+      validAssets.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "graphics-asset-card";
+
+        const layout = graphicsLayouts.has(item.layout)
+          ? item.layout
+          : "half";
+
+        card.classList.add(`graphics-layout-${layout}`);
+
+        card.appendChild(
+          graphicsVisual(
+            item,
+            "graphics-asset-visual",
+            "graphics-asset-image"
+          )
+        );
+
+        const content = document.createElement("div");
+        content.className = "graphics-asset-content";
+
+        content.appendChild(
+          createTextElement(
+            "span",
+            "graphics-asset-category",
+            item.category || "Graphic element"
+          )
+        );
+
+        content.appendChild(
+          createTextElement(
+            "h4",
+            "graphics-asset-title",
+            item.title || "Untitled graphic"
+          )
+        );
+
+        if (item.description) {
+          content.appendChild(
+            createTextElement(
+              "p",
+              "graphics-asset-description",
+              item.description
+            )
+          );
+        }
+
+        content.appendChild(
+          createTextElement(
+            "span",
+            "graphics-asset-number",
+            `${formatIndex(index + 1)} / ${formatIndex(validAssets.length)}`
+          )
+        );
+
+        card.appendChild(content);
+        assetsContainer.appendChild(card);
+      });
+
+      graphicsFeature(
+        "graphics-gallery-feature",
+        assetsContainer.children.length
+      );
+    }
+
+    // ========================================
+    // 11.4 — DETAILS AND APPLICATIONS
+    // ========================================
+
+    const detailsContainer = document.getElementById(
+      "graphics-details-gallery"
+    );
+
+    if (detailsContainer) {
+      detailsContainer.replaceChildren();
+
+      const details = Array.isArray(graphicsConfig.details)
+        ? graphicsConfig.details
+        : [];
+
+      details
+        .filter(item =>
+          item && graphicsImagePath(item.image)
+        )
+        .forEach(item => {
+          const card = document.createElement("article");
+          card.className = "graphics-detail-card";
+
+          if (item.layout === "full") {
+            card.classList.add("graphics-layout-full");
+          }
+
+          card.appendChild(
+            graphicsVisual(
+              item,
+              "graphics-detail-visual",
+              "graphics-detail-image"
+            )
+          );
+
+          const content = document.createElement("div");
+          content.className = "graphics-detail-content";
+
+          content.appendChild(
+            createTextElement(
+              "span",
+              "graphics-detail-category",
+              item.category || "Detail"
+            )
+          );
+
+          content.appendChild(
+            createTextElement(
+              "h4",
+              "graphics-detail-title",
+              item.title || "Graphic detail"
+            )
+          );
+
+          if (item.description) {
+            content.appendChild(
+              createTextElement(
+                "p",
+                "graphics-detail-description",
+                item.description
+              )
+            );
+          }
+
+          card.appendChild(content);
+          detailsContainer.appendChild(card);
+        });
+
+      graphicsFeature(
+        "graphics-details-feature",
+        detailsContainer.children.length
+      );
+    }
+
+    // ========================================
+    // 11.5 — GRAPHIC USAGE GUIDELINES
+    // ========================================
+
+    const guidelinesContainer = document.getElementById(
+      "graphics-guidelines-list"
+    );
+
+    if (guidelinesContainer) {
+      guidelinesContainer.replaceChildren();
+
+      const guidelines = Array.isArray(
+        graphicsConfig.guidelines
+      )
+        ? graphicsConfig.guidelines
+        : [];
+
+      guidelines
+        .filter(item =>
+          item && (item.title || item.description)
+        )
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "graphics-guideline-card";
+
+          card.appendChild(
+            createTextElement(
+              "span",
+              "graphics-guideline-number",
+              formatIndex(index + 1)
+            )
+          );
+
+          card.appendChild(
+            createTextElement(
+              "h4",
+              "graphics-guideline-title",
+              item.title || "Usage principle"
+            )
+          );
+
+          if (item.description) {
+            card.appendChild(
+              createTextElement(
+                "p",
+                "graphics-guideline-description",
+                item.description
+              )
+            );
+          }
+
+          guidelinesContainer.appendChild(card);
+        });
+
+      graphicsFeature(
+        "graphics-guidelines-feature",
+        guidelinesContainer.children.length
+      );
+    }
+  }
+
+  // ========================================
+  // 12 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
@@ -1347,40 +1493,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const visibleSections = navLinks
     .filter(link => link.style.display !== "none")
     .map(link => {
-
       const id = link.getAttribute("href").slice(1);
 
       return {
         link,
         section: document.getElementById(id)
       };
-
     })
     .filter(item =>
       item.section && !item.section.hidden
     );
 
   function updateActiveSection() {
-
     let current = visibleSections[0];
 
     visibleSections.forEach(item => {
-
       if (
         item.section.getBoundingClientRect().top <= 180
       ) {
         current = item;
       }
-
     });
 
     if (!current) return;
 
     navLinks.forEach(link => {
-
       link.classList.remove("active");
       link.removeAttribute("aria-current");
-
     });
 
     current.link.classList.add("active");
@@ -1389,7 +1528,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "aria-current",
       "location"
     );
-
   }
 
   window.addEventListener(
@@ -1407,7 +1545,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log(
     "Brand Hub loaded:",
-    config.brand.name
+    brand.name
   );
-
 });
