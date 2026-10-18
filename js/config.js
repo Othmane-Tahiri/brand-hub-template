@@ -46,21 +46,109 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // MAIN BRAND COLOR PALETTE
+  // ========================================
+
+  /*
+   * Add the client's approved brand colors here.
+   *
+   * Each object creates one color card.
+   *
+   * name = Display name
+   * role = Role in the identity
+   * hex  = Exact HEX color
+   *
+   * Add or remove objects as needed.
+   */
+
+  brandPalette: [
+
+    {
+      name: "Charcoal",
+      role: "Primary",
+      hex: "#202020"
+    },
+
+    {
+      name: "Warm Ivory",
+      role: "Secondary",
+      hex: "#F0EDE6"
+    },
+
+    {
+      name: "Muted Gold",
+      role: "Accent",
+      hex: "#B68B59"
+    }
+
+  ],
+
+  // ========================================
+  // TONAL COLOR SCALES
+  // ========================================
+
+  /*
+   * Tonal scales are based on the client's
+   * actual brand colors.
+   *
+   * Set generate to true to create a scale
+   * automatically from the base color.
+   *
+   * Set generate to false and provide a
+   * shades array to use exact approved HEX
+   * values instead.
+   *
+   * steps = Number of generated shades.
+   *
+   * The first shade will be the lightest,
+   * and the last will be the darkest.
+   *
+   * Generated shades are presentation
+   * suggestions, not automatically approved
+   * brand colors.
+   */
+
+  tonalScales: [
+
+    {
+      name: "Charcoal",
+      base: "#202020",
+      generate: true,
+      steps: 11,
+      shades: []
+    },
+
+    {
+      name: "Warm Ivory",
+      base: "#F0EDE6",
+      generate: true,
+      steps: 11,
+      shades: []
+    },
+
+    {
+      name: "Muted Gold",
+      base: "#B68B59",
+      generate: true,
+      steps: 11,
+      shades: []
+    }
+
+  ],
+
+  // ========================================
   // LOGO COLOR COMPATIBILITY
   // ========================================
 
   /*
    * Each object creates one compatibility card.
    *
-   * background = outer card color
-   * logoColor  = inner logo/square color
-   * label      = combination name
+   * background = Outer card color
+   * logoColor  = Inner logo/square color
+   * label      = Combination name
    *
    * Add or remove objects to change the
    * number of cards for each client.
-   *
-   * These are sample combinations only.
-   * Replace them with approved brand pairings.
    */
 
   logoColorCombinations: [
