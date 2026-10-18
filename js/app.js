@@ -47,5 +47,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Highlight the section currently being viewed
+  const navLinks = [
+    ...document.querySelectorAll(".nav-link")
+  ];
+
+  const visibleSections = navLinks
+    .filter(link => link.style.display !== "none")
+    .map(link => {
+      const id = link.getAttribute("href").slice(1);
+      return {
+        link,
+        section: document.getElementById(id)
+      };
+    })
+    .filter(item => item.section);
+
+  function updateActiveSection() {
+    let current = visibleSections[0];
+
+    visibleSections.forEach(item => {
+      if (item.section.getBoundingClientRect().top <= 180) {
+        current = item;
+      }
+    });
+
+    if (!current) return;
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      link.removeAttribute("aria-current");
+    });
+
+    current.link.classList.add("active");
+    current.link.setAttribute("aria-current", "location");
+  }
+
+  window.addEventListener("scroll", updateActiveSection, {
+    passive: true
+  });
+
+  window.addEventListener("resize", updateActiveSection);
+
+  updateActiveSection();
+
   console.log("Brand Hub loaded:", config.brand.name);
 });
