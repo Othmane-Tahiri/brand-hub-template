@@ -578,6 +578,277 @@ a {
 }
 
 /* =========================================
+   STEP 17.14D — COLOR SYSTEM
+   ========================================= */
+
+/* Color System presentation groups */
+
+#colors .color-feature {
+  margin-top: 75px;
+}
+
+/* Headings */
+
+#colors .color-section-heading {
+  margin-bottom: 30px;
+}
+
+#colors .color-section-heading .panel-label {
+  margin-bottom: 12px;
+}
+
+#colors .color-section-heading h3 {
+  margin: 0 0 10px;
+
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+#colors .color-section-heading p {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: var(--muted-text);
+}
+
+/* =========================================
+   MAIN BRAND COLOR PALETTE
+   ========================================= */
+
+#colors .brand-color-palette {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+/* Each main brand color card */
+
+#colors .brand-color-card {
+  min-width: 0;
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+/* Large interactive color preview */
+
+#colors .brand-color-swatch {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 230px;
+
+  padding: 15px;
+
+  border: 0;
+  border-radius: 0;
+
+  cursor: pointer;
+  font: inherit;
+
+  overflow: hidden;
+}
+
+/* Card details */
+
+#colors .brand-color-details {
+  padding: 23px 24px 26px;
+}
+
+#colors .brand-color-role {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+
+  color: var(--muted-text);
+}
+
+#colors .brand-color-name {
+  margin: 0 0 10px;
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+
+  overflow-wrap: anywhere;
+}
+
+#colors .brand-color-code {
+  display: block;
+
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+
+  color: var(--muted-text);
+}
+
+/* =========================================
+   TONAL COLOR SCALES
+   ========================================= */
+
+#colors .brand-tonal-scales {
+  display: flex;
+  flex-direction: column;
+
+  gap: 35px;
+}
+
+/* Individual color family */
+
+#colors .tonal-scale-group {
+  min-width: 0;
+}
+
+/* Scale heading */
+
+#colors .tonal-scale-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+#colors .tonal-scale-name {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+#colors .tonal-scale-count {
+  font-size: 11px;
+  color: var(--muted-text);
+}
+
+/* Horizontal color scale */
+
+#colors .tonal-scale-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      var(--shade-count, 11),
+      minmax(0, 1fr)
+    );
+
+  gap: 0;
+
+  width: 100%;
+
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+/* Individual tonal swatch */
+
+#colors .tonal-scale-swatch {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  height: 125px;
+
+  padding: 5px 2px;
+
+  border: 0;
+  border-radius: 0;
+
+  cursor: pointer;
+  font: inherit;
+
+  transition:
+    filter 0.2s ease;
+}
+
+/* =========================================
+   INTERACTIVE HEX LABELS
+   ========================================= */
+
+#colors .color-swatch-hex {
+  display: block;
+
+  max-width: 100%;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+
+  text-align: center;
+  white-space: nowrap;
+
+  opacity: 0;
+  transform: translateY(5px);
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+
+  pointer-events: none;
+}
+
+/* Reveal HEX on hover or keyboard focus */
+
+#colors .brand-color-swatch:hover .color-swatch-hex,
+#colors .brand-color-swatch:focus-visible .color-swatch-hex,
+#colors .tonal-scale-swatch:hover .color-swatch-hex,
+#colors .tonal-scale-swatch:focus-visible .color-swatch-hex,
+#colors .is-copied .color-swatch-hex {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subtle hover feedback */
+
+@media (hover: hover) {
+
+  #colors .brand-color-swatch:hover,
+  #colors .tonal-scale-swatch:hover {
+    filter: brightness(0.94);
+  }
+
+}
+
+/* Keyboard focus */
+
+#colors .brand-color-swatch:focus-visible,
+#colors .tonal-scale-swatch:focus-visible {
+  outline: 2px solid #202020;
+  outline-offset: -4px;
+  z-index: 2;
+}
+
+/* =========================================
    TABLET RESPONSIVENESS
    ========================================= */
 
@@ -641,6 +912,26 @@ a {
   #logo .logo-compatibility-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Color System */
+
+  #colors .brand-color-palette {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  #colors .brand-color-swatch {
+    height: 200px;
+  }
+
+  #colors .tonal-scale-swatch {
+    height: 105px;
+  }
+
+  #colors .color-swatch-hex {
+    font-size: 9px;
+  }
+
 }
 
 /* =========================================
@@ -751,6 +1042,71 @@ a {
   #logo .compatibility-card {
     min-height: 220px;
   }
+
+  /* Color System */
+
+  #colors .color-feature {
+    margin-top: 55px;
+  }
+
+  #colors .brand-color-palette {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #colors .brand-color-swatch {
+    height: 205px;
+  }
+
+  #colors .brand-color-details {
+    padding: 20px 22px 23px;
+  }
+
+  #colors .brand-tonal-scales {
+    gap: 30px;
+  }
+
+  /*
+   * Keep all shades in a single row,
+   * allowing horizontal scrolling on mobile.
+   */
+
+  #colors .tonal-scale-row {
+    grid-auto-columns: minmax(66px, 1fr);
+
+    grid-template-columns:
+      repeat(
+        var(--shade-count, 11),
+        minmax(66px, 1fr)
+      );
+
+    overflow-x: auto;
+    border-radius: 7px;
+  }
+
+  #colors .tonal-scale-swatch {
+    height: 105px;
+  }
+
+  #colors .color-swatch-hex {
+    font-size: 10px;
+  }
+
+  /*
+   * On touch screens, display the HEX
+   * so visitors can identify each color.
+   */
+
+  @media (hover: none) {
+
+    #colors .tonal-scale-swatch .color-swatch-hex,
+    #colors .brand-color-swatch .color-swatch-hex {
+      opacity: 1;
+      transform: none;
+    }
+
+  }
+
 }
 
 /* =========================================
@@ -764,7 +1120,10 @@ a {
   }
 
   .nav-link,
-  #logo .logo-block {
+  #logo .logo-block,
+  #colors .color-swatch-hex,
+  #colors .tonal-scale-swatch {
     transition: none;
   }
+
 }
