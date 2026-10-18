@@ -1,4 +1,8 @@
 
+
+
+
+
 /* =========================================
    BRAND HUB — MASTER STYLESHEET
    Theme 01: Minimal Swiss
@@ -3584,3 +3588,389 @@ span:last-child {
 @media (prefers-reduced-motion: reduce) {
   #voice * { scroll-behavior: auto; }
 }
+
+/* =========================================
+   BRAND APPLICATIONS — STEP 22.2
+   Editorial Application Showcase
+   ========================================= */
+
+#applications {
+  --applications-paper: var(--surface-warm, #f2f1ed);
+  --applications-soft: var(--surface-soft, #f8f8f6);
+  --applications-ink: var(--brand-text, #202020);
+  --applications-muted: var(--muted-text, #777);
+  --applications-line: var(--border-color, #e8e8e8);
+}
+
+#applications .applications-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 390px;
+  padding: 65px 55px;
+  background: var(--applications-paper);
+  color: var(--applications-ink);
+}
+
+#applications .applications-editorial-intro .panel-label { margin-bottom: 30px; }
+#applications .applications-editorial-intro h3 {
+  max-width: 850px;
+  margin: 0 0 24px;
+  font-size: clamp(44px, 6.5vw, 90px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+}
+#applications .applications-editorial-intro p {
+  max-width: 490px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #666;
+}
+
+#applications .applications-feature { margin-top: 85px; min-width: 0; }
+#applications .applications-feature[hidden] { display: none !important; }
+#applications .applications-section-heading { margin-bottom: 30px; }
+#applications .applications-section-heading .panel-label { margin-bottom: 12px; }
+#applications .applications-section-heading h3 {
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+#applications .applications-section-heading p {
+  max-width: 650px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--applications-muted);
+}
+
+#applications img { display: block; max-width: 100%; }
+#applications .applications-hero-canvas,
+#applications .applications-categories-gallery,
+#applications .applications-image-gallery,
+#applications .applications-details-gallery,
+#applications .applications-guidelines-list { min-width: 0; }
+
+/* 01 — Featured application */
+#applications .applications-hero-card,
+#applications .applications-featured-card,
+#applications .applications-hero-artwork {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--applications-paper);
+}
+#applications .applications-hero-visual,
+#applications .applications-featured-visual,
+#applications .applications-hero-frame {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--applications-paper);
+}
+#applications .applications-hero-image,
+#applications .applications-featured-image,
+#applications .applications-hero-visual img,
+#applications .applications-featured-visual img,
+#applications .applications-hero-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--applications-image-fit, cover);
+  object-position: center;
+}
+#applications .applications-hero-content,
+#applications .applications-featured-content,
+#applications .applications-hero-caption {
+  padding: 26px 0 12px;
+  background: var(--brand-background, #fff);
+}
+
+/* 02 — Categories */
+#applications .applications-categories-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+#applications .applications-category-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--applications-soft);
+}
+#applications .applications-category-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--applications-paper);
+}
+#applications .applications-category-image,
+#applications .applications-category-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#applications .applications-category-content { padding: 24px; }
+#applications .applications-category-number {
+  display: block;
+  margin-bottom: 25px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--applications-muted);
+}
+
+/* 03 — Flexible editorial application gallery */
+#applications .applications-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 18px;
+  align-items: start;
+}
+#applications .applications-gallery-card,
+#applications .applications-image-card,
+#applications .applications-application-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+#applications .applications-gallery-visual,
+#applications .applications-image-visual,
+#applications .applications-application-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--applications-paper);
+}
+#applications .applications-gallery-image,
+#applications .applications-image-image,
+#applications .applications-application-image,
+#applications .applications-gallery-visual img,
+#applications .applications-image-visual img,
+#applications .applications-application-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--applications-image-fit, cover);
+  object-position: center;
+  transition: transform .65s ease;
+}
+#applications .applications-gallery-content,
+#applications .applications-image-content,
+#applications .applications-application-content { padding: 22px 0 14px; }
+#applications .applications-layout-full,
+#applications .applications-layout-wide { grid-column: 1 / -1; }
+#applications .applications-layout-full .applications-gallery-visual,
+#applications .applications-layout-full .applications-image-visual,
+#applications .applications-layout-wide .applications-gallery-visual,
+#applications .applications-layout-wide .applications-image-visual { aspect-ratio: 16 / 9; }
+#applications .applications-layout-tall .applications-gallery-visual,
+#applications .applications-layout-tall .applications-image-visual { aspect-ratio: 3 / 4; }
+#applications .applications-layout-split,
+#applications .applications-layout-split-reverse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: stretch;
+  background: var(--applications-paper);
+}
+#applications .applications-layout-split-reverse { grid-template-columns: 1fr 1.3fr; }
+#applications .applications-layout-split .applications-gallery-visual,
+#applications .applications-layout-split .applications-image-visual,
+#applications .applications-layout-split-reverse .applications-gallery-visual,
+#applications .applications-layout-split-reverse .applications-image-visual {
+  height: 100%;
+  min-height: 350px;
+  aspect-ratio: auto;
+}
+#applications .applications-layout-split .applications-gallery-content,
+#applications .applications-layout-split .applications-image-content,
+#applications .applications-layout-split-reverse .applications-gallery-content,
+#applications .applications-layout-split-reverse .applications-image-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+}
+#applications .applications-layout-split-reverse .applications-gallery-visual,
+#applications .applications-layout-split-reverse .applications-image-visual { grid-column: 2; grid-row: 1; }
+#applications .applications-layout-split-reverse .applications-gallery-content,
+#applications .applications-layout-split-reverse .applications-image-content { grid-column: 1; grid-row: 1; }
+
+/* 04 — Materials and details */
+#applications .applications-details-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+#applications .applications-detail-card { min-width: 0; overflow: hidden; }
+#applications .applications-detail-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--applications-paper);
+}
+#applications .applications-detail-image,
+#applications .applications-detail-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--applications-image-fit, cover);
+  transition: transform .65s ease;
+}
+#applications .applications-detail-content { padding: 22px 0 12px; }
+#applications .applications-detail-card.applications-layout-full { grid-column: 1 / -1; }
+#applications .applications-detail-card.applications-layout-full .applications-detail-visual { aspect-ratio: 16 / 9; }
+
+/* Shared editorial captions */
+#applications .applications-hero-category,
+#applications .applications-featured-category,
+#applications .applications-category-label,
+#applications .applications-gallery-category,
+#applications .applications-image-category,
+#applications .applications-application-category,
+#applications .applications-detail-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--applications-muted);
+}
+#applications .applications-hero-title,
+#applications .applications-featured-title,
+#applications .applications-category-title,
+#applications .applications-gallery-title,
+#applications .applications-image-title,
+#applications .applications-application-title,
+#applications .applications-detail-title {
+  margin: 0 0 10px;
+  font-size: clamp(21px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+#applications .applications-hero-description,
+#applications .applications-featured-description,
+#applications .applications-category-description,
+#applications .applications-gallery-description,
+#applications .applications-image-description,
+#applications .applications-application-description,
+#applications .applications-detail-description {
+  margin: 0;
+  max-width: 550px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--applications-muted);
+}
+
+/* 05 — Application guidelines */
+#applications .applications-guidelines-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#applications .applications-guideline-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 235px;
+  padding: 32px;
+  border: 1px solid var(--applications-line);
+  background: var(--applications-soft);
+}
+#applications .applications-guideline-number {
+  display: block;
+  margin-bottom: 38px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--applications-muted);
+}
+#applications .applications-guideline-title {
+  margin: auto 0 12px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+#applications .applications-guideline-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #666;
+}
+
+@media (hover: hover) {
+  #applications .applications-gallery-card:hover img,
+  #applications .applications-image-card:hover img,
+  #applications .applications-detail-card:hover img,
+  #applications .applications-category-card:hover img { transform: scale(1.035); }
+}
+
+@media (max-width: 900px) {
+  #applications .applications-editorial-intro { margin-top: 60px; min-height: 320px; padding: 50px 38px; }
+  #applications .applications-feature { margin-top: 65px; }
+  #applications .applications-categories-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #applications .applications-hero-visual,
+  #applications .applications-featured-visual { min-height: 310px; }
+  #applications .applications-layout-split .applications-gallery-content,
+  #applications .applications-layout-split .applications-image-content,
+  #applications .applications-layout-split-reverse .applications-gallery-content,
+  #applications .applications-layout-split-reverse .applications-image-content { padding: 28px; }
+}
+
+@media (max-width: 640px) {
+  #applications .applications-editorial-intro { margin-top: 50px; min-height: 290px; padding: 42px 26px; }
+  #applications .applications-editorial-intro h3 { font-size: clamp(40px, 11vw, 64px); }
+  #applications .applications-editorial-intro p { font-size: 14px; }
+  #applications .applications-feature { margin-top: 55px; }
+  #applications .applications-section-heading { margin-bottom: 24px; }
+  #applications .applications-categories-gallery,
+  #applications .applications-image-gallery,
+  #applications .applications-details-gallery,
+  #applications .applications-guidelines-list { grid-template-columns: 1fr; }
+  #applications .applications-layout-full,
+  #applications .applications-layout-half,
+  #applications .applications-layout-wide,
+  #applications .applications-layout-tall,
+  #applications .applications-layout-split,
+  #applications .applications-layout-split-reverse { grid-column: 1 / -1; }
+  #applications .applications-layout-split,
+  #applications .applications-layout-split-reverse { display: flex; flex-direction: column; }
+  #applications .applications-layout-split .applications-gallery-visual,
+  #applications .applications-layout-split .applications-image-visual,
+  #applications .applications-layout-split-reverse .applications-gallery-visual,
+  #applications .applications-layout-split-reverse .applications-image-visual { height: auto; min-height: 240px; aspect-ratio: 4 / 3; }
+  #applications .applications-layout-split .applications-gallery-content,
+  #applications .applications-layout-split .applications-image-content,
+  #applications .applications-layout-split-reverse .applications-gallery-content,
+  #applications .applications-layout-split-reverse .applications-image-content { padding: 26px; }
+  #applications .applications-hero-visual,
+  #applications .applications-featured-visual,
+  #applications .applications-hero-frame { min-height: 240px; aspect-ratio: 4 / 3; }
+  #applications .applications-layout-full .applications-gallery-visual,
+  #applications .applications-layout-wide .applications-gallery-visual,
+  #applications .applications-layout-full .applications-image-visual,
+  #applications .applications-layout-wide .applications-image-visual { aspect-ratio: 4 / 3; }
+  #applications .applications-guideline-card { min-height: 210px; padding: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #applications img { transition: none !important; }
+}
+
+
