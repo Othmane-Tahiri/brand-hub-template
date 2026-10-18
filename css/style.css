@@ -4273,3 +4273,299 @@ span:last-child {
 @media (prefers-reduced-motion: reduce) {
   #packaging img { transition: none !important; }
 }
+
+/* =========================================
+   MOTION GUIDELINES — STEP 24.2
+   Concept 02: Editorial Motion System
+   ========================================= */
+#motion {
+  --motion-paper: var(--surface-warm);
+  --motion-soft: var(--surface-soft);
+  --motion-ink: var(--brand-text);
+  --motion-muted: var(--muted-text);
+  --motion-line: var(--border-color);
+}
+#motion .motion-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 340px;
+  margin-top: 75px;
+  padding: 65px 55px;
+  background: var(--motion-paper);
+  color: var(--motion-ink);
+}
+#motion .motion-editorial-intro .panel-label { margin-bottom: 28px; }
+#motion .motion-editorial-intro h3 {
+  max-width: 840px;
+  margin: 0 0 22px;
+  font-size: clamp(45px, 6.5vw, 90px);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+#motion .motion-editorial-intro p {
+  max-width: 490px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--motion-muted);
+}
+#motion .motion-feature { min-width: 0; margin-top: 85px; }
+#motion .motion-feature[hidden] { display: none !important; }
+#motion .motion-section-heading { margin-bottom: 30px; }
+#motion .motion-section-heading .panel-label { margin-bottom: 12px; }
+#motion .motion-section-heading h3 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+#motion .motion-section-heading p {
+  max-width: 650px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--motion-muted);
+}
+#motion img, #motion video { display: block; max-width: 100%; }
+#motion .motion-principles-gallery,
+#motion .motion-behaviors-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#motion .motion-principle-card,
+#motion .motion-behavior-card {
+  min-width: 0;
+  padding: 34px;
+  background: var(--motion-soft);
+  border: 1px solid var(--motion-line);
+}
+#motion .motion-principle-number,
+#motion .motion-behavior-number {
+  display: block;
+  margin-bottom: 48px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: var(--motion-muted);
+}
+#motion .motion-principle-title,
+#motion .motion-behavior-title {
+  margin: 0 0 12px;
+  font-size: clamp(21px, 2.5vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+#motion .motion-principle-description,
+#motion .motion-behavior-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--motion-muted);
+}
+#motion .motion-behavior-meta,
+#motion .motion-behavior-value,
+#motion .motion-behavior-timing {
+  display: block;
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--motion-muted);
+}
+#motion .motion-logo-gallery,
+#motion .motion-applications-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+#motion .motion-logo-card,
+#motion .motion-application-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+#motion .motion-logo-visual,
+#motion .motion-application-visual,
+#motion .motion-media-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 220px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--motion-paper);
+}
+#motion .motion-logo-visual img,
+#motion .motion-application-visual img,
+#motion .motion-media-frame img,
+#motion .motion-logo-visual video,
+#motion .motion-application-visual video,
+#motion .motion-media-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--motion-media-fit, cover);
+}
+#motion .motion-logo-visual video,
+#motion .motion-application-visual video,
+#motion .motion-media-frame video { position: absolute; inset: 0; }
+#motion .motion-logo-content,
+#motion .motion-application-content { padding: 22px 2px 12px; }
+#motion .motion-logo-category,
+#motion .motion-application-category,
+#motion .motion-card-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--motion-muted);
+}
+#motion .motion-logo-title,
+#motion .motion-application-title,
+#motion .motion-card-title {
+  margin: 0 0 9px;
+  font-size: clamp(21px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+#motion .motion-logo-description,
+#motion .motion-application-description,
+#motion .motion-card-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--motion-muted);
+}
+#motion .motion-logo-card.motion-layout-full,
+#motion .motion-application-card.motion-layout-full,
+#motion .motion-application-card.motion-layout-wide { grid-column: 1 / -1; }
+#motion .motion-layout-full .motion-logo-visual,
+#motion .motion-layout-full .motion-application-visual { aspect-ratio: 16 / 9; }
+#motion .motion-layout-wide .motion-application-visual { aspect-ratio: 16 / 8; }
+#motion .motion-layout-tall .motion-application-visual { aspect-ratio: 3 / 4; }
+#motion .motion-application-card.motion-layout-split,
+#motion .motion-application-card.motion-layout-split-reverse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: stretch;
+  background: var(--motion-paper);
+}
+#motion .motion-application-card.motion-layout-split-reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+}
+#motion .motion-layout-split .motion-application-visual,
+#motion .motion-layout-split-reverse .motion-application-visual {
+  min-height: 360px;
+  height: 100%;
+  aspect-ratio: auto;
+}
+#motion .motion-layout-split .motion-application-content,
+#motion .motion-layout-split-reverse .motion-application-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px;
+}
+#motion .motion-layout-split-reverse .motion-application-visual { grid-column: 2; grid-row: 1; }
+#motion .motion-layout-split-reverse .motion-application-content { grid-column: 1; grid-row: 1; }
+#motion .motion-comparison-gallery { display: flex; flex-direction: column; gap: 24px; }
+#motion .motion-comparison-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#motion .motion-comparison-card { min-width: 0; }
+#motion .motion-comparison-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--motion-paper);
+}
+#motion .motion-comparison-visual img,
+#motion .motion-comparison-visual video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#motion .motion-comparison-content { padding: 18px 0 8px; }
+#motion .motion-comparison-status {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+#motion .motion-comparison-approved .motion-comparison-status { color: #41634a; }
+#motion .motion-comparison-avoid .motion-comparison-status { color: #a04e4e; }
+#motion .motion-comparison-title {
+  margin: 0 0 9px;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+#motion .motion-comparison-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--motion-muted);
+}
+@media (max-width: 900px) {
+  #motion .motion-editorial-intro { margin-top: 60px; min-height: 310px; padding: 50px 38px; }
+  #motion .motion-feature { margin-top: 65px; }
+  #motion .motion-layout-split .motion-application-content,
+  #motion .motion-layout-split-reverse .motion-application-content { padding: 30px; }
+}
+@media (max-width: 640px) {
+  #motion .motion-editorial-intro { margin-top: 50px; min-height: 280px; padding: 42px 26px; }
+  #motion .motion-editorial-intro h3 { font-size: clamp(40px, 11vw, 64px); }
+  #motion .motion-feature { margin-top: 55px; }
+  #motion .motion-section-heading { margin-bottom: 24px; }
+  #motion .motion-principles-gallery,
+  #motion .motion-behaviors-gallery,
+  #motion .motion-logo-gallery,
+  #motion .motion-applications-gallery,
+  #motion .motion-comparison-pair { grid-template-columns: 1fr; }
+  #motion .motion-principle-card,
+  #motion .motion-behavior-card { padding: 26px; }
+  #motion .motion-application-card.motion-layout-full,
+  #motion .motion-application-card.motion-layout-half,
+  #motion .motion-application-card.motion-layout-wide,
+  #motion .motion-application-card.motion-layout-tall,
+  #motion .motion-application-card.motion-layout-split,
+  #motion .motion-application-card.motion-layout-split-reverse { grid-column: 1 / -1; }
+  #motion .motion-application-card.motion-layout-split,
+  #motion .motion-application-card.motion-layout-split-reverse { display: flex; flex-direction: column; }
+  #motion .motion-layout-split .motion-application-visual,
+  #motion .motion-layout-split-reverse .motion-application-visual {
+    min-height: 240px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  #motion .motion-layout-split .motion-application-content,
+  #motion .motion-layout-split-reverse .motion-application-content { padding: 26px; }
+  #motion .motion-layout-full .motion-logo-visual,
+  #motion .motion-layout-full .motion-application-visual,
+  #motion .motion-layout-wide .motion-application-visual { aspect-ratio: 4 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #motion *, #motion *::before, #motion *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
