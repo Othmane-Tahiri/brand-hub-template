@@ -1575,6 +1575,176 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // PACKAGING DESIGN SYSTEM
+  // Concept 02 — Editorial Packaging Gallery
+  // ========================================
+
+  /*
+   * TEST CONTENT: Replace placeholder imagery and
+   * specifications with approved client assets.
+   * Add, remove, or reorder items freely.
+   * Empty arrays can hide their related features.
+   * Use local image paths such as:
+   * "assets/packaging/box-front.jpg"
+   */
+
+  packagingDesign: {
+
+    intro: {
+      eyebrow: "THE TANGIBLE IDENTITY",
+      headline: "Made to be held.",
+      description:
+        "A considered packaging system that brings the identity into the physical world through form, material, and detail."
+    },
+
+    // 01 — FEATURED PACKAGING
+    featured: {
+      enabled: true,
+      title: "The Signature Package",
+      category: "FEATURED PACKAGING / TEST",
+      description:
+        "A hero mockup that introduces the packaging language through its silhouette, proportions, and signature brand details.",
+      image: "https://placehold.co/1600x1000/F0EDE6/202020.png?text=FEATURED+PACKAGING",
+      alt: "Placeholder for the signature packaging mockup",
+      fit: "cover"
+    },
+
+    // 02 — PACKAGING COLLECTION
+    // Supported layouts: full, half, wide, tall,
+    // split, split-reverse.
+    collection: [
+      {
+        title: "Signature Box",
+        category: "BOX / TEST",
+        description: "A premium rigid-box concept with a restrained logo treatment and thoughtful opening experience.",
+        image: "https://placehold.co/1600x900/F0EDE6/202020.png?text=SIGNATURE+BOX",
+        alt: "Placeholder for a branded signature box",
+        fit: "cover",
+        layout: "full"
+      },
+      {
+        title: "Shopping Bag",
+        category: "RETAIL PACKAGING / TEST",
+        description: "A branded carry bag using the identity's core typography and palette.",
+        image: "https://placehold.co/900x1100/202020/F0EDE6.png?text=SHOPPING+BAG",
+        alt: "Placeholder for a branded shopping bag",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Product Label",
+        category: "LABEL SYSTEM / TEST",
+        description: "A modular label that balances product information with a distinctive brand presence.",
+        image: "https://placehold.co/900x1100/B68B59/202020.png?text=PRODUCT+LABEL",
+        alt: "Placeholder for a branded product label",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Unboxing Experience",
+        category: "CUSTOMER EXPERIENCE / TEST",
+        description: "A considered arrangement of packaging components and presentation details.",
+        image: "https://placehold.co/1200x900/E8E5DE/202020.png?text=UNBOXING+EXPERIENCE",
+        alt: "Placeholder for an unboxing presentation",
+        fit: "cover",
+        layout: "split"
+      }
+    ],
+
+    // 03 — MATERIALS & FINISHES
+    materials: [
+      {
+        title: "Uncoated Paper",
+        category: "MATERIAL / TEST",
+        description: "A tactile, understated paper stock with a soft natural finish.",
+        image: "https://placehold.co/1000x800/F0EDE6/202020.png?text=UNCOATED+PAPER",
+        alt: "Placeholder for uncoated paper texture",
+        fit: "cover"
+      },
+      {
+        title: "Embossed Detail",
+        category: "FINISH / TEST",
+        description: "Subtle raised detailing introduces depth without excessive decoration.",
+        image: "https://placehold.co/1000x800/202020/B68B59.png?text=EMBOSSED+DETAIL",
+        alt: "Placeholder for an embossed print detail",
+        fit: "cover"
+      },
+      {
+        title: "Printed Surface",
+        category: "PRINT METHOD / TEST",
+        description: "Controlled color and crisp printing support consistency across packaging formats.",
+        image: "https://placehold.co/1000x800/B68B59/202020.png?text=PRINTED+SURFACE",
+        alt: "Placeholder for a printed packaging surface",
+        fit: "cover"
+      }
+    ],
+
+    // 04 — PRODUCTION SPECIFICATIONS
+    // Replace sample values with verified production specs.
+    specifications: [
+      {
+        title: "Primary Box Format",
+        category: "DIMENSIONS / TEST",
+        value: "To be confirmed",
+        description: "Record the approved dimensions, tolerances, and dieline reference for the primary package."
+      },
+      {
+        title: "Material Stock",
+        category: "SUBSTRATE / TEST",
+        value: "To be confirmed",
+        description: "Specify the approved stock, weight, finish, and sustainability requirements."
+      },
+      {
+        title: "Print & Finishing",
+        category: "PRODUCTION / TEST",
+        value: "To be confirmed",
+        description: "Document the approved printing process, inks, coatings, and special finishes."
+      },
+      {
+        title: "Artwork Preparation",
+        category: "PREPRESS / TEST",
+        value: "To be confirmed",
+        description: "Confirm bleed, safe areas, color profile, and supplier-ready export requirements."
+      }
+    ],
+
+    // 05 — PACKAGING DO / DON'T
+    comparisons: [
+      {
+        title: "Logo Placement",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+CORRECT+PLACEMENT",
+          alt: "Placeholder for approved logo placement",
+          title: "Protect the Identity",
+          description: "DO — Respect clear space, alignment, and approved logo proportions."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+CROWDED+LOGO",
+          alt: "Placeholder for incorrect logo placement",
+          title: "Avoid Crowding",
+          description: "DON'T — Place text or decorative elements inside the logo's protected space."
+        }
+      },
+      {
+        title: "Production Consistency",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+CONSISTENT+FINISH",
+          alt: "Placeholder for approved packaging finish",
+          title: "Use Approved Materials",
+          description: "DO — Match the agreed colors, material specifications, and finishes."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+UNAPPROVED+FINISH",
+          alt: "Placeholder for an unapproved packaging finish",
+          title: "Avoid Unapproved Substitutions",
+          description: "DON'T — Change material or print finishes without checking their effect on the identity."
+        }
+      }
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
@@ -1596,7 +1766,7 @@ const BRAND_CONFIG = {
     layout: true,
     voice: true,
     applications: true,
-    packaging: false,
+    packaging: true,
     motion: false,
     resources: true
   }
