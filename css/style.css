@@ -4,21 +4,15 @@
    Theme 01: Minimal Swiss
    ========================================= */
 
-/* DESIGN TOKENS */
-
 :root {
   --brand-primary: #202020;
   --brand-background: #ffffff;
   --brand-text: #202020;
-
   --sidebar-width: 270px;
-
   --surface-soft: #f8f8f6;
   --surface-warm: #f2f1ed;
-
   --border-color: #e8e8e8;
   --muted-text: #777777;
-
   --content-spacing: 7%;
 }
 
@@ -52,25 +46,19 @@ a {
   outline-offset: 3px;
 }
 
-/* =========================================
-   SIDEBAR
-   ========================================= */
+/* SIDEBAR */
 
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-
   width: var(--sidebar-width);
   height: 100vh;
-
   background: var(--surface-soft);
   border-right: 1px solid var(--border-color);
-
   display: flex;
   flex-direction: column;
-
   z-index: 100;
 }
 
@@ -81,19 +69,15 @@ a {
 
 .sidebar-label {
   display: block;
-
   margin-bottom: 14px;
-
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
-
   color: var(--muted-text);
 }
 
 .sidebar-header h2 {
   margin: 0;
-
   font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.8px;
@@ -103,7 +87,6 @@ a {
 .sidebar-nav {
   flex: 1;
   min-height: 0;
-
   padding: 22px 14px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -111,18 +94,13 @@ a {
 
 .nav-link {
   display: block;
-
   padding: 12px 15px;
   margin-bottom: 3px;
-
   color: #555555;
   text-decoration: none;
-
   font-size: 13px;
   font-weight: 500;
-
   border-radius: 5px;
-
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -145,154 +123,113 @@ a {
 
 .sidebar-footer {
   padding: 24px 28px;
-
   border-top: 1px solid var(--border-color);
-
   font-size: 10px;
   letter-spacing: 1.5px;
-
   color: var(--muted-text);
 }
 
-/* =========================================
-   MAIN CONTENT
-   ========================================= */
+/* MAIN CONTENT */
 
 .main-content {
   margin-left: var(--sidebar-width);
   padding: 85px var(--content-spacing);
-
   min-height: 100vh;
   max-width: 1800px;
 }
 
 .page-eyebrow {
   margin-bottom: 20px;
-
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2.5px;
-
   color: var(--muted-text);
 }
 
 .main-content h1 {
   margin: 0 0 22px;
-
   font-size: clamp(52px, 7vw, 110px);
   line-height: 1.04;
-
   font-weight: 700;
   letter-spacing: -0.045em;
-
   overflow-wrap: anywhere;
 }
 
 #brand-tagline {
   margin: 0;
-
   font-size: 20px;
   line-height: 1.6;
-
   color: var(--muted-text);
 }
 
-/* =========================================
-   WELCOME PANELS
-   ========================================= */
+/* WELCOME PANELS */
 
 .welcome-panel {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   margin-top: 75px;
   padding: 65px 55px;
-
   min-height: 330px;
-
   background: var(--surface-warm);
 }
 
 .panel-label {
   display: block;
-
   margin-bottom: 24px;
-
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
-
   color: var(--muted-text);
 }
 
 .welcome-panel h2 {
   margin: 0 0 18px;
-
   max-width: 650px;
-
   font-size: clamp(28px, 3.5vw, 52px);
   line-height: 1.15;
-
   letter-spacing: -0.035em;
   font-weight: 600;
 }
 
 .welcome-panel p {
   margin: 0;
-
   max-width: 480px;
-
   font-size: 15px;
   line-height: 1.8;
-
   color: #666666;
 }
 
-/* =========================================
-   GUIDELINE SECTIONS
-   ========================================= */
+/* GUIDELINE SECTIONS */
 
 .guideline-section {
   padding-top: 100px;
   margin-top: 100px;
-
   border-top: 1px solid var(--border-color);
-
   scroll-margin-top: 32px;
 }
 
 .guideline-section > h2 {
   margin: 0 0 25px;
-
   font-size: clamp(36px, 5vw, 68px);
   line-height: 1.1;
-
   letter-spacing: -0.035em;
   font-weight: 700;
 }
 
 .guideline-section > p {
   margin: 0;
-
   max-width: 650px;
-
   font-size: 17px;
   line-height: 1.8;
-
   color: var(--muted-text);
 }
 
-/* =========================================
-   LOGO SYSTEM — SECTION 02
-   ========================================= */
-
-/* Existing logo guideline cards */
+/* LOGO SYSTEM */
 
 #logo .welcome-panel {
   margin-top: 45px;
   min-height: 380px;
-
   background: var(--surface-warm);
   border: 1px solid #e9e7e2;
 }
@@ -300,10 +237,8 @@ a {
 #logo .logo-block {
   margin-top: 18px;
   padding: 38px 42px;
-
   background: var(--surface-soft);
   border: 1px solid var(--border-color);
-
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease;
@@ -315,24 +250,18 @@ a {
 
 #logo .logo-block h3 {
   margin: 0 0 14px;
-
   font-size: clamp(22px, 2.2vw, 30px);
   line-height: 1.25;
-
   font-weight: 600;
   letter-spacing: -0.025em;
-
   color: var(--brand-text);
 }
 
 #logo .logo-block p {
   margin: 0;
-
   max-width: 650px;
-
   font-size: 15px;
   line-height: 1.8;
-
   color: #666666;
 }
 
@@ -343,17 +272,9 @@ a {
   }
 }
 
-/* =========================================
-   HYBRID LOGO GALLERY
-   ========================================= */
-
-/* Each logo presentation group */
-
 #logo .logo-feature {
   margin-top: 70px;
 }
-
-/* Section headings and descriptions */
 
 #logo .logo-section-heading {
   margin-bottom: 26px;
@@ -366,97 +287,68 @@ a {
 
 #logo .logo-section-heading h3 {
   margin: 0 0 10px;
-
   font-size: clamp(26px, 3vw, 40px);
   line-height: 1.2;
-
   letter-spacing: -0.035em;
   font-weight: 600;
 }
 
 #logo .logo-section-heading p {
   margin: 0;
-
   max-width: 650px;
-
   font-size: 15px;
   line-height: 1.7;
-
   color: var(--muted-text);
 }
 
-/* Visual logo preview cards */
-
 #logo .logo-preview {
   position: relative;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   min-width: 0;
   min-height: 260px;
-
   padding: 45px 25px;
-
   border-radius: 10px;
   overflow: hidden;
-
   text-align: center;
 }
 
-/* Large primary logo showcase */
-
 #logo .logo-preview-primary {
   min-height: 400px;
-
   background: var(--surface-warm);
   color: var(--brand-text);
 }
-
-/* Light logo cards */
 
 #logo .logo-preview-light {
   background: #e8e7e5;
   color: #202020;
 }
 
-/* Dark logo cards */
-
 #logo .logo-preview-dark {
   background: #202020;
   color: #ffffff;
 }
 
-/* Temporary logo artwork */
-
 #logo .logo-placeholder {
   display: block;
   max-width: 100%;
-
   overflow-wrap: anywhere;
-
   font-size: clamp(30px, 4vw, 60px);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.1;
 }
 
-/* Logo labels */
-
 #logo .logo-caption {
   display: block;
   margin-top: 20px;
-
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
-
   opacity: 0.65;
 }
-
-/* Two-column logo gallery */
 
 #logo .logo-preview-grid {
   display: grid;
@@ -468,51 +360,36 @@ a {
   margin-top: 70px;
 }
 
-/* =========================================
-   STEP 17.13B — CLEAR SPACE SHOWCASE
-   ========================================= */
-
-/* Large outer presentation rectangle */
+/* CLEAR SPACE */
 
 #logo .clear-space-card {
   display: flex;
   align-items: center;
   justify-content: center;
-
   min-height: 390px;
   padding: 55px;
-
   background: var(--surface-warm);
   border: 1px solid var(--border-color);
   border-radius: 10px;
 }
 
-/* Dashed outline represents the spacing zone */
-
 #logo .clear-space-boundary {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: min(100%, 540px);
   min-height: 230px;
-
   padding: 55px 35px;
-
   border: 1.5px dashed #aaa8a3;
   border-radius: 4px;
 }
-
-/* Logo centered inside the clear-space rectangle */
 
 #logo .clear-space-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   min-height: 105px;
-
   text-align: center;
 }
 
@@ -520,74 +397,48 @@ a {
   font-size: clamp(34px, 5vw, 68px);
 }
 
-/* =========================================
-   STEP 17.13D — LOGO COLOR COMPATIBILITY
-   ========================================= */
-
-/* Automatically accommodates any card count */
+/* LOGO COLOR COMPATIBILITY */
 
 #logo .logo-compatibility-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
   gap: 8px;
 }
-
-/* Each approved pairing */
 
 #logo .compatibility-card {
   display: flex;
   align-items: center;
   justify-content: center;
-
   min-width: 0;
   min-height: 235px;
-
   padding: 25px;
-
   border-radius: 9px;
   overflow: hidden;
-
   background: var(--surface-soft);
 }
-
-/* Centered square displaying approved logo color */
 
 #logo .compatibility-square {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: min(45%, 105px);
   aspect-ratio: 1;
-
   border-radius: 5px;
-
   background: var(--brand-primary);
 }
 
-/* Optional actual logo inside the centered square */
-
 #logo .compatibility-square img {
   display: block;
-
   width: 75%;
   height: 75%;
-
   object-fit: contain;
 }
 
-/* =========================================
-   STEP 17.14D — COLOR SYSTEM
-   ========================================= */
-
-/* Color System presentation groups */
+/* COLOR SYSTEM */
 
 #colors .color-feature {
   margin-top: 75px;
 }
-
-/* Headings */
 
 #colors .color-section-heading {
   margin-bottom: 30px;
@@ -599,74 +450,50 @@ a {
 
 #colors .color-section-heading h3 {
   margin: 0 0 10px;
-
   font-size: clamp(26px, 3vw, 40px);
   line-height: 1.2;
-
   font-weight: 600;
   letter-spacing: -0.035em;
 }
 
 #colors .color-section-heading p {
   margin: 0;
-
   max-width: 650px;
-
   font-size: 15px;
   line-height: 1.7;
-
   color: var(--muted-text);
 }
 
-/* =========================================
-   MAIN BRAND COLOR PALETTE
-   ========================================= */
+/* MAIN BRAND COLOR PALETTE */
 
 #colors .brand-color-palette {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
-
-/* Each main brand color card */
 
 #colors .brand-color-card {
   min-width: 0;
   overflow: hidden;
-
   background: #ffffff;
-
   border: 1px solid var(--border-color);
   border-radius: 10px;
 }
 
-/* Large interactive color preview */
-
 #colors .brand-color-swatch {
   position: relative;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   height: 230px;
-
   padding: 15px;
-
   border: 0;
   border-radius: 0;
-
   cursor: pointer;
   font: inherit;
-
   overflow: hidden;
 }
-
-/* Card details */
 
 #colors .brand-color-details {
   padding: 23px 24px 26px;
@@ -674,69 +501,53 @@ a {
 
 #colors .brand-color-role {
   display: block;
-
   margin-bottom: 9px;
-
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-
   color: var(--muted-text);
 }
 
 #colors .brand-color-name {
   margin: 0 0 10px;
-
   font-size: 20px;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.025em;
-
   overflow-wrap: anywhere;
 }
 
 #colors .brand-color-code {
   display: block;
-
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.04em;
-
   color: var(--muted-text);
 }
 
-/* =========================================
-   TONAL COLOR SCALES
-   ========================================= */
+/* TONAL COLOR SCALES */
 
 #colors .brand-tonal-scales {
   display: flex;
   flex-direction: column;
-
   gap: 35px;
 }
-
-/* Individual color family */
 
 #colors .tonal-scale-group {
   min-width: 0;
 }
 
-/* Scale heading */
-
 #colors .tonal-scale-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 15px;
   margin-bottom: 12px;
 }
 
 #colors .tonal-scale-name {
   margin: 0;
-
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -747,78 +558,49 @@ a {
   color: var(--muted-text);
 }
 
-/* Horizontal color scale */
-/* Updated: separated rectangular swatches */
-
 #colors .tonal-scale-row {
   display: grid;
-
   grid-template-columns:
-    repeat(
-      var(--shade-count, 11),
-      minmax(0, 1fr)
-    );
-
+    repeat(var(--shade-count, 11), minmax(0, 1fr));
   gap: 3px;
-
   width: 100%;
-
   overflow: hidden;
   border-radius: 0;
 }
 
-/* Individual tonal swatch */
-
 #colors .tonal-scale-swatch {
   position: relative;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   min-width: 0;
   height: 125px;
-
   padding: 5px 2px;
-
   border: 0;
   border-radius: 0;
-
   cursor: pointer;
   font: inherit;
-
-  transition:
-    filter 0.2s ease;
+  transition: filter 0.2s ease;
 }
 
-/* =========================================
-   INTERACTIVE HEX LABELS
-   ========================================= */
+/* INTERACTIVE HEX LABELS */
 
 #colors .color-swatch-hex {
   display: block;
-
   max-width: 100%;
-
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.01em;
-
   text-align: center;
   white-space: nowrap;
-
   opacity: 0;
   transform: translateY(5px);
-
   transition:
     opacity 0.18s ease,
     transform 0.18s ease;
-
   pointer-events: none;
 }
-
-/* Reveal HEX on hover or keyboard focus */
 
 #colors .brand-color-swatch:hover .color-swatch-hex,
 #colors .brand-color-swatch:focus-visible .color-swatch-hex,
@@ -829,24 +611,359 @@ a {
   transform: translateY(0);
 }
 
-/* Subtle hover feedback */
-
 @media (hover: hover) {
-
   #colors .brand-color-swatch:hover,
   #colors .tonal-scale-swatch:hover {
     filter: brightness(0.94);
   }
-
 }
-
-/* Keyboard focus */
 
 #colors .brand-color-swatch:focus-visible,
 #colors .tonal-scale-swatch:focus-visible {
   outline: 2px solid #202020;
   outline-offset: -4px;
   z-index: 2;
+}
+
+/* =========================================
+   TYPOGRAPHY SYSTEM
+   Concept 02 — Editorial Type Gallery
+   ========================================= */
+
+/*
+   Supports dynamically generated typeface
+   galleries with any number of client fonts.
+*/
+
+#typography {
+  --type-light: var(--surface-warm);
+  --type-dark: var(--brand-primary);
+  --type-ink: var(--brand-text);
+  --type-muted: var(--muted-text);
+  --type-display-font: Georgia, serif;
+  --type-support-font: Arial, sans-serif;
+}
+
+#typography .typography-editorial-intro {
+  margin-top: 75px;
+  padding: 65px 55px;
+  background: var(--type-light);
+  color: var(--type-ink);
+}
+
+#typography .typography-editorial-intro .panel-label {
+  margin-bottom: 30px;
+}
+
+#typography .typography-editorial-intro h3 {
+  margin: 0 0 22px;
+  max-width: 800px;
+  font-family: var(--type-display-font);
+  font-size: clamp(44px, 6.5vw, 90px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+#typography .typography-editorial-intro p {
+  margin: 0;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 1.8;
+  opacity: 0.7;
+}
+
+/* TYPOGRAPHY FEATURE HEADINGS */
+
+#typography .typography-feature {
+  margin-top: 75px;
+  min-width: 0;
+}
+
+#typography .typography-section-heading {
+  margin-bottom: 30px;
+}
+
+#typography .typography-section-heading .panel-label {
+  margin-bottom: 12px;
+}
+
+#typography .typography-section-heading h3 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+#typography .typography-section-heading p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted-text);
+}
+
+/* FLEXIBLE TYPEFACE GALLERY */
+
+#typography .typography-typeface-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#typography .typography-typeface-showcase {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 490px;
+  padding: 32px 38px 35px;
+  overflow: hidden;
+  background: var(--type-light);
+  color: var(--type-ink);
+}
+
+/* Alternating editorial presentation */
+
+#typography .typography-primary-showcase,
+#typography .typography-typeface-showcase:nth-child(odd) {
+  background: var(--type-light);
+  color: var(--type-ink);
+}
+
+#typography .typography-secondary-showcase,
+#typography .typography-typeface-showcase:nth-child(even) {
+  background: var(--type-dark);
+  color: #ffffff;
+}
+
+#typography .typography-showcase-topline,
+#typography .typography-showcase-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#typography .typography-showcase-topline {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  opacity: 0.68;
+}
+
+#typography .typography-hero-specimen {
+  display: flex;
+  align-items: center;
+  min-height: 270px;
+  max-width: 100%;
+  font-family: var(--type-display-font);
+  font-size: clamp(110px, 18vw, 250px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.09em;
+  overflow-wrap: anywhere;
+}
+
+#typography .typography-secondary-showcase
+.typography-hero-specimen {
+  font-family: var(--type-support-font);
+  font-weight: 700;
+}
+
+#typography .typography-showcase-bottom {
+  align-items: flex-end;
+}
+
+#typography .typography-showcase-bottom h4 {
+  margin: 0 0 7px;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+#typography .typography-showcase-bottom p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+#typography .typography-showcase-index {
+  flex-shrink: 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+/* CHARACTER GALLERY */
+
+#typography .typography-character-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+#typography .typography-character-block {
+  min-width: 0;
+  padding: 35px 38px 45px;
+  background: var(--type-light);
+  color: var(--type-ink);
+  overflow: hidden;
+}
+
+#typography .typography-character-secondary,
+#typography .typography-character-block:nth-child(even) {
+  background: var(--type-dark);
+  color: #ffffff;
+}
+
+#typography .typography-character-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 42px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+#typography .typography-character-content {
+  font-family: var(--type-display-font);
+  font-size: clamp(19px, 3vw, 38px);
+  line-height: 1.55;
+  letter-spacing: 0.025em;
+  overflow-wrap: anywhere;
+}
+
+#typography .typography-character-secondary
+.typography-character-content {
+  font-family: var(--type-support-font);
+}
+
+#typography .typography-character-content p {
+  margin: 0 0 10px;
+}
+
+#typography .typography-character-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* FONT WEIGHTS AND STYLES */
+
+#typography .typography-weights-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#typography .typography-weight-group {
+  padding: 30px 36px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  min-width: 0;
+}
+
+#typography .typography-weight-group-title {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+#typography .typography-weight-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+#typography .typography-weight-sample {
+  min-width: 0;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+#typography .typography-weight-meta {
+  flex-shrink: 0;
+  color: var(--muted-text);
+  font-size: 11px;
+  text-align: right;
+}
+
+/* TYPOGRAPHY IN CONTEXT */
+
+#typography .typography-context-showcase {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 70px;
+  min-height: 530px;
+  padding: 38px 42px;
+  background: var(--type-dark);
+  color: #ffffff;
+}
+
+#typography .typography-context-topline,
+#typography .typography-context-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--type-support-font);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+#typography .typography-context-topline {
+  opacity: 0.7;
+}
+
+#typography .typography-context-main h4 {
+  margin: 0 0 30px;
+  max-width: 900px;
+  font-family: var(--type-display-font);
+  font-size: clamp(48px, 7.5vw, 110px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  overflow-wrap: anywhere;
+}
+
+#typography .typography-context-main h4 em {
+  font-weight: inherit;
+}
+
+#typography .typography-context-main p {
+  margin: 0;
+  max-width: 390px;
+  font-family: var(--type-support-font);
+  font-size: 15px;
+  line-height: 1.8;
+  opacity: 0.75;
+}
+
+#typography .typography-context-footer {
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+#typography .typography-context-footer
+span:last-child {
+  font-size: 24px;
+  line-height: 1;
 }
 
 /* =========================================
@@ -914,11 +1031,10 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Color System */
+  /* COLOR SYSTEM */
 
   #colors .brand-color-palette {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #colors .brand-color-swatch {
@@ -933,19 +1049,37 @@ a {
     font-size: 9px;
   }
 
+  /* TYPOGRAPHY SYSTEM */
+
+  #typography .typography-editorial-intro {
+    padding: 50px 38px;
+  }
+
+  #typography .typography-typeface-showcase {
+    min-height: 410px;
+    padding: 30px;
+  }
+
+  #typography .typography-hero-specimen {
+    min-height: 220px;
+    font-size: clamp(100px, 16vw, 190px);
+  }
+
+  #typography .typography-character-block {
+    padding: 30px;
+  }
+
+  #typography .typography-context-showcase {
+    min-height: 460px;
+    padding: 32px;
+  }
 }
 
 /* =========================================
-   MOBILE RESPONSIVENESS — FOUNDATION
+   MOBILE RESPONSIVENESS
    ========================================= */
 
 @media (max-width: 640px) {
-
-  /*
-   * Temporary mobile behavior.
-   * A collapsible mobile sidebar will be
-   * implemented in a later development step.
-   */
 
   .sidebar {
     display: none;
@@ -1044,7 +1178,7 @@ a {
     min-height: 220px;
   }
 
-  /* Color System */
+  /* COLOR SYSTEM */
 
   #colors .color-feature {
     margin-top: 55px;
@@ -1067,20 +1201,10 @@ a {
     gap: 30px;
   }
 
-  /*
-   * Keep all shades in a single row,
-   * allowing horizontal scrolling on mobile.
-   */
-
   #colors .tonal-scale-row {
     grid-auto-columns: minmax(66px, 1fr);
-
     grid-template-columns:
-      repeat(
-        var(--shade-count, 11),
-        minmax(66px, 1fr)
-      );
-
+      repeat(var(--shade-count, 11), minmax(66px, 1fr));
     overflow-x: auto;
     border-radius: 0;
   }
@@ -1093,26 +1217,92 @@ a {
     font-size: 10px;
   }
 
-  /*
-   * On touch screens, display the HEX
-   * so visitors can identify each color.
-   */
+  /* TYPOGRAPHY SYSTEM */
+
+  #typography .typography-editorial-intro {
+    margin-top: 50px;
+    padding: 42px 26px;
+  }
+
+  #typography .typography-editorial-intro h3 {
+    font-size: clamp(42px, 11vw, 65px);
+  }
+
+  #typography .typography-feature {
+    margin-top: 55px;
+  }
+
+  #typography .typography-typeface-showcase {
+    min-height: 340px;
+    padding: 24px 22px;
+  }
+
+  #typography .typography-showcase-topline {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  #typography .typography-hero-specimen {
+    min-height: 170px;
+    font-size: clamp(85px, 26vw, 155px);
+  }
+
+  #typography .typography-showcase-bottom h4 {
+    font-size: 23px;
+  }
+
+  #typography .typography-showcase-bottom p {
+    font-size: 12px;
+  }
+
+  #typography .typography-character-block {
+    padding: 25px 22px 32px;
+  }
+
+  #typography .typography-character-header {
+    margin-bottom: 28px;
+    font-size: 9px;
+  }
+
+  #typography .typography-character-content {
+    font-size: clamp(17px, 5vw, 25px);
+    line-height: 1.6;
+  }
+
+  #typography .typography-weight-group {
+    padding: 22px;
+  }
+
+  #typography .typography-weight-sample {
+    font-size: 23px;
+  }
+
+  #typography .typography-context-showcase {
+    min-height: 420px;
+    gap: 55px;
+    padding: 26px 23px;
+  }
+
+  #typography .typography-context-main h4 {
+    font-size: clamp(43px, 11vw, 70px);
+  }
+
+  #typography .typography-context-topline,
+  #typography .typography-context-footer {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
 
   @media (hover: none) {
-
     #colors .tonal-scale-swatch .color-swatch-hex,
     #colors .brand-color-swatch .color-swatch-hex {
       opacity: 1;
       transform: none;
     }
-
   }
-
 }
 
-/* =========================================
-   ACCESSIBILITY
-   ========================================= */
+/* ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1126,5 +1316,4 @@ a {
   #colors .tonal-scale-swatch {
     transition: none;
   }
-
 }
