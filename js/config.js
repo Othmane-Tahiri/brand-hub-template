@@ -560,6 +560,227 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // PHOTOGRAPHY SYSTEM
+  // ========================================
+
+  /*
+   * Concept 02 — Editorial Photography Gallery
+   *
+   * FULLY CLIENT-CONFIGURABLE
+   *
+   * Each client can have:
+   *
+   * - Zero or one featured photograph
+   * - Any number of photography categories
+   * - Any number of images per category
+   * - Any number of editorial gallery images
+   * - Any number of art-direction guidelines
+   * - Any number of Do / Don't comparisons
+   *
+   * Empty collections remain hidden once
+   * the photography renderer is connected.
+   *
+   * IMAGE PATH EXAMPLE:
+   *
+   * "assets/photography/product-01.jpg"
+   *
+   * Upload actual image files to GitHub
+   * before referencing their paths.
+   *
+   * Recommended image formats:
+   * JPG, PNG, WebP, AVIF.
+   *
+   * Use optimized photographs to keep
+   * the website fast on mobile.
+   */
+
+  photography: {
+
+    // ------------------------------------
+    // EDITORIAL INTRODUCTION
+    // ------------------------------------
+
+    intro: {
+      eyebrow: "THE PHOTOGRAPHIC LANGUAGE",
+      headline: "A world through our lens.",
+      description:
+        "A considered approach to imagery, balancing atmosphere, composition, lighting, and storytelling."
+    },
+
+    // ------------------------------------
+    // 01 — FEATURED PHOTOGRAPHY
+    // ------------------------------------
+
+    /*
+     * Set enabled to true and provide
+     * an image to display the hero.
+     *
+     * enabled: true / false
+     * fit: "cover" / "contain"
+     *
+     * Recommended source image:
+     * Landscape, ideally 1600px or wider.
+     */
+
+    featured: {
+      enabled: false,
+
+      title: "Signature Photography",
+      category: "Photography / Art Direction",
+
+      description:
+        "The defining photographic expression of the brand.",
+
+      image: "",
+
+      alt: "Signature brand photograph",
+
+      fit: "cover"
+    },
+
+    // ------------------------------------
+    // 02 — PHOTOGRAPHY CATEGORIES
+    // ------------------------------------
+
+    /*
+     * Add or remove category objects freely.
+     *
+     * Each category can have any number
+     * of photographs in its images array.
+     *
+     * A category can be:
+     * Product, Lifestyle, Environment,
+     * People, Architecture, Detail, etc.
+     *
+     * These names are examples only.
+     *
+     * Example category:
+     *
+     * {
+     *   title: "Product",
+     *   description: "Clean, considered product imagery.",
+     *   images: [
+     *     {
+     *       image: "assets/photography/product-01.jpg",
+     *       alt: "Product photographed on a neutral surface",
+     *       title: "Product Study 01",
+     *       fit: "cover"
+     *     },
+     *     {
+     *       image: "assets/photography/product-02.jpg",
+     *       alt: "Close-up of product materials",
+     *       title: "Product Study 02",
+     *       fit: "cover"
+     *     }
+     *   ]
+     * }
+     *
+     * Categories without valid images
+     * should be omitted by the renderer.
+     */
+
+    categories: [],
+
+    // ------------------------------------
+    // 03 — EDITORIAL PHOTOGRAPHY GALLERY
+    // ------------------------------------
+
+    /*
+     * Add or remove individual photographs.
+     *
+     * Each object creates one gallery card.
+     *
+     * Supported layouts:
+     *
+     * "full"
+     * "half"
+     * "wide"
+     * "tall"
+     * "split"
+     * "split-reverse"
+     *
+     * Use different layouts to create
+     * a curated editorial rhythm.
+     *
+     * Example:
+     *
+     * {
+     *   title: "The Details",
+     *   category: "Detail Photography",
+     *   description: "An intimate look at material and texture.",
+     *   image: "assets/photography/detail-01.jpg",
+     *   alt: "Close-up of natural material texture",
+     *   fit: "cover",
+     *   layout: "full"
+     * }
+     */
+
+    gallery: [],
+
+    // ------------------------------------
+    // 04 — ART DIRECTION GUIDELINES
+    // ------------------------------------
+
+    /*
+     * Each object creates one guideline card.
+     *
+     * Use only relevant directions
+     * for the individual client.
+     *
+     * Example:
+     *
+     * {
+     *   title: "Lighting",
+     *   description:
+     *     "Use soft directional lighting with natural shadows."
+     * }
+     *
+     * Other possible topics:
+     * Composition, Color, Mood,
+     * Styling, Background, Retouching.
+     */
+
+    artDirection: [],
+
+    // ------------------------------------
+    // 05 — PHOTOGRAPHY DO / DON'T
+    // ------------------------------------
+
+    /*
+     * Each object represents one comparison
+     * between approved and avoided imagery.
+     *
+     * Both images are optional at the
+     * configuration level, but the renderer
+     * should show a comparison only when
+     * both image paths are provided.
+     *
+     * Example:
+     *
+     * {
+     *   title: "Lighting Direction",
+     *
+     *   approved: {
+     *     image: "assets/photography/lighting-do.jpg",
+     *     alt: "Product with soft directional lighting",
+     *     title: "Directional Lighting",
+     *     description: "Use intentional highlights and shadows."
+     *   },
+     *
+     *   avoid: {
+     *     image: "assets/photography/lighting-dont.jpg",
+     *     alt: "Product under harsh flat lighting",
+     *     title: "Flat Lighting",
+     *     description: "Avoid flat, uncontrolled illumination."
+     *   }
+     * }
+     */
+
+    comparisons: []
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
