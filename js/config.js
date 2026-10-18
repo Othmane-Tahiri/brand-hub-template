@@ -1030,6 +1030,201 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // LAYOUT & COMPOSITION SYSTEM
+  // Concept 02 — Editorial Layout Framework
+  // ========================================
+
+  /*
+   * TEST CONTENT: Replace examples and image URLs
+   * with each client's approved guidelines.
+   * Add or remove items in any array freely.
+   * Empty arrays will hide the related feature
+   * once the renderer is connected in app.js.
+   */
+
+  layoutComposition: {
+
+    intro: {
+      eyebrow: "THE ART OF ARRANGEMENT",
+      headline: "Structure creates freedom.",
+      description:
+        "A flexible design framework built on thoughtful proportions, confident hierarchy, and intentional whitespace."
+    },
+
+    // 01 — LAYOUT PHILOSOPHY
+    principles: [
+      {
+        title: "Clarity First",
+        description:
+          "Establish a clear focal point in every composition. Give the most important message the strongest visual priority."
+      },
+      {
+        title: "Intentional Whitespace",
+        description:
+          "Allow generous breathing room around important elements. Space is an active part of the identity."
+      },
+      {
+        title: "Consistent Alignment",
+        description:
+          "Align typography, imagery, and graphic elements to a shared underlying structure."
+      },
+      {
+        title: "Flexible Expression",
+        description:
+          "Adapt the system to different formats while preserving its core proportions, rhythm, and visual character."
+      }
+    ],
+
+    // 02 — GRID SYSTEM
+    // columns = count; gutter and margin = CSS sizes.
+    grids: [
+      {
+        title: "Editorial Grid",
+        category: "4 COLUMNS / PRINT",
+        description:
+          "A balanced four-column structure for editorial pages, brand presentations, and print layouts.",
+        columns: 4,
+        gutter: "12px",
+        margin: "9%"
+      },
+      {
+        title: "Digital Grid",
+        category: "12 COLUMNS / DIGITAL",
+        description:
+          "A flexible twelve-column grid for web interfaces, responsive layouts, and digital brand applications.",
+        columns: 12,
+        gutter: "8px",
+        margin: "7%"
+      }
+    ],
+
+    // 03 — SPACING & HIERARCHY
+    // bars are percentage heights for visual demonstrations.
+    spacing: [
+      {
+        title: "Clear Visual Priority",
+        description:
+          "Use contrasting scales to distinguish headlines, supporting information, and fine details.",
+        bars: [85, 50, 25]
+      },
+      {
+        title: "Rhythmic Spacing",
+        description:
+          "Repeat a deliberate spacing rhythm to create order between related and unrelated elements.",
+        bars: [30, 60, 90]
+      },
+      {
+        title: "Generous Margins",
+        description:
+          "Maintain consistent outer margins to protect content and create a calm visual frame.",
+        bars: [25, 70, 25]
+      },
+      {
+        title: "Balanced Density",
+        description:
+          "Avoid crowding content. Balance areas of information with open, quiet space.",
+        bars: [70, 40, 20]
+      }
+    ],
+
+    // 04 — COMPOSITION EXAMPLES
+    // Supported layouts: full, half, wide, tall,
+    // split, split-reverse. fit: cover or contain.
+    examples: [
+      {
+        title: "Editorial Opening",
+        category: "FULL-WIDTH COMPOSITION / TEST",
+        description:
+          "A strong visual opening built around one dominant image and generous whitespace.",
+        image: "https://placehold.co/1600x900/F0EDE6/202020.png?text=EDITORIAL+OPENING",
+        alt: "Placeholder for a full-width editorial layout",
+        fit: "cover",
+        layout: "full"
+      },
+      {
+        title: "Structured Balance",
+        category: "HALF-WIDTH COMPOSITION / TEST",
+        description:
+          "An example of balanced visual weight within a two-column arrangement.",
+        image: "https://placehold.co/900x1000/202020/F0EDE6.png?text=BALANCED+LAYOUT",
+        alt: "Placeholder for a balanced layout",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Typographic Hierarchy",
+        category: "HALF-WIDTH COMPOSITION / TEST",
+        description:
+          "An example demonstrating the relationship between headline, supporting copy, and space.",
+        image: "https://placehold.co/900x1000/B68B59/202020.png?text=TYPE+HIERARCHY",
+        alt: "Placeholder for a typographic hierarchy layout",
+        fit: "cover",
+        layout: "half"
+      },
+      {
+        title: "Image Meets Content",
+        category: "SPLIT COMPOSITION / TEST",
+        description:
+          "A split layout pairs a dominant visual with a restrained supporting narrative.",
+        image: "https://placehold.co/1200x900/F0EDE6/202020.png?text=IMAGE+AND+CONTENT",
+        alt: "Placeholder for a split editorial composition",
+        fit: "cover",
+        layout: "split"
+      },
+      {
+        title: "Reversed Rhythm",
+        category: "REVERSED SPLIT / TEST",
+        description:
+          "Alternating the position of imagery and text introduces rhythm without abandoning the grid.",
+        image: "https://placehold.co/1200x900/202020/B68B59.png?text=REVERSED+LAYOUT",
+        alt: "Placeholder for a reversed split composition",
+        fit: "cover",
+        layout: "split-reverse"
+      }
+    ],
+
+    // 05 — COMPOSITION DO / DON'T
+    // Each comparison pairs approved and avoid examples.
+    comparisons: [
+      {
+        title: "Alignment",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+ALIGNED+LAYOUT",
+          alt: "Placeholder for an approved aligned composition",
+          title: "Follow the Grid",
+          description:
+            "DO — Align elements to consistent margins and shared grid lines."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+MISALIGNED",
+          alt: "Placeholder for an incorrectly aligned composition",
+          title: "Avoid Arbitrary Placement",
+          description:
+            "DON'T — Position elements without a consistent alignment system."
+        }
+      },
+      {
+        title: "Hierarchy",
+        approved: {
+          image: "https://placehold.co/1000x750/F0EDE6/202020.png?text=DO+CLEAR+HIERARCHY",
+          alt: "Placeholder for an approved hierarchy example",
+          title: "Establish a Focal Point",
+          description:
+            "DO — Give primary messages clear visual priority and sufficient space."
+        },
+        avoid: {
+          image: "https://placehold.co/1000x750/E7DDDA/202020.png?text=DONT+CROWDED+LAYOUT",
+          alt: "Placeholder for a crowded composition",
+          title: "Avoid Visual Competition",
+          description:
+            "DON'T — Give every element equal emphasis or crowd the composition."
+        }
+      }
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
