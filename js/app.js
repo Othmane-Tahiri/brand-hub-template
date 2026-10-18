@@ -2,7 +2,7 @@
 /*
  * BRAND HUB — MAIN APPLICATION
  * Logo, Colors, Typography, Graphic Elements,
- * Photography, and Sidebar Navigation
+ * Photography, Layout & Composition, and Navigation
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1956,7 +1956,291 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 13 — ACTIVE SIDEBAR NAVIGATION
+  // 13 — LAYOUT & COMPOSITION SYSTEM
+  // Concept 02 — Editorial Layout Framework
+  // ========================================
+
+  const layoutConfig = config.layoutComposition || {};
+  const layoutSection = document.getElementById("layout");
+
+  if (layoutSection && sections.layout !== false) {
+    const intro = layoutConfig.intro || {};
+    setElementText("layout-intro-eyebrow", intro.eyebrow);
+    setElementText("layout-intro-headline", intro.headline);
+    setElementText("layout-intro-description", intro.description);
+
+    const layoutTypes = new Set([
+      "full", "half", "wide", "tall", "split", "split-reverse"
+    ]);
+
+    function layoutItems(value) {
+      return Array.isArray(value)
+        ? value.filter(item => item && typeof item === "object")
+        : [];
+    }
+
+    function layoutFeature(id, container) {
+      const feature = document.getElementById(id);
+      if (feature && container) {
+        feature.hidden = container.children.length === 0;
+      }
+    }
+
+    function layoutImagePath(value) {
+      if (typeof value !== "string") return "";
+      const path = value.trim();
+      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (/^https:\/\//i.test(path)) return path;
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
+      return path;
+    }
+
+    function layoutImage(item, card, container, featureId) {
+      const img = document.createElement("img");
+      img.className = card.classList.contains("layout-example-card")
+        ? "layout-example-image"
+        : "layout-comparison-image";
+      img.alt = item.alt || item.title || "Layout composition example";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.style.setProperty(
+        "--layout-image-fit", item.fit === "contain" ? "contain" : "cover"
+      );
+      img.addEventListener("error", () => {
+        console.warn("Layout image could not be loaded:", img.src);
+        if (card.isConnected) card.remove();
+        layoutFeature(featureId, container);
+      });
+      img.src = layoutImagePath(item.image);
+      return img;
+    }
+
+    function layoutCaption(item, categoryClass, titleClass, descriptionClass) {
+      const content = document.createElement("div");
+      content.className = "layout-example-content";
+      if (item.category) {
+        content.appendChild(createTextElement(
+          "span", categoryClass, item.category
+        ));
+      }
+      content.appendChild(createTextElement(
+        "h4", titleClass, item.title || "Composition example"
+      ));
+      if (item.description) {
+        content.appendChild(createTextElement(
+          "p", descriptionClass, item.description
+        ));
+      }
+      return content;
+    }
+
+    // 13.1 — LAYOUT PHILOSOPHY
+
+    const principlesGallery = document.getElementById(
+      "layout-principles-gallery"
+    );
+    if (principlesGallery) {
+      principlesGallery.replaceChildren();
+      layoutItems(layoutConfig.principles)
+        .filter(item => item.title || item.description)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "layout-principle-card";
+          card.appendChild(createTextElement(
+            "span", "layout-principle-number", formatIndex(index + 1)
+          ));
+          card.appendChild(createTextElement(
+            "h4", "layout-principle-title", item.title || "Layout principle"
+          ));
+          if (item.description) {
+            card.appendChild(createTextElement(
+              "p", "layout-principle-description", item.description
+            ));
+          }
+          principlesGallery.appendChild(card);
+        });
+      layoutFeature("layout-philosophy-feature", principlesGallery);
+    }
+
+    // 13.2 — GRID SYSTEM
+
+    const gridGallery = document.getElementById("layout-grid-gallery");
+    if (gridGallery) {
+      gridGallery.replaceChildren();
+      layoutItems(layoutConfig.grids).forEach(item => {
+        const columns = Math.max(1, Math.min(24, Math.round(
+          Number(item.columns) || 4
+        )));
+        const card = document.createElement("article");
+        card.className = "layout-grid-card";
+        const visual = document.createElement("div");
+        visual.className = "layout-grid-visual";
+        const grid = document.createElement("div");
+        grid.className = "layout-grid-columns";
+        grid.style.setProperty("--layout-grid-columns", String(columns));
+        const cssLength = /^(?:\d+(?:\.\d+)?)(?:px|rem|em|%)$/;
+        if (typeof item.gutter === "string" && cssLength.test(item.gutter)) {
+          grid.style.setProperty("--layout-grid-gutter", item.gutter);
+        }
+        if (typeof item.margin === "string" && cssLength.test(item.margin)) {
+          visual.style.setProperty("--layout-grid-margin", item.margin);
+        }
+        for (let i = 0; i < columns; i++) {
+          const column = document.createElement("span");
+          column.className = "layout-grid-column";
+          grid.appendChild(column);
+        }
+        visual.appendChild(grid);
+        const content = document.createElement("div");
+        content.className = "layout-grid-content";
+        content.appendChild(createTextElement(
+          "span", "layout-grid-meta", item.category || `${columns} COLUMNS`
+        ));
+        content.appendChild(createTextElement(
+          "h4", "layout-grid-title", item.title || "Grid system"
+        ));
+        if (item.description) {
+          content.appendChild(createTextElement(
+            "p", "layout-grid-description", item.description
+          ));
+        }
+        card.append(visual, content);
+        gridGallery.appendChild(card);
+      });
+      layoutFeature("layout-grid-feature", gridGallery);
+    }
+
+    // 13.3 — SPACING & HIERARCHY
+
+    const spacingGallery = document.getElementById(
+      "layout-spacing-gallery"
+    );
+    if (spacingGallery) {
+      spacingGallery.replaceChildren();
+      layoutItems(layoutConfig.spacing).forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "layout-spacing-card";
+        card.appendChild(createTextElement(
+          "span", "layout-spacing-number", formatIndex(index + 1)
+        ));
+        const demo = document.createElement("div");
+        demo.className = "layout-spacing-demo";
+        const bars = Array.isArray(item.bars) && item.bars.length
+          ? item.bars.slice(0, 8) : [80, 50, 25];
+        bars.forEach(value => {
+          const bar = document.createElement("span");
+          bar.className = "layout-spacing-bar";
+          const height = Math.max(5, Math.min(100, Number(value) || 5));
+          bar.style.setProperty("--layout-bar-height", `${height}%`);
+          demo.appendChild(bar);
+        });
+        card.appendChild(demo);
+        card.appendChild(createTextElement(
+          "h4", "layout-spacing-title", item.title || "Spacing principle"
+        ));
+        if (item.description) {
+          card.appendChild(createTextElement(
+            "p", "layout-spacing-description", item.description
+          ));
+        }
+        spacingGallery.appendChild(card);
+      });
+      layoutFeature("layout-spacing-feature", spacingGallery);
+    }
+
+    // 13.4 — COMPOSITION EXAMPLES
+
+    const examplesGallery = document.getElementById(
+      "layout-examples-gallery"
+    );
+    if (examplesGallery) {
+      examplesGallery.replaceChildren();
+      layoutItems(layoutConfig.examples)
+        .filter(item => layoutImagePath(item.image))
+        .forEach(item => {
+          const card = document.createElement("article");
+          card.className = "layout-example-card";
+          const type = layoutTypes.has(item.layout) ? item.layout : "half";
+          card.classList.add(`layout-layout-${type}`);
+          const visual = document.createElement("div");
+          visual.className = "layout-example-visual";
+          visual.appendChild(layoutImage(
+            item, card, examplesGallery, "layout-examples-feature"
+          ));
+          card.appendChild(visual);
+          card.appendChild(layoutCaption(
+            item,
+            "layout-example-category",
+            "layout-example-title",
+            "layout-example-description"
+          ));
+          examplesGallery.appendChild(card);
+        });
+      layoutFeature("layout-examples-feature", examplesGallery);
+    }
+
+    // 13.5 — COMPOSITION DO / DON'T
+
+    const comparisonsGallery = document.getElementById(
+      "layout-comparison-gallery"
+    );
+    if (comparisonsGallery) {
+      comparisonsGallery.replaceChildren();
+      layoutItems(layoutConfig.comparisons).forEach(comparison => {
+        if (!comparison.approved || !comparison.avoid ||
+            !layoutImagePath(comparison.approved.image) ||
+            !layoutImagePath(comparison.avoid.image)) return;
+
+        const pair = document.createElement("div");
+        pair.className = "layout-comparison-pair";
+        let failed = false;
+        const removePair = () => {
+          if (failed) return;
+          failed = true;
+          pair.remove();
+          layoutFeature("layout-comparison-feature", comparisonsGallery);
+        };
+
+        [
+          { item: comparison.approved, approved: true },
+          { item: comparison.avoid, approved: false }
+        ].forEach(({ item, approved }) => {
+          const card = document.createElement("article");
+          card.className = "layout-comparison-card";
+          card.classList.add(
+            approved ? "layout-comparison-approved" : "layout-comparison-avoid"
+          );
+          const visual = document.createElement("div");
+          visual.className = "layout-comparison-visual";
+          const img = layoutImage(
+            item, card, comparisonsGallery, "layout-comparison-feature"
+          );
+          img.addEventListener("error", removePair);
+          visual.appendChild(img);
+          card.appendChild(visual);
+          card.appendChild(createTextElement(
+            "span", "layout-comparison-status",
+            approved ? "DO / APPROVED" : "DON'T / AVOID"
+          ));
+          card.appendChild(createTextElement(
+            "h4", "layout-comparison-title",
+            item.title || comparison.title || (approved ? "Approved" : "Avoid")
+          ));
+          if (item.description) {
+            card.appendChild(createTextElement(
+              "p", "layout-comparison-description", item.description
+            ));
+          }
+          pair.appendChild(card);
+        });
+        comparisonsGallery.appendChild(pair);
+      });
+      layoutFeature("layout-comparison-feature", comparisonsGallery);
+    }
+  }
+
+  // ========================================
+  // 14 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
