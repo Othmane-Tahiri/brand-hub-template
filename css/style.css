@@ -1,0 +1,10 @@
+
+/* Brand Hub — Master Stylesheet */
+/* We will build our three visual themes here. */
+
+:root {
+  --brand-primary: #202020;
+  --brand-background: #ffffff;
+  --brand-text: #202020;
+}
+      
