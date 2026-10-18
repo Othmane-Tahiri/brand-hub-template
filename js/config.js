@@ -566,32 +566,33 @@ const BRAND_CONFIG = {
   /*
    * Concept 02 — Editorial Photography Gallery
    *
-   * FULLY CLIENT-CONFIGURABLE
+   * STEP 19.5 — TEMPORARY GALLERY TEST
    *
-   * Each client can have:
+   * These photographs are examples only.
+   * They are not approved client assets.
    *
-   * - Zero or one featured photograph
-   * - Any number of photography categories
-   * - Any number of images per category
-   * - Any number of editorial gallery images
-   * - Any number of art-direction guidelines
-   * - Any number of Do / Don't comparisons
+   * Replace the images and descriptions
+   * when preparing a real brand guideline.
    *
-   * Empty collections remain hidden once
-   * the photography renderer is connected.
+   * The system supports:
    *
-   * IMAGE PATH EXAMPLE:
+   * - One optional featured photograph
+   * - Unlimited photography categories
+   * - Unlimited images per category
+   * - Unlimited editorial gallery images
+   * - Unlimited art-direction guidelines
+   * - Unlimited Do / Don't comparisons
+   *
+   * Empty collections are automatically
+   * hidden by the Photography renderer.
+   *
+   * For real client projects, use paths
+   * such as:
    *
    * "assets/photography/product-01.jpg"
    *
-   * Upload actual image files to GitHub
-   * before referencing their paths.
-   *
-   * Recommended image formats:
+   * Recommended formats:
    * JPG, PNG, WebP, AVIF.
-   *
-   * Use optimized photographs to keep
-   * the website fast on mobile.
    */
 
   photography: {
@@ -612,28 +613,28 @@ const BRAND_CONFIG = {
     // ------------------------------------
 
     /*
-     * Set enabled to true and provide
-     * an image to display the hero.
-     *
      * enabled: true / false
      * fit: "cover" / "contain"
      *
-     * Recommended source image:
-     * Landscape, ideally 1600px or wider.
+     * Use a high-resolution landscape image.
+     *
+     * This test photograph is from Unsplash.
      */
 
     featured: {
-      enabled: false,
+      enabled: true,
 
-      title: "Signature Photography",
-      category: "Photography / Art Direction",
+      title: "A Sense of Place",
+      category: "Signature Photography / Test",
 
       description:
-        "The defining photographic expression of the brand.",
+        "A defining visual atmosphere built through natural light, considered composition, and a quiet sense of storytelling.",
 
-      image: "",
+      image:
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&auto=format&fit=crop&q=85",
 
-      alt: "Signature brand photograph",
+      alt:
+        "Atmospheric forest landscape with soft natural light",
 
       fit: "cover"
     },
@@ -643,52 +644,130 @@ const BRAND_CONFIG = {
     // ------------------------------------
 
     /*
-     * Add or remove category objects freely.
+     * Each category can contain any
+     * number of photographs.
      *
-     * Each category can have any number
-     * of photographs in its images array.
+     * Each image creates a gallery card.
      *
-     * A category can be:
-     * Product, Lifestyle, Environment,
-     * People, Architecture, Detail, etc.
+     * You can add more categories or
+     * more images without changing HTML.
      *
-     * These names are examples only.
-     *
-     * Example category:
-     *
-     * {
-     *   title: "Product",
-     *   description: "Clean, considered product imagery.",
-     *   images: [
-     *     {
-     *       image: "assets/photography/product-01.jpg",
-     *       alt: "Product photographed on a neutral surface",
-     *       title: "Product Study 01",
-     *       fit: "cover"
-     *     },
-     *     {
-     *       image: "assets/photography/product-02.jpg",
-     *       alt: "Close-up of product materials",
-     *       title: "Product Study 02",
-     *       fit: "cover"
-     *     }
-     *   ]
-     * }
-     *
-     * Categories without valid images
-     * should be omitted by the renderer.
+     * Categories below are test examples.
      */
 
-    categories: [],
+    categories: [
+
+      {
+        title: "Product Photography",
+
+        description:
+          "Objects photographed with clarity, material sensitivity, and careful control of light.",
+
+        images: [
+
+          {
+            title: "Object Study",
+            description:
+              "A clean, minimal approach that allows the subject to remain the focus.",
+
+            image:
+              "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=85",
+
+            alt:
+              "Red sneaker photographed against a red background",
+
+            fit: "cover"
+          },
+
+          {
+            title: "Product Detail",
+            description:
+              "Close framing highlights the design, surface, and character of the object.",
+
+            image:
+              "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1000&auto=format&fit=crop&q=85",
+
+            alt:
+              "Minimal wristwatch photographed on a light background",
+
+            fit: "cover"
+          }
+
+        ]
+      },
+
+      {
+        title: "Environment Photography",
+
+        description:
+          "Spaces and environments captured with a strong sense of composition, atmosphere, and scale.",
+
+        images: [
+
+          {
+            title: "Architectural Rhythm",
+            description:
+              "Structured lines and quiet geometry establish a strong visual rhythm.",
+
+            image:
+              "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1000&auto=format&fit=crop&q=85",
+
+            alt:
+              "Modern white architectural building photographed from below",
+
+            fit: "cover"
+          },
+
+          {
+            title: "Natural Atmosphere",
+            description:
+              "An environmental image shaped by soft light and natural texture.",
+
+            image:
+              "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1000&auto=format&fit=crop&q=85",
+
+            alt:
+              "Warm sunlight falling across an atmospheric landscape",
+
+            fit: "cover"
+          }
+
+        ]
+      },
+
+      {
+        title: "Lifestyle Photography",
+
+        description:
+          "Everyday moments presented with an authentic, understated editorial quality.",
+
+        images: [
+
+          {
+            title: "Human Connection",
+            description:
+              "Natural expressions and authentic moments create a sense of personality.",
+
+            image:
+              "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&auto=format&fit=crop&q=85",
+
+            alt:
+              "Group of friends together outdoors",
+
+            fit: "cover"
+          }
+
+        ]
+      }
+
+    ],
 
     // ------------------------------------
     // 03 — EDITORIAL PHOTOGRAPHY GALLERY
     // ------------------------------------
 
     /*
-     * Add or remove individual photographs.
-     *
-     * Each object creates one gallery card.
+     * Each object creates one image card.
      *
      * Supported layouts:
      *
@@ -699,84 +778,254 @@ const BRAND_CONFIG = {
      * "split"
      * "split-reverse"
      *
-     * Use different layouts to create
-     * a curated editorial rhythm.
+     * Change the layout value to test
+     * different editorial compositions.
      *
-     * Example:
-     *
-     * {
-     *   title: "The Details",
-     *   category: "Detail Photography",
-     *   description: "An intimate look at material and texture.",
-     *   image: "assets/photography/detail-01.jpg",
-     *   alt: "Close-up of natural material texture",
-     *   fit: "cover",
-     *   layout: "full"
-     * }
+     * You can add unlimited photographs.
      */
 
-    gallery: [],
+    gallery: [
+
+      {
+        title: "The Atmosphere",
+        category: "Landscape / Test",
+
+        description:
+          "A full-width photograph establishes mood and gives the editorial gallery a strong visual opening.",
+
+        image:
+          "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1800&auto=format&fit=crop&q=85",
+
+        alt:
+          "Mountain landscape reflected in a calm lake",
+
+        fit: "cover",
+        layout: "full"
+      },
+
+      {
+        title: "Material & Form",
+        category: "Architecture / Test",
+
+        description:
+          "Architectural structure, repetition, and light create a considered composition.",
+
+        image:
+          "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1000&auto=format&fit=crop&q=85",
+
+        alt:
+          "Minimal modern architecture",
+
+        fit: "cover",
+        layout: "half"
+      },
+
+      {
+        title: "The Human Element",
+        category: "Lifestyle / Test",
+
+        description:
+          "Human presence introduces warmth and emotional connection.",
+
+        image:
+          "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&auto=format&fit=crop&q=85",
+
+        alt:
+          "People sharing a moment outdoors",
+
+        fit: "cover",
+        layout: "half"
+      },
+
+      {
+        title: "A Study in Light",
+        category: "Atmosphere / Test",
+
+        description:
+          "Soft light and natural shadows create a quiet, cinematic photographic direction.",
+
+        image:
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1400&auto=format&fit=crop&q=85",
+
+        alt:
+          "Sunlight filtering through a forest",
+
+        fit: "cover",
+        layout: "split"
+      },
+
+      {
+        title: "The Natural World",
+        category: "Environment / Test",
+
+        description:
+          "A carefully composed natural scene provides visual balance and breathing room.",
+
+        image:
+          "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400&auto=format&fit=crop&q=85",
+
+        alt:
+          "Soft sunlight over a natural landscape",
+
+        fit: "cover",
+        layout: "split-reverse"
+      },
+
+      {
+        title: "Quiet Geometry",
+        category: "Composition / Test",
+
+        description:
+          "A wide photographic composition explores balance, negative space, and architectural form.",
+
+        image:
+          "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1600&auto=format&fit=crop&q=85",
+
+        alt:
+          "Minimal geometric architecture",
+
+        fit: "cover",
+        layout: "wide"
+      }
+
+    ],
 
     // ------------------------------------
     // 04 — ART DIRECTION GUIDELINES
     // ------------------------------------
 
     /*
-     * Each object creates one guideline card.
+     * Add or remove any number of rules.
      *
-     * Use only relevant directions
-     * for the individual client.
+     * These are sample guidelines only.
      *
-     * Example:
-     *
-     * {
-     *   title: "Lighting",
-     *   description:
-     *     "Use soft directional lighting with natural shadows."
-     * }
-     *
-     * Other possible topics:
-     * Composition, Color, Mood,
-     * Styling, Background, Retouching.
+     * Actual art direction must be
+     * defined for each branding client.
      */
 
-    artDirection: [],
+    artDirection: [
+
+      {
+        title: "Lighting",
+        description:
+          "Test direction: prioritize natural or carefully controlled directional light. Preserve depth through subtle highlights and believable shadows."
+      },
+
+      {
+        title: "Composition",
+        description:
+          "Test direction: create deliberate compositions with clear visual hierarchy, balanced framing, and intentional negative space."
+      },
+
+      {
+        title: "Color & Tone",
+        description:
+          "Test direction: maintain a consistent color atmosphere across photographs. Avoid uncontrolled shifts in saturation and white balance."
+      },
+
+      {
+        title: "Mood & Emotion",
+        description:
+          "Test direction: select imagery that communicates an authentic emotional quality rather than an overly staged appearance."
+      },
+
+      {
+        title: "Background & Styling",
+        description:
+          "Test direction: choose backgrounds and supporting objects that complement the subject without creating unnecessary visual distractions."
+      },
+
+      {
+        title: "Retouching",
+        description:
+          "Test direction: preserve realistic texture, natural contrast, and material detail. Avoid excessive sharpening or artificial effects."
+      }
+
+    ],
 
     // ------------------------------------
     // 05 — PHOTOGRAPHY DO / DON'T
     // ------------------------------------
 
     /*
-     * Each object represents one comparison
-     * between approved and avoided imagery.
+     * Each comparison includes:
      *
-     * Both images are optional at the
-     * configuration level, but the renderer
-     * should show a comparison only when
-     * both image paths are provided.
+     * approved = What to use
+     * avoid    = What not to use
      *
-     * Example:
+     * Both image paths are required
+     * for a comparison to appear.
      *
-     * {
-     *   title: "Lighting Direction",
+     * These are layout-testing examples,
+     * not approved client standards.
      *
-     *   approved: {
-     *     image: "assets/photography/lighting-do.jpg",
-     *     alt: "Product with soft directional lighting",
-     *     title: "Directional Lighting",
-     *     description: "Use intentional highlights and shadows."
-     *   },
-     *
-     *   avoid: {
-     *     image: "assets/photography/lighting-dont.jpg",
-     *     alt: "Product under harsh flat lighting",
-     *     title: "Flat Lighting",
-     *     description: "Avoid flat, uncontrolled illumination."
-     *   }
-     * }
+     * Replace them with carefully selected
+     * visual comparisons for each client.
      */
 
-    comparisons: []
+    comparisons: [
+
+      {
+        title: "Composition",
+
+        approved: {
+          image:
+            "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1000&auto=format&fit=crop&q=85",
+
+          alt:
+            "Modern architecture with structured lines and clear composition",
+
+          title: "Intentional Framing",
+
+          description:
+            "DO — Use deliberate framing, balanced geometry, and clear focal points."
+        },
+
+        avoid: {
+          image:
+            "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1000&auto=format&fit=crop&q=85",
+
+          alt:
+            "Broad natural landscape used as a comparison placeholder",
+
+          title: "Unfocused Composition",
+
+          description:
+            "DON'T — Avoid imagery without a clear subject or intentional visual hierarchy."
+        }
+      },
+
+      {
+        title: "Lighting",
+
+        approved: {
+          image:
+            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1000&auto=format&fit=crop&q=85",
+
+          alt:
+            "Forest with directional natural light",
+
+          title: "Natural Depth",
+
+          description:
+            "DO — Preserve natural light transitions, atmospheric depth, and realistic shadows."
+        },
+
+        avoid: {
+          image:
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&auto=format&fit=crop&q=85",
+
+          alt:
+            "Highly saturated red product photograph used as a test comparison",
+
+          title: "Uncontrolled Saturation",
+
+          description:
+            "DON'T — Avoid color treatments that conflict with the intended photographic atmosphere."
+        }
+      }
+
+    ]
 
   },
 
