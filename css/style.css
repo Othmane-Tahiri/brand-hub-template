@@ -521,7 +521,7 @@ a {
 }
 
 /* =========================================
-   STEP 17.13B — LOGO COLOR COMPATIBILITY
+   STEP 17.13D — LOGO COLOR COMPATIBILITY
    ========================================= */
 
 /* Automatically accommodates any card count */
@@ -553,7 +553,7 @@ a {
 
 /* Centered square displaying approved logo color */
 
-#logo .compatibility-swatch {
+#logo .compatibility-square {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -568,7 +568,7 @@ a {
 
 /* Optional actual logo inside the centered square */
 
-#logo .compatibility-swatch img {
+#logo .compatibility-square img {
   display: block;
 
   width: 75%;
