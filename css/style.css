@@ -4569,3 +4569,246 @@ span:last-child {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* =========================================
+   STEP 25.2 — RESOURCES & DOWNLOADS
+   Editorial Brand Asset Library
+   ========================================= */
+#resources {
+  --resources-paper: var(--surface-warm);
+  --resources-soft: var(--surface-soft);
+  --resources-ink: var(--brand-text);
+  --resources-muted: var(--muted-text);
+  --resources-line: var(--border-color);
+}
+#resources .resources-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 360px;
+  padding: 65px 55px;
+  background: var(--resources-paper);
+}
+#resources .resources-editorial-intro .panel-label { margin-bottom: 30px; }
+#resources .resources-editorial-intro h3 {
+  margin: 0 0 22px;
+  max-width: 850px;
+  font-size: clamp(44px, 6.5vw, 88px);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -.06em;
+  overflow-wrap: anywhere;
+}
+#resources .resources-editorial-intro p {
+  margin: 0;
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--resources-muted);
+}
+#resources .resources-feature { margin-top: 80px; min-width: 0; }
+#resources .resources-feature[hidden] { display: none !important; }
+#resources .resources-section-heading { margin-bottom: 30px; }
+#resources .resources-section-heading .panel-label { margin-bottom: 12px; }
+#resources .resources-section-heading h3 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+#resources .resources-section-heading p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--resources-muted);
+}
+#resources .resources-featured-canvas { min-width: 0; }
+#resources .resources-featured-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  min-height: 330px;
+  overflow: hidden;
+  background: var(--resources-paper);
+}
+#resources .resources-featured-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 330px;
+  overflow: hidden;
+  background: var(--resources-ink);
+  color: #fff;
+}
+#resources .resources-featured-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#resources .resources-featured-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(28px, 4vw, 55px);
+}
+#resources .resources-featured-category,
+#resources .resources-category-label,
+#resources .resources-asset-format,
+#resources .resources-format-extension,
+#resources .resources-instruction-number,
+#resources .resources-delivery-label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--resources-muted);
+}
+#resources .resources-featured-title {
+  margin: 0 0 16px;
+  font-size: clamp(29px, 3.6vw, 48px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1.13;
+}
+#resources .resources-featured-description,
+#resources .resources-category-description,
+#resources .resources-asset-description,
+#resources .resources-format-description,
+#resources .resources-instruction-description,
+#resources .resources-delivery-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--resources-muted);
+}
+#resources .resources-download-link,
+#resources .resources-asset-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 12px 19px;
+  border: 1px solid var(--resources-ink);
+  background: var(--resources-ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+#resources .resources-download-link:hover,
+#resources .resources-asset-link:hover { background: transparent; color: var(--resources-ink); }
+#resources .resources-library-gallery { display: grid; grid-template-columns: 1fr; gap: 24px; }
+#resources .resources-category-card {
+  min-width: 0;
+  padding: 32px;
+  background: var(--resources-soft);
+  border: 1px solid var(--resources-line);
+}
+#resources .resources-category-title {
+  margin: 0 0 10px;
+  font-size: clamp(23px, 2.5vw, 32px);
+  letter-spacing: -.035em;
+}
+#resources .resources-assets-list,
+#resources .resources-category-assets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+#resources .resources-asset-card {
+  min-width: 0;
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--resources-line);
+}
+#resources .resources-asset-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+#resources .resources-asset-link { margin-top: 18px; min-height: 38px; padding: 9px 15px; }
+#resources .resources-formats-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+#resources .resources-format-card {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--resources-line);
+  background: #fff;
+}
+#resources .resources-format-extension { font-size: 24px; color: var(--resources-ink); letter-spacing: -.025em; }
+#resources .resources-format-title { margin: 0 0 12px; font-size: 19px; letter-spacing: -.025em; }
+#resources .resources-instructions-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+#resources .resources-instruction-card {
+  min-width: 0;
+  padding: 32px;
+  background: var(--resources-soft);
+  border: 1px solid var(--resources-line);
+}
+#resources .resources-instruction-number { margin-bottom: 38px; }
+#resources .resources-instruction-title { margin: 0 0 12px; font-size: 23px; line-height: 1.25; letter-spacing: -.03em; }
+#resources .resources-delivery-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+#resources .resources-delivery-card {
+  min-width: 0;
+  padding: 30px;
+  background: var(--resources-paper);
+}
+#resources .resources-delivery-title,
+#resources .resources-delivery-value { margin: 0 0 10px; font-size: 21px; font-weight: 600; letter-spacing: -.025em; overflow-wrap: anywhere; }
+#resources a:focus-visible { outline-offset: 4px; }
+
+/* MOTION LAYOUT CORRECTION — keep logo previews full width.
+   Applies to the secondary logo animation without changing other sections. */
+#motion .motion-logo-gallery { grid-template-columns: minmax(0, 1fr); }
+#motion .motion-logo-gallery > .motion-logo-card,
+#motion .motion-logo-gallery > .motion-logo-card:nth-child(2) {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+#motion .motion-logo-gallery .motion-logo-visual {
+  width: 100%;
+  min-height: 320px;
+  aspect-ratio: 16 / 9;
+}
+#motion .motion-logo-gallery .motion-logo-visual video,
+#motion .motion-logo-gallery .motion-logo-visual img {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  #resources .resources-editorial-intro { margin-top: 60px; min-height: 300px; padding: 50px 38px; }
+  #resources .resources-feature { margin-top: 65px; }
+  #resources .resources-formats-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #motion .motion-logo-gallery .motion-logo-visual { min-height: 260px; }
+}
+@media (max-width: 640px) {
+  #resources .resources-editorial-intro { margin-top: 50px; min-height: 270px; padding: 42px 26px; }
+  #resources .resources-editorial-intro h3 { font-size: clamp(40px, 11vw, 64px); }
+  #resources .resources-feature { margin-top: 55px; }
+  #resources .resources-featured-card { grid-template-columns: 1fr; }
+  #resources .resources-featured-visual { min-height: 240px; }
+  #resources .resources-featured-content { padding: 28px 24px; }
+  #resources .resources-assets-list,
+  #resources .resources-category-assets,
+  #resources .resources-formats-list,
+  #resources .resources-instructions-list,
+  #resources .resources-delivery-details { grid-template-columns: 1fr; }
+  #resources .resources-category-card,
+  #resources .resources-instruction-card { padding: 24px; }
+  #motion .motion-logo-gallery .motion-logo-visual { min-height: 210px; aspect-ratio: 4 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #resources .resources-download-link,
+  #resources .resources-asset-link { transition: none; }
+}
