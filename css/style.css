@@ -3197,3 +3197,390 @@ span:last-child {
   }
 }
 
+/* =========================================
+   21 — BRAND VOICE & MESSAGING
+   Concept 02 — Editorial Verbal Identity
+   ========================================= */
+
+#voice {
+  --voice-ink: var(--brand-text, #202020);
+  --voice-paper: var(--surface-warm, #f2f1ed);
+  --voice-soft: var(--surface-soft, #f8f8f6);
+  --voice-line: var(--border-color, #e8e8e8);
+  --voice-muted: var(--muted-text, #777777);
+}
+
+#voice .voice-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 390px;
+  padding: 65px 55px;
+  background: var(--voice-paper);
+  overflow: hidden;
+}
+
+#voice .voice-editorial-intro .panel-label {
+  margin-bottom: 30px;
+}
+
+#voice .voice-editorial-intro h3 {
+  max-width: 880px;
+  margin: 0 0 24px;
+  font-size: clamp(46px, 6.5vw, 90px);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+
+#voice .voice-editorial-intro p {
+  max-width: 510px;
+  margin: 0;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+#voice .voice-feature {
+  min-width: 0;
+  margin-top: 85px;
+}
+
+#voice .voice-feature[hidden] { display: none !important; }
+
+#voice .voice-section-heading { margin-bottom: 30px; }
+#voice .voice-section-heading .panel-label { margin-bottom: 12px; }
+
+#voice .voice-section-heading h3 {
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+#voice .voice-section-heading p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--voice-muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+/* 01 — Personality: confident typographic cards */
+#voice .voice-personality-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#voice .voice-personality-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 250px;
+  padding: 32px;
+  border: 1px solid var(--voice-line);
+  background: var(--voice-soft);
+}
+
+#voice .voice-personality-number,
+#voice .voice-tone-number,
+#voice .voice-pillar-number,
+#voice .voice-example-number {
+  display: block;
+  color: var(--voice-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+#voice .voice-personality-number { margin-bottom: auto; }
+
+#voice .voice-personality-title {
+  margin: 34px 0 12px;
+  font-size: clamp(25px, 3vw, 39px);
+  font-weight: 600;
+  line-height: 1.13;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+#voice .voice-personality-description {
+  max-width: 470px;
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* 02 — Tone: contextual editorial rows */
+#voice .voice-tone-gallery {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--voice-line);
+}
+
+#voice .voice-tone-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: 36px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--voice-line);
+}
+
+#voice .voice-tone-category {
+  display: block;
+  margin-bottom: 13px;
+  color: var(--voice-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#voice .voice-tone-title {
+  margin: 0;
+  font-size: clamp(22px, 2.7vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+#voice .voice-tone-description {
+  margin: 0 0 18px;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+#voice .voice-tone-example {
+  margin: 0;
+  padding: 18px 22px;
+  border-left: 2px solid var(--voice-ink);
+  background: var(--voice-soft);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+/* 03 — Messaging pillars: modular narrative cards */
+#voice .voice-pillars-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#voice .voice-pillar-card {
+  min-width: 0;
+  padding: 34px;
+  background: var(--voice-paper);
+}
+
+#voice .voice-pillar-number { margin-bottom: 58px; }
+
+#voice .voice-pillar-title {
+  margin: 0 0 15px;
+  font-size: clamp(25px, 3vw, 39px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+#voice .voice-pillar-description {
+  margin: 0;
+  max-width: 450px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #666;
+}
+
+#voice .voice-pillar-statement {
+  margin: 25px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid #d9d7d2;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+
+/* 04 — Writing examples: large-scale copy specimens */
+#voice .voice-examples-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#voice .voice-example-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 330px;
+  padding: 32px;
+  background: var(--voice-soft);
+  border: 1px solid var(--voice-line);
+}
+
+#voice .voice-example-card.voice-layout-full,
+#voice .voice-example-card.voice-layout-wide {
+  grid-column: 1 / -1;
+  min-height: 380px;
+}
+
+#voice .voice-example-card:nth-child(even) {
+  background: var(--voice-ink);
+  color: #fff;
+  border-color: var(--voice-ink);
+}
+
+#voice .voice-example-card:nth-child(even) .voice-example-category,
+#voice .voice-example-card:nth-child(even) .voice-example-description,
+#voice .voice-example-card:nth-child(even) .voice-example-number {
+  color: rgba(255,255,255,.68);
+}
+
+#voice .voice-example-category {
+  display: block;
+  margin-bottom: 35px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--voice-muted);
+}
+
+#voice .voice-example-copy {
+  margin: auto 0 25px;
+  font-size: clamp(27px, 4vw, 57px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+#voice .voice-example-description {
+  max-width: 570px;
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* 05 — Voice standards: paired DO / DON'T specimens */
+#voice .voice-comparison-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+#voice .voice-comparison-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#voice .voice-comparison-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 290px;
+  padding: 30px;
+  border: 1px solid var(--voice-line);
+  background: var(--voice-soft);
+}
+
+#voice .voice-comparison-card.is-approved {
+  background: var(--voice-paper);
+}
+
+#voice .voice-comparison-card.is-avoid {
+  background: #eee7e5;
+}
+
+#voice .voice-comparison-status {
+  display: block;
+  margin-bottom: 35px;
+  color: #5f655d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#voice .voice-comparison-card.is-avoid .voice-comparison-status {
+  color: #86625b;
+}
+
+#voice .voice-comparison-copy {
+  margin: 0 0 28px;
+  font-size: clamp(23px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+#voice .voice-comparison-title {
+  margin: auto 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+#voice .voice-comparison-description {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* Responsive refinements */
+@media (max-width: 900px) {
+  #voice .voice-editorial-intro {
+    min-height: 320px;
+    margin-top: 60px;
+    padding: 50px 38px;
+  }
+  #voice .voice-feature { margin-top: 65px; }
+  #voice .voice-personality-card,
+  #voice .voice-pillar-card,
+  #voice .voice-example-card,
+  #voice .voice-comparison-card { padding: 26px; }
+  #voice .voice-tone-card { gap: 24px; }
+}
+
+@media (max-width: 640px) {
+  #voice .voice-editorial-intro {
+    min-height: 290px;
+    margin-top: 50px;
+    padding: 42px 26px;
+  }
+  #voice .voice-editorial-intro h3 {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+  #voice .voice-editorial-intro p { font-size: 14px; }
+  #voice .voice-feature { margin-top: 55px; }
+  #voice .voice-section-heading { margin-bottom: 24px; }
+  #voice .voice-personality-gallery,
+  #voice .voice-pillars-gallery,
+  #voice .voice-examples-gallery,
+  #voice .voice-comparison-pair { grid-template-columns: 1fr; }
+  #voice .voice-tone-card { grid-template-columns: 1fr; gap: 18px; }
+  #voice .voice-personality-card { min-height: 210px; }
+  #voice .voice-pillar-number { margin-bottom: 38px; }
+  #voice .voice-example-card,
+  #voice .voice-example-card.voice-layout-full,
+  #voice .voice-example-card.voice-layout-wide { grid-column: 1; min-height: 290px; }
+  #voice .voice-comparison-card { min-height: 250px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #voice * { scroll-behavior: auto; }
+}
