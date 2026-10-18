@@ -82,12 +82,13 @@ a {
 .sidebar-label {
   display: block;
 
+  margin-bottom: 14px;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
 
   color: var(--muted-text);
-  margin-bottom: 14px;
 }
 
 .sidebar-header h2 {
@@ -166,12 +167,13 @@ a {
 }
 
 .page-eyebrow {
+  margin-bottom: 20px;
+
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2.5px;
 
   color: var(--muted-text);
-  margin-bottom: 20px;
 }
 
 .main-content h1 {
@@ -285,7 +287,7 @@ a {
    LOGO SYSTEM — SECTION 02
    ========================================= */
 
-/* Primary logo introduction */
+/* Existing logo guideline cards */
 
 #logo .welcome-panel {
   margin-top: 45px;
@@ -294,8 +296,6 @@ a {
   background: var(--surface-warm);
   border: 1px solid #e9e7e2;
 }
-
-/* Individual logo guideline cards */
 
 #logo .logo-block {
   margin-top: 18px;
@@ -309,13 +309,9 @@ a {
     background-color 0.2s ease;
 }
 
-/* More breathing room after the primary panel */
-
 #logo .welcome-panel + .logo-block {
   margin-top: 42px;
 }
-
-/* Card headings */
 
 #logo .logo-block h3 {
   margin: 0 0 14px;
@@ -329,8 +325,6 @@ a {
   color: var(--brand-text);
 }
 
-/* Card descriptions */
-
 #logo .logo-block p {
   margin: 0;
 
@@ -342,13 +336,245 @@ a {
   color: #666666;
 }
 
-/* Gentle hover feedback */
-
 @media (hover: hover) {
   #logo .logo-block:hover {
     border-color: #d4d4d0;
     background: #f5f5f2;
   }
+}
+
+/* =========================================
+   HYBRID LOGO GALLERY
+   ========================================= */
+
+/* Each logo presentation group */
+
+#logo .logo-feature {
+  margin-top: 70px;
+}
+
+/* Section headings and descriptions */
+
+#logo .logo-section-heading {
+  margin-bottom: 26px;
+}
+
+#logo .logo-section-heading .panel-label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+#logo .logo-section-heading h3 {
+  margin: 0 0 10px;
+
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+#logo .logo-section-heading p {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: var(--muted-text);
+}
+
+/* Visual logo preview cards */
+
+#logo .logo-preview {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 260px;
+
+  padding: 45px 25px;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  text-align: center;
+}
+
+/* Large primary logo showcase */
+
+#logo .logo-preview-primary {
+  min-height: 400px;
+
+  background: var(--surface-warm);
+  color: var(--brand-text);
+}
+
+/* Light logo cards */
+
+#logo .logo-preview-light {
+  background: #e8e7e5;
+  color: #202020;
+}
+
+/* Dark logo cards */
+
+#logo .logo-preview-dark {
+  background: #202020;
+  color: #ffffff;
+}
+
+/* Temporary logo artwork */
+
+#logo .logo-placeholder {
+  display: block;
+  max-width: 100%;
+
+  overflow-wrap: anywhere;
+
+  font-size: clamp(30px, 4vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+/* Logo labels */
+
+#logo .logo-caption {
+  display: block;
+  margin-top: 20px;
+
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  opacity: 0.65;
+}
+
+/* Two-column logo gallery */
+
+#logo .logo-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#logo .logo-feature + .logo-block {
+  margin-top: 70px;
+}
+
+/* =========================================
+   STEP 17.13B — CLEAR SPACE SHOWCASE
+   ========================================= */
+
+/* Large outer presentation rectangle */
+
+#logo .clear-space-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 390px;
+  padding: 55px;
+
+  background: var(--surface-warm);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+/* Dashed outline represents the spacing zone */
+
+#logo .clear-space-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 540px);
+  min-height: 230px;
+
+  padding: 55px 35px;
+
+  border: 1.5px dashed #aaa8a3;
+  border-radius: 4px;
+}
+
+/* Logo centered inside the clear-space rectangle */
+
+#logo .clear-space-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 105px;
+
+  text-align: center;
+}
+
+#logo .clear-space-logo .logo-placeholder {
+  font-size: clamp(34px, 5vw, 68px);
+}
+
+/* =========================================
+   STEP 17.13B — LOGO COLOR COMPATIBILITY
+   ========================================= */
+
+/* Automatically accommodates any card count */
+
+#logo .logo-compatibility-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+/* Each approved pairing */
+
+#logo .compatibility-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 235px;
+
+  padding: 25px;
+
+  border-radius: 9px;
+  overflow: hidden;
+
+  background: var(--surface-soft);
+}
+
+/* Centered square displaying approved logo color */
+
+#logo .compatibility-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(45%, 105px);
+  aspect-ratio: 1;
+
+  border-radius: 5px;
+
+  background: var(--brand-primary);
+}
+
+/* Optional actual logo inside the centered square */
+
+#logo .compatibility-swatch img {
+  display: block;
+
+  width: 75%;
+  height: 75%;
+
+  object-fit: contain;
 }
 
 /* =========================================
@@ -388,6 +614,32 @@ a {
 
   #logo .logo-block {
     padding: 32px;
+  }
+
+  #logo .logo-feature {
+    margin-top: 55px;
+  }
+
+  #logo .logo-preview-primary {
+    min-height: 320px;
+  }
+
+  #logo .logo-preview {
+    padding: 35px 20px;
+  }
+
+  #logo .clear-space-card {
+    min-height: 320px;
+    padding: 35px;
+  }
+
+  #logo .clear-space-boundary {
+    min-height: 200px;
+    padding: 35px;
+  }
+
+  #logo .logo-compatibility-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -450,161 +702,7 @@ a {
   #logo .logo-block h3 {
     font-size: 23px;
   }
-}
 
-/* =========================================
-   ACCESSIBILITY
-   ========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  html {
-    scroll-behavior: auto;
-  }
-
-  .nav-link,
-  #logo .logo-block {
-    transition: none;
-  }
-}
-
-/* =========================================
-   STEP 17.12B — HYBRID LOGO GALLERY
-   Theme 01: Minimal Swiss
-   ========================================= */
-
-/* Each logo presentation group */
-
-#logo .logo-feature {
-  margin-top: 70px;
-}
-
-/* Section headings and descriptions */
-
-#logo .logo-section-heading {
-  margin-bottom: 26px;
-}
-
-#logo .logo-section-heading .panel-label {
-  display: block;
-  margin-bottom: 12px;
-}
-
-#logo .logo-section-heading h3 {
-  margin: 0 0 10px;
-  font-size: clamp(26px, 3vw, 40px);
-  line-height: 1.2;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-}
-
-#logo .logo-section-heading p {
-  margin: 0;
-  max-width: 650px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--muted-text);
-}
-
-/* Visual logo preview cards */
-
-#logo .logo-preview {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 0;
-  min-height: 260px;
-  padding: 45px 25px;
-
-  border-radius: 10px;
-  overflow: hidden;
-  text-align: center;
-}
-
-/* Large primary logo showcase */
-
-#logo .logo-preview-primary {
-  min-height: 400px;
-  background: var(--surface-warm);
-  color: var(--brand-text);
-}
-
-/* Light logo cards */
-
-#logo .logo-preview-light {
-  background: #e8e7e5;
-  color: #202020;
-}
-
-/* Dark logo cards */
-
-#logo .logo-preview-dark {
-  background: #202020;
-  color: #ffffff;
-}
-
-/* Temporary logo artwork */
-
-#logo .logo-placeholder {
-  display: block;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-
-  font-size: clamp(30px, 4vw, 60px);
-  font-weight: 700;
-  letter-spacing: -0.045em;
-  line-height: 1.1;
-}
-
-/* Logo labels */
-
-#logo .logo-caption {
-  display: block;
-  margin-top: 20px;
-
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-
-  opacity: 0.65;
-}
-
-/* Two-column logo gallery */
-
-#logo .logo-preview-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-/* Spacing before guideline cards */
-
-#logo .logo-feature + .logo-block {
-  margin-top: 70px;
-}
-
-/* =========================================
-   RESPONSIVE LOGO GALLERY
-   ========================================= */
-
-@media (max-width: 900px) {
-  #logo .logo-feature {
-    margin-top: 55px;
-  }
-
-  #logo .logo-preview-primary {
-    min-height: 320px;
-  }
-
-  #logo .logo-preview {
-    padding: 35px 20px;
-  }
-}
-
-@media (max-width: 640px) {
   #logo .logo-feature {
     margin-top: 45px;
   }
@@ -629,5 +727,44 @@ a {
 
   #logo .logo-feature + .logo-block {
     margin-top: 50px;
+  }
+
+  #logo .clear-space-card {
+    min-height: 260px;
+    padding: 22px;
+  }
+
+  #logo .clear-space-boundary {
+    min-height: 175px;
+    padding: 25px 15px;
+  }
+
+  #logo .clear-space-logo .logo-placeholder {
+    font-size: clamp(26px, 8vw, 44px);
+  }
+
+  #logo .logo-compatibility-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  #logo .compatibility-card {
+    min-height: 220px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .nav-link,
+  #logo .logo-block {
+    transition: none;
   }
 }
