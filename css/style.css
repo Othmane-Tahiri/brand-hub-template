@@ -1317,3 +1317,742 @@ span:last-child {
     transition: none;
   }
 }
+
+/* =========================================
+   GRAPHIC ELEMENTS SYSTEM
+   Concept 02 — Visual Identity Canvas
+
+   Dynamic, client-configurable graphic assets.
+   Supports:
+   - Signature artwork
+   - Graphic asset gallery
+   - Detail and application previews
+   - Usage guidelines
+   ========================================= */
+
+
+/* =========================================
+   01 — GRAPHIC SYSTEM VARIABLES
+   ========================================= */
+
+#graphics {
+  --graphics-ink: #202020;
+  --graphics-paper: #f2f1ed;
+  --graphics-soft: #f8f8f6;
+  --graphics-line: #e8e8e8;
+  --graphics-muted: #777777;
+  --graphics-white: #ffffff;
+}
+
+
+/* =========================================
+   02 — EDITORIAL INTRO
+   ========================================= */
+
+#graphics .graphics-editorial-intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 390px;
+  padding: 65px 55px;
+  overflow: hidden;
+  background: var(--graphics-paper);
+  color: var(--graphics-ink);
+}
+
+#graphics .graphics-editorial-intro .panel-label {
+  margin-bottom: 32px;
+  color: #777777;
+}
+
+#graphics .graphics-editorial-intro h3 {
+  margin: 0 0 25px;
+  max-width: 850px;
+  font-size: clamp(45px, 6.5vw, 90px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+
+#graphics .graphics-editorial-intro p {
+  margin: 0;
+  max-width: 490px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #666666;
+}
+
+
+/* =========================================
+   03 — FEATURE SECTION HEADINGS
+   ========================================= */
+
+#graphics .graphics-feature {
+  margin-top: 85px;
+  min-width: 0;
+}
+
+#graphics .graphics-feature[hidden] {
+  display: none !important;
+}
+
+#graphics .graphics-section-heading {
+  margin-bottom: 32px;
+}
+
+#graphics .graphics-section-heading .panel-label {
+  margin-bottom: 12px;
+}
+
+#graphics .graphics-section-heading h3 {
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+#graphics .graphics-section-heading p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--graphics-muted);
+}
+
+
+/* =========================================
+   04 — SHARED GRAPHIC IMAGE STYLES
+   ========================================= */
+
+#graphics img {
+  display: block;
+  max-width: 100%;
+}
+
+#graphics .graphics-artwork-image,
+#graphics .graphics-asset-image,
+#graphics .graphics-detail-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--graphics-image-fit, cover);
+  object-position: center;
+}
+
+#graphics .graphics-artwork-frame,
+#graphics .graphics-asset-visual,
+#graphics .graphics-detail-visual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#graphics .graphics-artwork-frame img,
+#graphics .graphics-asset-visual img,
+#graphics .graphics-detail-visual img {
+  transition: transform 0.7s ease;
+}
+
+@media (hover: hover) {
+
+  #graphics .graphics-artwork-frame:hover img,
+  #graphics .graphics-asset-card:hover img,
+  #graphics .graphics-detail-card:hover img {
+    transform: scale(1.035);
+  }
+
+}
+
+
+/* =========================================
+   05 — SIGNATURE ARTWORK CANVAS
+   ========================================= */
+
+#graphics .graphics-hero-canvas {
+  min-width: 0;
+}
+
+#graphics .graphics-hero-artwork {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--graphics-paper);
+}
+
+#graphics .graphics-hero-artwork .graphics-artwork-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 500px;
+  aspect-ratio: 16 / 10;
+  background: var(
+    --graphics-artwork-background,
+    var(--graphics-paper)
+  );
+}
+
+#graphics .graphics-hero-artwork .graphics-artwork-image {
+  position: absolute;
+  inset: 0;
+}
+
+#graphics .graphics-hero-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+  padding: 28px 32px 32px;
+  background: var(--graphics-white);
+  border: 1px solid var(--graphics-line);
+  border-top: 0;
+}
+
+#graphics .graphics-hero-caption-main {
+  min-width: 0;
+}
+
+#graphics .graphics-hero-category {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-hero-title {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+#graphics .graphics-hero-description {
+  margin: 0;
+  max-width: 570px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-hero-index {
+  flex-shrink: 0;
+  padding-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--graphics-muted);
+}
+
+
+/* =========================================
+   06 — FLEXIBLE GRAPHIC ASSET GALLERY
+   ========================================= */
+
+#graphics .graphics-asset-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+#graphics .graphics-asset-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--graphics-white);
+}
+
+#graphics .graphics-asset-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(
+    --graphics-artwork-background,
+    var(--graphics-paper)
+  );
+}
+
+#graphics .graphics-asset-image {
+  position: absolute;
+  inset: 0;
+}
+
+#graphics .graphics-asset-content {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 2px 12px;
+}
+
+#graphics .graphics-asset-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-asset-title {
+  margin: 0 0 10px;
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+#graphics .graphics-asset-description {
+  margin: 0;
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-asset-number {
+  display: block;
+  margin-top: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--graphics-muted);
+}
+
+
+/* =========================================
+   07 — EDITORIAL LAYOUT VARIATIONS
+   ========================================= */
+
+/*
+   JavaScript can assign these classes
+   depending on the client's configuration:
+
+   graphics-layout-full
+   graphics-layout-half
+   graphics-layout-wide
+   graphics-layout-tall
+*/
+
+#graphics .graphics-asset-card.graphics-layout-full {
+  grid-column: 1 / -1;
+}
+
+#graphics .graphics-layout-full .graphics-asset-visual {
+  aspect-ratio: 16 / 9;
+  min-height: 360px;
+}
+
+#graphics .graphics-asset-card.graphics-layout-half {
+  grid-column: span 1;
+}
+
+#graphics .graphics-asset-card.graphics-layout-wide {
+  grid-column: 1 / -1;
+}
+
+#graphics .graphics-layout-wide .graphics-asset-visual {
+  aspect-ratio: 16 / 8;
+  min-height: 320px;
+}
+
+#graphics .graphics-layout-tall .graphics-asset-visual {
+  aspect-ratio: 3 / 4;
+}
+
+/* Alternating editorial compositions */
+
+#graphics .graphics-asset-card.graphics-layout-split {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: stretch;
+  background: var(--graphics-paper);
+}
+
+#graphics .graphics-layout-split .graphics-asset-visual {
+  height: 100%;
+  min-height: 390px;
+  aspect-ratio: auto;
+}
+
+#graphics .graphics-layout-split .graphics-asset-content {
+  justify-content: center;
+  padding: 45px;
+}
+
+#graphics .graphics-asset-card.graphics-layout-split-reverse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  align-items: stretch;
+  background: var(--graphics-paper);
+}
+
+#graphics .graphics-layout-split-reverse .graphics-asset-visual {
+  grid-column: 2;
+  grid-row: 1;
+  height: 100%;
+  min-height: 390px;
+  aspect-ratio: auto;
+}
+
+#graphics .graphics-layout-split-reverse .graphics-asset-content {
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: center;
+  padding: 45px;
+}
+
+
+/* =========================================
+   08 — GRAPHIC DETAILS & APPLICATIONS
+   ========================================= */
+
+#graphics .graphics-details-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#graphics .graphics-detail-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+#graphics .graphics-detail-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(
+    --graphics-artwork-background,
+    var(--graphics-paper)
+  );
+}
+
+#graphics .graphics-detail-image {
+  position: absolute;
+  inset: 0;
+}
+
+#graphics .graphics-detail-content {
+  padding: 22px 0 8px;
+}
+
+#graphics .graphics-detail-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-detail-title {
+  margin: 0 0 8px;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+#graphics .graphics-detail-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-detail-card.graphics-layout-full {
+  grid-column: 1 / -1;
+}
+
+#graphics .graphics-detail-card.graphics-layout-full
+.graphics-detail-visual {
+  aspect-ratio: 16 / 9;
+}
+
+
+/* =========================================
+   09 — GRAPHIC USAGE GUIDELINES
+   ========================================= */
+
+#graphics .graphics-guidelines-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#graphics .graphics-guideline-card {
+  min-width: 0;
+  padding: 32px;
+  background: var(--graphics-soft);
+  border: 1px solid var(--graphics-line);
+}
+
+#graphics .graphics-guideline-number {
+  display: block;
+  margin-bottom: 35px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--graphics-muted);
+}
+
+#graphics .graphics-guideline-title {
+  margin: 0 0 13px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+#graphics .graphics-guideline-description {
+  margin: 0;
+  max-width: 460px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #666666;
+}
+
+
+/* =========================================
+   10 — OPTIONAL ASSET LABELS
+   ========================================= */
+
+#graphics .graphics-artwork-label {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  z-index: 2;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #202020;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#graphics .graphics-artwork-label.is-dark {
+  background: rgba(32, 32, 32, 0.94);
+  color: #ffffff;
+}
+
+
+/* =========================================
+   11 — TABLET RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  #graphics .graphics-editorial-intro {
+    margin-top: 60px;
+    min-height: 320px;
+    padding: 50px 38px;
+  }
+
+  #graphics .graphics-feature {
+    margin-top: 65px;
+  }
+
+  #graphics .graphics-hero-artwork
+  .graphics-artwork-frame {
+    min-height: 370px;
+  }
+
+  #graphics .graphics-hero-caption {
+    padding: 25px;
+  }
+
+  #graphics .graphics-asset-gallery,
+  #graphics .graphics-details-gallery {
+    gap: 14px;
+  }
+
+  #graphics .graphics-layout-split
+  .graphics-asset-content,
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-content {
+    padding: 30px;
+  }
+
+  #graphics .graphics-layout-split
+  .graphics-asset-visual,
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-visual {
+    min-height: 300px;
+  }
+
+  #graphics .graphics-guideline-card {
+    padding: 26px;
+  }
+
+}
+
+
+/* =========================================
+   12 — MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 640px) {
+
+  #graphics .graphics-editorial-intro {
+    margin-top: 50px;
+    min-height: 290px;
+    padding: 42px 26px;
+  }
+
+  #graphics .graphics-editorial-intro h3 {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+
+  #graphics .graphics-editorial-intro p {
+    font-size: 14px;
+  }
+
+  #graphics .graphics-feature {
+    margin-top: 55px;
+  }
+
+  #graphics .graphics-section-heading {
+    margin-bottom: 24px;
+  }
+
+  #graphics .graphics-hero-artwork
+  .graphics-artwork-frame {
+    min-height: 270px;
+    aspect-ratio: 4 / 3;
+  }
+
+  #graphics .graphics-hero-caption {
+    flex-direction: column;
+    gap: 16px;
+    padding: 23px 22px;
+  }
+
+  #graphics .graphics-asset-gallery,
+  #graphics .graphics-details-gallery,
+  #graphics .graphics-guidelines-list {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  #graphics .graphics-asset-card,
+  #graphics .graphics-asset-card.graphics-layout-half,
+  #graphics .graphics-asset-card.graphics-layout-full,
+  #graphics .graphics-asset-card.graphics-layout-wide,
+  #graphics .graphics-asset-card.graphics-layout-tall,
+  #graphics .graphics-asset-card.graphics-layout-split,
+  #graphics .graphics-asset-card.graphics-layout-split-reverse {
+    grid-column: 1 / -1;
+  }
+
+  #graphics .graphics-asset-visual,
+  #graphics .graphics-layout-full .graphics-asset-visual,
+  #graphics .graphics-layout-wide .graphics-asset-visual {
+    min-height: 240px;
+    aspect-ratio: 4 / 3;
+  }
+
+  #graphics .graphics-layout-tall .graphics-asset-visual {
+    aspect-ratio: 3 / 4;
+  }
+
+  #graphics .graphics-asset-card.graphics-layout-split,
+  #graphics .graphics-asset-card.graphics-layout-split-reverse {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #graphics .graphics-layout-split .graphics-asset-visual,
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-visual {
+    width: 100%;
+    min-height: 270px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-visual,
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-content {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  #graphics .graphics-layout-split
+  .graphics-asset-content,
+  #graphics .graphics-layout-split-reverse
+  .graphics-asset-content {
+    padding: 26px;
+  }
+
+  #graphics .graphics-asset-content {
+    padding: 20px 0 12px;
+  }
+
+  #graphics .graphics-asset-title {
+    font-size: 24px;
+  }
+
+  #graphics .graphics-detail-card.graphics-layout-full {
+    grid-column: 1;
+  }
+
+  #graphics .graphics-detail-visual,
+  #graphics .graphics-detail-card.graphics-layout-full
+  .graphics-detail-visual {
+    aspect-ratio: 4 / 3;
+  }
+
+  #graphics .graphics-guideline-card {
+    padding: 26px 24px;
+  }
+
+  #graphics .graphics-guideline-number {
+    margin-bottom: 24px;
+  }
+
+  #graphics .graphics-artwork-label {
+    left: 16px;
+    bottom: 16px;
+    font-size: 9px;
+  }
+
+}
+
+
+/* =========================================
+   13 — ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #graphics .graphics-artwork-frame img,
+  #graphics .graphics-asset-visual img,
+  #graphics .graphics-detail-visual img {
+    transition: none;
+  }
+
+}
+
