@@ -50,15 +50,11 @@ const BRAND_CONFIG = {
   // ========================================
 
   /*
-   * Add the client's approved brand colors here.
-   *
-   * Each object creates one color card.
+   * Add or remove approved colors freely.
    *
    * name = Display name
    * role = Role in the identity
    * hex  = Exact HEX color
-   *
-   * Add or remove objects as needed.
    */
 
   brandPalette: [
@@ -88,24 +84,13 @@ const BRAND_CONFIG = {
   // ========================================
 
   /*
-   * Tonal scales are based on the client's
-   * actual brand colors.
+   * generate: true creates tonal suggestions.
    *
-   * Set generate to true to create a scale
-   * automatically from the base color.
+   * generate: false uses exact shades
+   * provided in the shades array.
    *
-   * Set generate to false and provide a
-   * shades array to use exact approved HEX
-   * values instead.
-   *
-   * steps = Number of generated shades.
-   *
-   * The first shade will be the lightest,
-   * and the last will be the darkest.
-   *
-   * Generated shades are presentation
-   * suggestions, not automatically approved
-   * brand colors.
+   * Generated shades are not automatically
+   * approved brand colors.
    */
 
   tonalScales: [
@@ -141,14 +126,11 @@ const BRAND_CONFIG = {
   // ========================================
 
   /*
-   * Each object creates one compatibility card.
+   * Add or remove combinations as needed.
    *
-   * background = Outer card color
-   * logoColor  = Inner logo/square color
+   * background = Card background
+   * logoColor  = Logo preview color
    * label      = Combination name
-   *
-   * Add or remove objects to change the
-   * number of cards for each client.
    */
 
   logoColorCombinations: [
@@ -198,58 +180,16 @@ const BRAND_CONFIG = {
   /*
    * Concept 02 — Editorial Type Gallery
    *
-   * This system adapts to the number of
-   * typefaces used in each client project.
+   * Add or remove font objects as needed.
    *
-   * Add or remove font objects freely.
+   * Each font supports:
    *
-   * Each font object includes:
+   * name, role, category, family,
+   * source, specimen, description,
+   * and approved weights.
    *
-   * name:
-   *   Public-facing typeface name.
-   *
-   * role:
-   *   Primary, Secondary, Supporting,
-   *   Display, Body, Accent, etc.
-   *
-   * category:
-   *   Serif, Sans Serif, Display,
-   *   Script, Monospace, etc.
-   *
-   * family:
-   *   CSS font-family value.
-   *
-   * source:
-   *   Optional CSS stylesheet URL.
-   *   Use an empty string for locally
-   *   installed/system fonts or when
-   *   font loading is handled elsewhere.
-   *
-   * specimen:
-   *   Large characters shown in the
-   *   editorial typeface gallery.
-   *
-   * description:
-   *   Short description of the font.
-   *
-   * weights:
-   *   Only approved weights/styles.
-   *
-   * Each weight has:
-   *   name, value, style.
-   *
-   * Examples:
-   *   Regular = 400
-   *   Medium  = 500
-   *   Bold    = 700
-   *
-   * Italic styles use style: "italic".
-   *
-   * Important:
-   * Declaring a font name does not
-   * automatically install that font.
-   * Its files or stylesheet must be
-   * available to the website.
+   * The source is an optional stylesheet URL.
+   * Font files must be available to the site.
    */
 
   typography: {
@@ -372,28 +312,38 @@ const BRAND_CONFIG = {
   /*
    * Concept 02 — Visual Identity Canvas
    *
-   * This section presents the client's
-   * approved graphic identity assets.
+   * FULLY CLIENT-CONFIGURABLE
    *
-   * All content is optional.
+   * Every client may have:
    *
-   * The system automatically adapts to
-   * different numbers of graphic elements.
+   * - Zero or one featured graphic
+   * - Any number of gallery assets
+   * - Any number of detail images
+   * - Any number of usage guidelines
    *
-   * Images may be PNG, JPG, WEBP, or SVG.
+   * Add, remove, or reorder objects.
    *
-   * Example local image path:
+   * The website adapts automatically.
+   *
+   * No HTML or JavaScript changes needed.
+   *
+   * ----------------------------------------
+   * TEST MODE
+   * ----------------------------------------
+   *
+   * The temporary images below come from
+   * an external placeholder service.
+   *
+   * They test layout, spacing, and rendering.
+   *
+   * They are NOT approved client artwork.
+   *
+   * Replace them with real asset paths
+   * before publishing a client project.
+   *
+   * Example real asset path:
    *
    * "assets/graphics/pattern-01.svg"
-   *
-   * Upload the corresponding asset to
-   * the GitHub repository before using it.
-   *
-   * IMPORTANT:
-   * The content below is demonstration
-   * content for the Sample Brand only.
-   * Replace it with actual approved
-   * client assets and guidelines.
    */
 
   graphicElements: {
@@ -410,47 +360,37 @@ const BRAND_CONFIG = {
     },
 
     // ------------------------------------
-    // SIGNATURE GRAPHIC
+    // FEATURED SIGNATURE GRAPHIC
     // ------------------------------------
 
     /*
-     * Featured artwork is optional.
-     *
-     * Set enabled to false to hide it.
-     *
-     * image:
-     *   Path to the approved graphic.
-     *
-     * background:
-     *   Background behind the image.
+     * enabled:
+     * true = Display featured artwork
+     * false = Hide featured artwork
      *
      * fit:
-     *   "cover" or "contain".
-     *
-     * label:
-     *   Optional small label over artwork.
+     * "cover" or "contain"
      *
      * labelTheme:
-     *   "light" or "dark".
-     *
-     * If image is empty, no artwork
-     * should be presented as approved.
+     * "light" or "dark"
      */
 
     featured: {
-      enabled: false,
+      enabled: true,
 
-      title: "Signature Pattern",
-      category: "Brand Pattern",
+      title: "Signature Graphic",
+      category: "Visual Identity / Test Artwork",
 
       description:
-        "A distinctive graphic expression that extends the identity beyond the logo.",
+        "A temporary composition used to test the large editorial artwork presentation.",
 
-      image: "",
-      background: "#F0EDE6",
+      image:
+        "https://placehold.co/1600x900/202020/B68B59.png?text=SIGNATURE+GRAPHIC",
+
+      background: "#202020",
       fit: "contain",
 
-      label: "SIGNATURE GRAPHIC",
+      label: "TEST ARTWORK",
       labelTheme: "light"
     },
 
@@ -459,20 +399,18 @@ const BRAND_CONFIG = {
     // ------------------------------------
 
     /*
-     * Add one object for each approved
-     * graphic element.
+     * Each object creates ONE graphic card.
      *
-     * There is no fixed asset limit.
+     * To add a graphic:
+     * Copy an object and change its content.
      *
-     * category examples:
-     * "Pattern"
-     * "Shape"
-     * "Iconography"
-     * "Illustration"
-     * "Texture"
-     * "Graphic Motif"
+     * To remove a graphic:
+     * Delete its object.
      *
-     * layout options:
+     * To reorder:
+     * Move objects up or down.
+     *
+     * Supported layouts:
      *
      * "full"
      * "half"
@@ -481,37 +419,64 @@ const BRAND_CONFIG = {
      * "split"
      * "split-reverse"
      *
-     * image:
-     *   Actual asset file path.
-     *
-     * background:
-     *   Canvas background HEX value.
-     *
-     * fit:
-     *   "contain" keeps the whole artwork
-     *   visible.
-     *
-     *   "cover" fills the entire canvas.
-     *
-     * Empty image paths are ignored.
+     * There is NO fixed number of assets.
      */
 
     assets: [
 
-      // Example:
-      //
-      // {
-      //   title: "Geometric Pattern",
-      //   category: "Pattern",
-      //   description:
-      //     "A repeatable graphic pattern.",
-      //   image: "assets/graphics/pattern.svg",
-      //   background: "#F0EDE6",
-      //   fit: "cover",
-      //   layout: "full",
-      //   label: "PATTERN 01",
-      //   labelTheme: "light"
-      // }
+      {
+        title: "Primary Pattern",
+        category: "Pattern / Test",
+
+        description:
+          "A full-width placeholder to test the presentation of a primary brand pattern.",
+
+        image:
+          "https://placehold.co/1600x900/F0EDE6/202020.png?text=PRIMARY+PATTERN",
+
+        background: "#F0EDE6",
+        fit: "cover",
+        layout: "full",
+
+        label: "GRAPHIC 01",
+        labelTheme: "light"
+      },
+
+      {
+        title: "Secondary Motif",
+        category: "Graphic Motif / Test",
+
+        description:
+          "A supporting graphic displayed in a half-width composition.",
+
+        image:
+          "https://placehold.co/900x1100/202020/B68B59.png?text=SECONDARY+MOTIF",
+
+        background: "#202020",
+        fit: "contain",
+        layout: "half",
+
+        label: "GRAPHIC 02",
+        labelTheme: "light"
+      },
+
+      {
+        title: "Geometric Element",
+        category: "Shape / Test",
+
+        description:
+          "An additional visual element to test how the gallery adapts to an uneven number of assets.",
+
+        image:
+          "https://placehold.co/900x1100/B68B59/202020.png?text=GEOMETRIC+ELEMENT",
+
+        background: "#B68B59",
+        fit: "contain",
+        layout: "half",
+
+        label: "GRAPHIC 03",
+        labelTheme: "dark"
+      }
 
     ],
 
@@ -520,41 +485,46 @@ const BRAND_CONFIG = {
     // ------------------------------------
 
     /*
-     * Use this gallery for close-ups,
-     * texture details, and graphic
-     * applications.
+     * Add close-ups, textures, or real
+     * applications of graphic elements.
      *
-     * Each entry can have:
-     *
-     * title
-     * category
-     * description
-     * image
-     * background
-     * fit
-     * layout
+     * Each object creates one detail card.
      *
      * layout:
-     *   "half" or "full"
-     *
-     * Entries without image paths
-     * will not be displayed.
+     * "half" or "full"
      */
 
     details: [
 
-      // Example:
-      //
-      // {
-      //   title: "Pattern Detail",
-      //   category: "Close-up",
-      //   description:
-      //     "A closer look at the pattern.",
-      //   image: "assets/graphics/detail.jpg",
-      //   background: "#F0EDE6",
-      //   fit: "cover",
-      //   layout: "half"
-      // }
+      {
+        title: "Graphic Detail",
+        category: "Close-up / Test",
+
+        description:
+          "A placeholder for a close-up view of an approved brand graphic.",
+
+        image:
+          "https://placehold.co/1000x800/F0EDE6/202020.png?text=GRAPHIC+DETAIL",
+
+        background: "#F0EDE6",
+        fit: "cover",
+        layout: "half"
+      },
+
+      {
+        title: "Application Preview",
+        category: "Application / Test",
+
+        description:
+          "A placeholder for showing how a graphic element works on a real brand application.",
+
+        image:
+          "https://placehold.co/1000x800/202020/B68B59.png?text=APPLICATION+PREVIEW",
+
+        background: "#202020",
+        fit: "cover",
+        layout: "half"
+      }
 
     ],
 
@@ -563,28 +533,27 @@ const BRAND_CONFIG = {
     // ------------------------------------
 
     /*
-     * Add only approved rules.
+     * These are example rules for testing.
      *
-     * Each rule creates one card.
+     * Replace them with approved client
+     * guidelines before publishing.
      *
-     * Rules are optional.
-     *
-     * Example:
-     *
-     * {
-     *   title: "Maintain Clear Space",
-     *   description:
-     *     "Keep sufficient space around
-     *      the graphic motif."
-     * }
-     *
-     * Avoid adding generic rules that
-     * were not approved for the client.
+     * Add or remove as many as needed.
      */
 
     guidelines: [
 
-      // Add client-specific rules here.
+      {
+        title: "Preserve the Original Proportions",
+        description:
+          "Test guideline: do not stretch or distort the graphic element when placing it in a layout."
+      },
+
+      {
+        title: "Use Approved Color Combinations",
+        description:
+          "Test guideline: apply graphic elements using the colors defined in the brand identity system."
+      }
 
     ]
 
@@ -594,7 +563,12 @@ const BRAND_CONFIG = {
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
-  // Enable or disable sections for each client.
+  /*
+   * Enable or disable sections per client.
+   *
+   * true = Show
+   * false = Hide
+   */
 
   sections: {
     overview: true,
