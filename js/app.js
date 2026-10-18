@@ -2743,7 +2743,180 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 17 — ACTIVE SIDEBAR NAVIGATION
+  // 17 — MOTION GUIDELINES
+  // ========================================
+
+  const motionConfig = config.motionGuidelines || {};
+  const motionSection = document.getElementById("motion");
+
+  if (motionSection && sections.motion !== false) {
+    const intro = motionConfig.intro || {};
+    setElementText("motion-intro-eyebrow", intro.eyebrow);
+    setElementText("motion-intro-headline", intro.headline);
+    setElementText("motion-intro-description", intro.description);
+
+    const layouts = new Set(["full", "half", "wide", "tall", "split", "split-reverse"]);
+    const items = value => Array.isArray(value)
+      ? value.filter(item => item && typeof item === "object") : [];
+
+    function motionPath(value) {
+      if (typeof value !== "string") return "";
+      const path = value.trim();
+      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (/^https:\/\//i.test(path)) return path;
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
+      return path;
+    }
+
+    function motionFeature(id, container) {
+      const feature = document.getElementById(id);
+      if (feature && container) feature.hidden = container.children.length === 0;
+    }
+
+    function motionMedia(item, card, container, featureId, visualClass) {
+      const visual = document.createElement("div");
+      visual.className = visualClass;
+      const videoSource = item.mediaType === "video" ? motionPath(item.video || item.src) : "";
+      const imageSource = motionPath(item.image);
+      const source = videoSource || imageSource;
+      if (!source) return null;
+
+      const media = document.createElement(videoSource ? "video" : "img");
+      media.style.setProperty("--motion-media-fit", item.fit === "contain" ? "contain" : "cover");
+      if (videoSource) {
+        media.muted = true;
+        media.loop = true;
+        media.playsInline = true;
+        media.autoplay = true;
+        media.controls = true;
+        media.preload = "metadata";
+        const poster = motionPath(item.poster);
+        if (poster) media.poster = poster;
+        media.setAttribute("aria-label", item.alt || item.title || "Brand motion preview");
+        media.addEventListener("error", () => {
+          console.warn("Motion video could not be loaded:", source);
+          if (card.isConnected) card.remove();
+          motionFeature(featureId, container);
+        });
+      } else {
+        media.alt = item.alt || item.title || "Brand motion preview";
+        media.loading = "lazy";
+        media.decoding = "async";
+        media.addEventListener("error", () => {
+          console.warn("Motion image could not be loaded:", source);
+          if (card.isConnected) card.remove();
+          motionFeature(featureId, container);
+        });
+      }
+      media.src = source;
+      visual.appendChild(media);
+      return visual;
+    }
+
+    function motionCaption(item, prefix) {
+      const content = document.createElement("div");
+      content.className = `${prefix}-content`;
+      if (item.category) content.appendChild(createTextElement("span", `${prefix}-category`, item.category));
+      content.appendChild(createTextElement("h4", `${prefix}-title`, item.title || "Motion example"));
+      if (item.description) content.appendChild(createTextElement("p", `${prefix}-description`, item.description));
+      if (item.duration) content.appendChild(createTextElement("span", "motion-card-category", `DURATION / ${item.duration}`));
+      return content;
+    }
+
+    const principles = document.getElementById("motion-principles-gallery");
+    if (principles) {
+      principles.replaceChildren();
+      items(motionConfig.principles).filter(item => item.title || item.description).forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "motion-principle-card";
+        card.appendChild(createTextElement("span", "motion-principle-number", formatIndex(index + 1)));
+        card.appendChild(createTextElement("h4", "motion-principle-title", item.title || "Motion principle"));
+        if (item.description) card.appendChild(createTextElement("p", "motion-principle-description", item.description));
+        principles.appendChild(card);
+      });
+      motionFeature("motion-philosophy-feature", principles);
+    }
+
+    function renderMotionGallery(containerId, featureId, data, prefix) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.replaceChildren();
+      items(data).forEach(item => {
+        const card = document.createElement("article");
+        card.className = `${prefix}-card`;
+        const layout = layouts.has(item.layout) ? item.layout : "half";
+        card.classList.add(`motion-layout-${layout}`);
+        const visual = motionMedia(item, card, container, featureId, `${prefix}-visual`);
+        if (!visual) return;
+        card.appendChild(visual);
+        card.appendChild(motionCaption(item, prefix));
+        container.appendChild(card);
+      });
+      motionFeature(featureId, container);
+    }
+
+    renderMotionGallery("motion-logo-gallery", "motion-logo-feature", motionConfig.logoAnimations, "motion-logo");
+
+    const behaviors = document.getElementById("motion-behaviors-gallery");
+    if (behaviors) {
+      behaviors.replaceChildren();
+      items(motionConfig.behaviors).filter(item => item.title || item.description || item.value).forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "motion-behavior-card";
+        card.appendChild(createTextElement("span", "motion-behavior-number", formatIndex(index + 1)));
+        if (item.category) card.appendChild(createTextElement("span", "motion-behavior-meta", item.category));
+        card.appendChild(createTextElement("h4", "motion-behavior-title", item.title || "Motion behavior"));
+        if (item.value) card.appendChild(createTextElement("span", "motion-behavior-value", item.value));
+        if (item.easing) card.appendChild(createTextElement("span", "motion-behavior-timing", `EASING / ${item.easing}`));
+        if (item.description) card.appendChild(createTextElement("p", "motion-behavior-description", item.description));
+        behaviors.appendChild(card);
+      });
+      motionFeature("motion-behaviors-feature", behaviors);
+    }
+
+    renderMotionGallery("motion-applications-gallery", "motion-applications-feature", motionConfig.applications, "motion-application");
+
+    const comparisons = document.getElementById("motion-comparison-gallery");
+    if (comparisons) {
+      comparisons.replaceChildren();
+      items(motionConfig.comparisons).forEach(item => {
+        if (!item.approved || !item.avoid) return;
+        const pair = document.createElement("div");
+        pair.className = "motion-comparison-pair";
+        let failed = false;
+        const failPair = () => {
+          if (failed) return;
+          failed = true;
+          pair.remove();
+          motionFeature("motion-comparison-feature", comparisons);
+        };
+        [
+          { data: item.approved, approved: true },
+          { data: item.avoid, approved: false }
+        ].forEach(({ data, approved }) => {
+          const card = document.createElement("article");
+          card.className = `motion-comparison-card ${approved ? "motion-comparison-approved" : "motion-comparison-avoid"}`;
+          const visual = motionMedia(data, card, comparisons, "motion-comparison-feature", "motion-comparison-visual");
+          if (!visual) { failed = true; return; }
+          const media = visual.querySelector("img, video");
+          if (media) media.addEventListener("error", failPair);
+          card.appendChild(visual);
+          const content = document.createElement("div");
+          content.className = "motion-comparison-content";
+          content.appendChild(createTextElement("span", "motion-comparison-status", approved ? "DO / APPROVED" : "DON'T / AVOID"));
+          content.appendChild(createTextElement("h4", "motion-comparison-title", data.title || item.title || "Motion example"));
+          if (data.description) content.appendChild(createTextElement("p", "motion-comparison-description", data.description));
+          card.appendChild(content);
+          pair.appendChild(card);
+        });
+        if (!failed && pair.children.length === 2) comparisons.appendChild(pair);
+      });
+      motionFeature("motion-comparison-feature", comparisons);
+    }
+  }
+
+  // ========================================
+  // 18 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
