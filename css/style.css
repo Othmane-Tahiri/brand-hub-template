@@ -2056,3 +2056,579 @@ span:last-child {
 
 }
 
+/* =========================================
+   PHOTOGRAPHY SYSTEM
+   Concept 02 — Editorial Photography Gallery
+   ========================================= */
+
+#photography {
+  --photo-paper: #f2f1ed;
+  --photo-soft: #f8f8f6;
+  --photo-ink: #202020;
+  --photo-muted: #777777;
+  --photo-line: #e8e8e8;
+}
+
+/* EDITORIAL INTRO */
+
+#photography .photography-editorial-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 75px;
+  min-height: 390px;
+  padding: 65px 55px;
+  background: var(--photo-paper);
+  overflow: hidden;
+}
+
+#photography .photography-editorial-intro .panel-label {
+  margin-bottom: 32px;
+}
+
+#photography .photography-editorial-intro h3 {
+  margin: 0 0 25px;
+  max-width: 850px;
+  font-size: clamp(45px, 6.5vw, 90px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.065em;
+  overflow-wrap: anywhere;
+}
+
+#photography .photography-editorial-intro p {
+  margin: 0;
+  max-width: 490px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #666666;
+}
+
+/* SECTION HEADINGS */
+
+#photography .photography-feature {
+  margin-top: 85px;
+  min-width: 0;
+}
+
+#photography .photography-feature[hidden] {
+  display: none !important;
+}
+
+#photography .photography-section-heading {
+  margin-bottom: 32px;
+}
+
+#photography .photography-section-heading .panel-label {
+  margin-bottom: 12px;
+}
+
+#photography .photography-section-heading h3 {
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+#photography .photography-section-heading p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--photo-muted);
+}
+
+/* SHARED IMAGE STYLES */
+
+#photography img {
+  display: block;
+  max-width: 100%;
+}
+
+#photography .photography-hero-image,
+#photography .photography-category-image,
+#photography .photography-gallery-image,
+#photography .photography-comparison-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--photo-image-fit, cover);
+  object-position: center;
+}
+
+#photography .photography-hero-visual,
+#photography .photography-category-visual,
+#photography .photography-gallery-visual,
+#photography .photography-comparison-visual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--photo-paper);
+}
+
+#photography .photography-hero-visual img,
+#photography .photography-category-visual img,
+#photography .photography-gallery-visual img,
+#photography .photography-comparison-visual img {
+  transition: transform 0.7s ease;
+}
+
+@media (hover: hover) {
+  #photography .photography-hero-visual:hover img,
+  #photography .photography-category-card:hover img,
+  #photography .photography-gallery-card:hover img {
+    transform: scale(1.035);
+  }
+}
+
+/* 01 — SIGNATURE PHOTOGRAPHY */
+
+#photography .photography-hero-canvas {
+  min-width: 0;
+}
+
+#photography .photography-hero-card {
+  min-width: 0;
+}
+
+#photography .photography-hero-visual {
+  width: 100%;
+  min-height: 440px;
+  aspect-ratio: 16 / 10;
+}
+
+#photography .photography-hero-image {
+  position: absolute;
+  inset: 0;
+}
+
+#photography .photography-hero-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 28px 0 12px;
+  border-bottom: 1px solid var(--photo-line);
+}
+
+#photography .photography-hero-category,
+#photography .photography-category-label,
+#photography .photography-gallery-category {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--photo-muted);
+}
+
+#photography .photography-hero-title {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+#photography .photography-hero-description {
+  margin: 0 0 22px;
+  max-width: 580px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--photo-muted);
+}
+
+#photography .photography-hero-index {
+  flex-shrink: 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--photo-muted);
+}
+
+/* 02 — PHOTOGRAPHY CATEGORIES */
+
+#photography .photography-categories-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 18px;
+}
+
+#photography .photography-category-card {
+  min-width: 0;
+}
+
+#photography .photography-category-visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+#photography .photography-category-image {
+  position: absolute;
+  inset: 0;
+}
+
+#photography .photography-category-content {
+  padding: 22px 0 4px;
+}
+
+#photography .photography-category-title {
+  margin: 0 0 10px;
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+#photography .photography-category-description {
+  margin: 0;
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--photo-muted);
+}
+
+/* 03 — EDITORIAL IMAGE GALLERY */
+
+#photography .photography-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 18px;
+  align-items: start;
+}
+
+#photography .photography-gallery-card {
+  min-width: 0;
+}
+
+#photography .photography-gallery-visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+#photography .photography-gallery-image {
+  position: absolute;
+  inset: 0;
+}
+
+#photography .photography-gallery-content {
+  padding: 18px 0 4px;
+}
+
+#photography .photography-gallery-title {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+#photography .photography-gallery-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--photo-muted);
+}
+
+/* EDITORIAL LAYOUT VARIATIONS */
+
+#photography .photography-layout-full,
+#photography .photography-layout-wide {
+  grid-column: 1 / -1;
+}
+
+#photography .photography-layout-full
+.photography-gallery-visual {
+  aspect-ratio: 16 / 9;
+}
+
+#photography .photography-layout-wide
+.photography-gallery-visual {
+  aspect-ratio: 16 / 8;
+}
+
+#photography .photography-layout-tall
+.photography-gallery-visual {
+  aspect-ratio: 3 / 4;
+}
+
+#photography .photography-gallery-card.photography-layout-split,
+#photography .photography-gallery-card.photography-layout-split-reverse {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  background: var(--photo-paper);
+}
+
+#photography .photography-layout-split
+.photography-gallery-visual,
+#photography .photography-layout-split-reverse
+.photography-gallery-visual {
+  height: 100%;
+  min-height: 390px;
+  aspect-ratio: auto;
+}
+
+#photography .photography-layout-split
+.photography-gallery-content,
+#photography .photography-layout-split-reverse
+.photography-gallery-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px;
+}
+
+#photography .photography-gallery-card.photography-layout-split-reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+}
+
+#photography .photography-layout-split-reverse
+.photography-gallery-visual {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#photography .photography-layout-split-reverse
+.photography-gallery-content {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* 04 — ART DIRECTION GUIDELINES */
+
+#photography .photography-direction-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#photography .photography-direction-card {
+  min-width: 0;
+  padding: 32px;
+  background: var(--photo-soft);
+  border: 1px solid var(--photo-line);
+}
+
+#photography .photography-direction-number {
+  display: block;
+  margin-bottom: 36px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--photo-muted);
+}
+
+#photography .photography-direction-title {
+  margin: 0 0 13px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+#photography .photography-direction-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #666666;
+}
+
+/* 05 — DO / DON'T COMPARISONS */
+
+#photography .photography-comparison-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+#photography .photography-comparison-card {
+  min-width: 0;
+}
+
+#photography .photography-comparison-visual {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+#photography .photography-comparison-image {
+  position: absolute;
+  inset: 0;
+}
+
+#photography .photography-comparison-content {
+  padding: 18px 0 6px;
+}
+
+#photography .photography-comparison-status {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#photography .photography-comparison-status.is-approved {
+  color: #36764c;
+}
+
+#photography .photography-comparison-status.is-avoid {
+  color: #a34747;
+}
+
+#photography .photography-comparison-title {
+  margin: 0 0 9px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+#photography .photography-comparison-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--photo-muted);
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+  #photography .photography-editorial-intro {
+    margin-top: 60px;
+    min-height: 320px;
+    padding: 50px 38px;
+  }
+
+  #photography .photography-feature {
+    margin-top: 65px;
+  }
+
+  #photography .photography-hero-visual {
+    min-height: 340px;
+  }
+
+  #photography .photography-direction-card {
+    padding: 26px;
+  }
+
+  #photography .photography-layout-split
+  .photography-gallery-content,
+  #photography .photography-layout-split-reverse
+  .photography-gallery-content {
+    padding: 30px;
+  }
+
+}
+
+/* MOBILE */
+
+@media (max-width: 640px) {
+
+  #photography .photography-editorial-intro {
+    margin-top: 50px;
+    min-height: 290px;
+    padding: 42px 26px;
+  }
+
+  #photography .photography-editorial-intro h3 {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+
+  #photography .photography-editorial-intro p {
+    font-size: 14px;
+  }
+
+  #photography .photography-feature {
+    margin-top: 55px;
+  }
+
+  #photography .photography-section-heading {
+    margin-bottom: 24px;
+  }
+
+  #photography .photography-hero-visual {
+    min-height: 260px;
+    aspect-ratio: 4 / 3;
+  }
+
+  #photography .photography-hero-caption {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 22px;
+  }
+
+  #photography .photography-categories-gallery,
+  #photography .photography-image-gallery,
+  #photography .photography-direction-list,
+  #photography .photography-comparison-gallery {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  #photography .photography-gallery-card,
+  #photography .photography-layout-full,
+  #photography .photography-layout-wide {
+    grid-column: 1 / -1;
+  }
+
+  #photography .photography-gallery-visual,
+  #photography .photography-layout-full
+  .photography-gallery-visual,
+  #photography .photography-layout-wide
+  .photography-gallery-visual {
+    aspect-ratio: 4 / 3;
+  }
+
+  #photography .photography-layout-tall
+  .photography-gallery-visual {
+    aspect-ratio: 3 / 4;
+  }
+
+  #photography .photography-gallery-card.photography-layout-split,
+  #photography .photography-gallery-card.photography-layout-split-reverse {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #photography .photography-layout-split
+  .photography-gallery-visual,
+  #photography .photography-layout-split-reverse
+  .photography-gallery-visual {
+    width: 100%;
+    min-height: 260px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  #photography .photography-layout-split
+  .photography-gallery-content,
+  #photography .photography-layout-split-reverse
+  .photography-gallery-content {
+    padding: 26px;
+  }
+
+  #photography .photography-direction-card {
+    padding: 26px 24px;
+  }
+
+  #photography .photography-direction-number {
+    margin-bottom: 24px;
+  }
+
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #photography .photography-hero-visual img,
+  #photography .photography-category-visual img,
+  #photography .photography-gallery-visual img,
+  #photography .photography-comparison-visual img {
+    transition: none;
+  }
+
+}
+
