@@ -208,3 +208,24 @@ body {
     min-height: 280px;
   }
 }
+
+/* GUIDELINE SECTIONS */
+
+.guideline-section {
+  padding-top: 100px;
+  margin-top: 100px;
+  border-top: 1px solid var(--border-color);
+}
+
+.guideline-section > h2 {
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: -2px;
+  margin: 0 0 25px;
+}
+
+.guideline-section > p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--muted-text);
+  max-width: 650px;
+}
