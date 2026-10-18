@@ -2916,7 +2916,169 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 18 — ACTIVE SIDEBAR NAVIGATION
+  // 18 — RESOURCES & DOWNLOADS
+  // ========================================
+
+  const resourcesConfig = config.resourcesDownloads || {};
+  const resourcesSection = document.getElementById("resources");
+  const resourcesVisible = resourcesSection && !resourcesSection.hidden &&
+    sections.resources !== false && config.publishingMode !== "showcase";
+
+  if (resourcesVisible) {
+    const list = value => Array.isArray(value) ? value.filter(Boolean) : [];
+    const text = (tag, cls, value) => createTextElement(tag, cls, value);
+    const show = (id, hasContent) => {
+      const element = document.getElementById(id);
+      if (element) element.hidden = !hasContent;
+    };
+    const put = (id, node) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.replaceChildren();
+        if (node) element.appendChild(node);
+      }
+      return element;
+    };
+    const validUrl = value => {
+      if (typeof value !== "string" || !value.trim()) return false;
+      const url = value.trim();
+      if (/^(https?:\/\/)/i.test(url)) return true;
+      return !/^(javascript:|data:|vbscript:|\/\/)/i.test(url) &&
+        !url.startsWith("#") && !url.startsWith("/") && !url.includes("\\");
+    };
+    const downloadLink = (url, label, cls) => {
+      if (!validUrl(url)) return null;
+      const a = document.createElement("a");
+      a.className = cls;
+      a.href = url.trim();
+      a.textContent = label || "Download file";
+      if (/^https?:\/\//i.test(url)) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      } else {
+        a.setAttribute("download", "");
+      }
+      return a;
+    };
+
+    const intro = resourcesConfig.intro || {};
+    setElementText("resources-intro-eyebrow", intro.eyebrow || "RESOURCES & DOWNLOADS");
+    setElementText("resources-intro-headline", intro.headline || "Brand resources.");
+    setElementText("resources-intro-description", intro.description || "");
+
+    // Featured package: no fake download button for an empty URL.
+    const featured = resourcesConfig.featured || {};
+    const featuredCanvas = document.getElementById("resources-featured-canvas");
+    if (featuredCanvas) {
+      featuredCanvas.replaceChildren();
+      if (featured.enabled !== false && (featured.title || featured.description)) {
+        const card = document.createElement("article");
+        card.className = "resources-featured-card";
+        const visual = document.createElement("div");
+        visual.className = "resources-featured-visual";
+        visual.appendChild(text("span", "resources-featured-visual-label", "BRAND ASSET LIBRARY"));
+        const content = document.createElement("div");
+        content.className = "resources-featured-content";
+        if (featured.eyebrow) content.appendChild(text("span", "resources-featured-category", featured.eyebrow));
+        content.appendChild(text("h4", "resources-featured-title", featured.title || "Brand package"));
+        if (featured.description) content.appendChild(text("p", "resources-featured-description", featured.description));
+        const meta = [featured.fileName, featured.fileType, featured.fileSize, featured.version].filter(Boolean);
+        if (meta.length) content.appendChild(text("p", "resources-featured-meta", meta.join("  ·  ")));
+        const link = downloadLink(featured.url, featured.buttonLabel || "Download package", "resources-download-link");
+        if (link) content.appendChild(link);
+        else if (featured.note) content.appendChild(text("p", "resources-featured-note", featured.note));
+        card.append(visual, content);
+        featuredCanvas.appendChild(card);
+      }
+      show("resources-featured-feature", featuredCanvas.children.length > 0);
+    }
+
+    // Asset categories are unlimited, and empty categories are skipped.
+    const library = document.getElementById("resources-library-gallery");
+    if (library) {
+      library.replaceChildren();
+      list(resourcesConfig.categories).forEach(category => {
+        const assets = list(category.assets).filter(asset => asset.title || asset.description || asset.fileName);
+        if (!assets.length) return;
+        const card = document.createElement("section");
+        card.className = "resources-category-card";
+        if (category.category) card.appendChild(text("span", "resources-category-label", category.category));
+        card.appendChild(text("h4", "resources-category-title", category.title || "Brand assets"));
+        if (category.description) card.appendChild(text("p", "resources-category-description", category.description));
+        const assetList = document.createElement("div");
+        assetList.className = "resources-assets-list";
+        assets.forEach(asset => {
+          const item = document.createElement("article");
+          item.className = "resources-asset-card";
+          if (asset.format) item.appendChild(text("span", "resources-asset-format", asset.format));
+          item.appendChild(text("h5", "resources-asset-title", asset.title || asset.fileName || "Brand asset"));
+          if (asset.description) item.appendChild(text("p", "resources-asset-description", asset.description));
+          const meta = [asset.fileName, asset.fileSize, asset.version].filter(Boolean);
+          if (meta.length) item.appendChild(text("p", "resources-asset-meta", meta.join("  ·  ")));
+          const link = downloadLink(asset.url, asset.buttonLabel || "Download asset", "resources-asset-link");
+          if (link) item.appendChild(link);
+          else item.appendChild(text("span", "resources-asset-unavailable", "Not yet available"));
+          assetList.appendChild(item);
+        });
+        card.appendChild(assetList);
+        library.appendChild(card);
+      });
+      show("resources-library-feature", library.children.length > 0);
+    }
+
+    const formats = document.getElementById("resources-formats-list");
+    if (formats) {
+      formats.replaceChildren();
+      list(resourcesConfig.formats).filter(item => item.extension || item.title).forEach(item => {
+        const card = document.createElement("article");
+        card.className = "resources-format-card";
+        if (item.extension) card.appendChild(text("span", "resources-format-extension", item.extension));
+        if (item.category) card.appendChild(text("span", "resources-category-label", item.category));
+        card.appendChild(text("h4", "resources-format-title", item.title || "File format"));
+        if (item.description) card.appendChild(text("p", "resources-format-description", item.description));
+        formats.appendChild(card);
+      });
+      show("resources-formats-feature", formats.children.length > 0);
+    }
+
+    const instructions = document.getElementById("resources-instructions-list");
+    if (instructions) {
+      instructions.replaceChildren();
+      list(resourcesConfig.instructions).filter(item => item.title || item.description).forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "resources-instruction-card";
+        card.appendChild(text("span", "resources-instruction-number", formatIndex(index + 1)));
+        card.appendChild(text("h4", "resources-instruction-title", item.title || "Usage guidance"));
+        if (item.description) card.appendChild(text("p", "resources-instruction-description", item.description));
+        instructions.appendChild(card);
+      });
+      show("resources-instructions-feature", instructions.children.length > 0);
+    }
+
+    const delivery = document.getElementById("resources-delivery-details");
+    if (delivery) {
+      delivery.replaceChildren();
+      const info = resourcesConfig.delivery || {};
+      [
+        ["VERSION", info.version],
+        ["LAST UPDATED", info.updated],
+        ["PREPARED BY", info.preparedBy],
+        ["CONTACT", info.contact],
+        ["DELIVERY NOTES", info.notes]
+      ].forEach(([label, value]) => {
+        if (!value || !String(value).trim()) return;
+        const card = document.createElement("article");
+        card.className = "resources-delivery-card";
+        card.appendChild(text("span", "resources-delivery-label", label));
+        card.appendChild(text("p", label === "DELIVERY NOTES" ? "resources-delivery-description" : "resources-delivery-value", value));
+        delivery.appendChild(card);
+      });
+      show("resources-delivery-feature", delivery.children.length > 0);
+    }
+  }
+
+  // ========================================
+  // 19 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
