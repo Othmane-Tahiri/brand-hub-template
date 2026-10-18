@@ -2378,7 +2378,201 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 15 — ACTIVE SIDEBAR NAVIGATION
+  // 15 — BRAND APPLICATIONS SYSTEM
+  // Concept 02 — Editorial Application Gallery
+  // ========================================
+
+  const applicationsConfig = config.brandApplications || {};
+  const applicationsSection = document.getElementById("applications");
+
+  if (applicationsSection && sections.applications !== false) {
+    const intro = applicationsConfig.intro || {};
+    setElementText("applications-intro-eyebrow", intro.eyebrow);
+    setElementText("applications-intro-headline", intro.headline);
+    setElementText("applications-intro-description", intro.description);
+
+    const supportedLayouts = new Set([
+      "full", "half", "wide", "tall", "split", "split-reverse"
+    ]);
+
+    function applicationItems(value) {
+      return Array.isArray(value)
+        ? value.filter(item => item && typeof item === "object")
+        : [];
+    }
+
+    function applicationPath(value) {
+      if (typeof value !== "string") return "";
+      const path = value.trim();
+      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (/^https:\/\//i.test(path)) return path;
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
+      return path;
+    }
+
+    function applicationFeature(featureId, container) {
+      const feature = document.getElementById(featureId);
+      if (feature && container) feature.hidden = container.children.length === 0;
+    }
+
+    function applicationVisual(item, card, container, featureId, visualClass, imageClass) {
+      const visual = document.createElement("div");
+      visual.className = visualClass;
+      const image = document.createElement("img");
+      image.className = imageClass;
+      image.alt = item.alt || item.title || "Brand application";
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.style.setProperty(
+        "--applications-image-fit", item.fit === "contain" ? "contain" : "cover"
+      );
+      image.addEventListener("error", () => {
+        console.warn("Brand application image could not be loaded:", image.src);
+        if (card.isConnected) card.remove();
+        applicationFeature(featureId, container);
+      });
+      image.src = applicationPath(item.image);
+      visual.appendChild(image);
+      return visual;
+    }
+
+    function applicationContent(item, contentClass, categoryClass, titleClass, descriptionClass) {
+      const content = document.createElement("div");
+      content.className = contentClass;
+      if (item.category) {
+        content.appendChild(createTextElement("span", categoryClass, item.category));
+      }
+      if (item.title) {
+        content.appendChild(createTextElement("h4", titleClass, item.title));
+      }
+      if (item.description) {
+        content.appendChild(createTextElement("p", descriptionClass, item.description));
+      }
+      return content;
+    }
+
+    function renderApplicationCards(options) {
+      const container = document.getElementById(options.containerId);
+      if (!container) return;
+      container.replaceChildren();
+      const items = applicationItems(options.items).filter(item => applicationPath(item.image));
+      items.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = options.cardClass;
+        if (options.layout) {
+          const layout = supportedLayouts.has(item.layout) ? item.layout : "half";
+          card.classList.add(`applications-layout-${layout}`);
+        }
+        card.appendChild(applicationVisual(
+          item, card, container, options.featureId, options.visualClass, options.imageClass
+        ));
+        const content = applicationContent(
+          item, options.contentClass, options.categoryClass,
+          options.titleClass, options.descriptionClass
+        );
+        if (options.numbered) {
+          content.prepend(createTextElement(
+            "span", "applications-category-number", formatIndex(index + 1)
+          ));
+        }
+        card.appendChild(content);
+        container.appendChild(card);
+      });
+      applicationFeature(options.featureId, container);
+    }
+
+    // 15.1 — Featured hero application
+    const heroContainer = document.getElementById("applications-hero-canvas");
+    if (heroContainer) {
+      heroContainer.replaceChildren();
+      const featured = applicationsConfig.featured || {};
+      if (featured.enabled === true && applicationPath(featured.image)) {
+        const card = document.createElement("article");
+        card.className = "applications-hero-card";
+        card.appendChild(applicationVisual(
+          featured, card, heroContainer, "applications-hero-feature",
+          "applications-hero-visual", "applications-hero-image"
+        ));
+        card.appendChild(applicationContent(
+          featured, "applications-hero-content", "applications-hero-category",
+          "applications-hero-title", "applications-hero-description"
+        ));
+        heroContainer.appendChild(card);
+      }
+      applicationFeature("applications-hero-feature", heroContainer);
+    }
+
+    // 15.2 — Categories
+    renderApplicationCards({
+      containerId: "applications-categories-gallery",
+      featureId: "applications-categories-feature",
+      items: applicationsConfig.categories,
+      cardClass: "applications-category-card",
+      visualClass: "applications-category-visual",
+      imageClass: "applications-category-image",
+      contentClass: "applications-category-content",
+      categoryClass: "applications-category-label",
+      titleClass: "applications-category-title",
+      descriptionClass: "applications-category-description",
+      numbered: true
+    });
+
+    // 15.3 — Editorial gallery with flexible layouts
+    renderApplicationCards({
+      containerId: "applications-image-gallery",
+      featureId: "applications-gallery-feature",
+      items: applicationsConfig.gallery,
+      cardClass: "applications-gallery-card",
+      visualClass: "applications-gallery-visual",
+      imageClass: "applications-gallery-image",
+      contentClass: "applications-gallery-content",
+      categoryClass: "applications-gallery-category",
+      titleClass: "applications-gallery-title",
+      descriptionClass: "applications-gallery-description",
+      layout: true
+    });
+
+    // 15.4 — Material and production details
+    renderApplicationCards({
+      containerId: "applications-details-gallery",
+      featureId: "applications-details-feature",
+      items: applicationsConfig.details,
+      cardClass: "applications-detail-card",
+      visualClass: "applications-detail-visual",
+      imageClass: "applications-detail-image",
+      contentClass: "applications-detail-content",
+      categoryClass: "applications-detail-category",
+      titleClass: "applications-detail-title",
+      descriptionClass: "applications-detail-description",
+      layout: true
+    });
+
+    // 15.5 — Application guidelines
+    const guidelinesContainer = document.getElementById("applications-guidelines-list");
+    if (guidelinesContainer) {
+      guidelinesContainer.replaceChildren();
+      applicationItems(applicationsConfig.guidelines)
+        .filter(item => item.title || item.description)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "applications-guideline-card";
+          card.appendChild(createTextElement(
+            "span", "applications-guideline-number", formatIndex(index + 1)
+          ));
+          if (item.title) card.appendChild(createTextElement(
+            "h4", "applications-guideline-title", item.title
+          ));
+          if (item.description) card.appendChild(createTextElement(
+            "p", "applications-guideline-description", item.description
+          ));
+          guidelinesContainer.appendChild(card);
+        });
+      applicationFeature("applications-guidelines-feature", guidelinesContainer);
+    }
+  }
+
+  // ========================================
+  // 16 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
