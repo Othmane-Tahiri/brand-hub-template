@@ -4,17 +4,29 @@
    Theme 01: Minimal Swiss
    ========================================= */
 
+/* DESIGN TOKENS */
+
 :root {
   --brand-primary: #202020;
   --brand-background: #ffffff;
   --brand-text: #202020;
 
   --sidebar-width: 270px;
+
+  --surface-soft: #f8f8f6;
+  --surface-warm: #f2f1ed;
+
   --border-color: #e8e8e8;
   --muted-text: #777777;
+
+  --content-spacing: 7%;
 }
 
-* {
+/* GLOBAL RESET */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -28,20 +40,37 @@ body {
   color: var(--brand-text);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
-/* SIDEBAR */
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
 
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+
   width: var(--sidebar-width);
-  background: #f8f8f6;
+  height: 100vh;
+
+  background: var(--surface-soft);
   border-right: 1px solid var(--border-color);
+
   display: flex;
   flex-direction: column;
+
   z-index: 100;
 }
 
@@ -52,61 +81,86 @@ body {
 
 .sidebar-label {
   display: block;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
+
   color: var(--muted-text);
   margin-bottom: 14px;
 }
 
 .sidebar-header h2 {
   margin: 0;
+
   font-size: 23px;
   font-weight: 700;
   letter-spacing: -0.8px;
+  line-height: 1.2;
 }
 
 .sidebar-nav {
+  flex: 1;
+  min-height: 0;
+
   padding: 22px 14px;
   overflow-y: auto;
-  flex: 1;
+  overscroll-behavior: contain;
 }
 
 .nav-link {
   display: block;
+
   padding: 12px 15px;
   margin-bottom: 3px;
+
   color: #555555;
   text-decoration: none;
+
   font-size: 13px;
   font-weight: 500;
+
   border-radius: 5px;
-  transition: background 0.2s, color 0.2s;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .nav-link:hover {
   background: #ebebe8;
-  color: #202020;
+  color: var(--brand-text);
 }
 
-.nav-link.active {
-  background: #202020;
+.nav-link.active,
+.nav-link.active:hover {
+  background: var(--brand-primary);
   color: #ffffff;
+}
+
+.nav-link:focus-visible {
+  outline-offset: -2px;
 }
 
 .sidebar-footer {
   padding: 24px 28px;
+
   border-top: 1px solid var(--border-color);
+
   font-size: 10px;
   letter-spacing: 1.5px;
+
   color: var(--muted-text);
 }
 
-/* MAIN CONTENT */
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
 
 .main-content {
   margin-left: var(--sidebar-width);
-  padding: 85px 7%;
+  padding: 85px var(--content-spacing);
+
   min-height: 100vh;
   max-width: 1800px;
 }
@@ -115,80 +169,240 @@ body {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2.5px;
+
   color: var(--muted-text);
   margin-bottom: 20px;
 }
 
 .main-content h1 {
-  font-size: clamp(52px, 7vw, 110px);
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -4px;
   margin: 0 0 22px;
+
+  font-size: clamp(52px, 7vw, 110px);
+  line-height: 1.04;
+
+  font-weight: 700;
+  letter-spacing: -0.045em;
+
+  overflow-wrap: anywhere;
 }
 
 #brand-tagline {
-  font-size: 20px;
-  color: #777777;
   margin: 0;
+
+  font-size: 20px;
   line-height: 1.6;
+
+  color: var(--muted-text);
 }
 
-/* WELCOME PANEL */
+/* =========================================
+   WELCOME PANELS
+   ========================================= */
 
 .welcome-panel {
-  margin-top: 75px;
-  padding: 65px 55px;
-  background: #f2f1ed;
-  min-height: 330px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  margin-top: 75px;
+  padding: 65px 55px;
+
+  min-height: 330px;
+
+  background: var(--surface-warm);
 }
 
 .panel-label {
+  display: block;
+
+  margin-bottom: 24px;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #777777;
-  margin-bottom: 24px;
+
+  color: var(--muted-text);
 }
 
 .welcome-panel h2 {
+  margin: 0 0 18px;
+
+  max-width: 650px;
+
   font-size: clamp(28px, 3.5vw, 52px);
   line-height: 1.15;
-  letter-spacing: -1.5px;
+
+  letter-spacing: -0.035em;
   font-weight: 600;
-  max-width: 650px;
-  margin: 0 0 18px;
 }
 
 .welcome-panel p {
-  font-size: 15px;
-  color: #666666;
-  line-height: 1.8;
-  max-width: 480px;
   margin: 0;
+
+  max-width: 480px;
+
+  font-size: 15px;
+  line-height: 1.8;
+
+  color: #666666;
 }
 
-/* RESPONSIVE FOUNDATION */
+/* =========================================
+   GUIDELINE SECTIONS
+   ========================================= */
+
+.guideline-section {
+  padding-top: 100px;
+  margin-top: 100px;
+
+  border-top: 1px solid var(--border-color);
+
+  scroll-margin-top: 32px;
+}
+
+.guideline-section > h2 {
+  margin: 0 0 25px;
+
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.guideline-section > p {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-size: 17px;
+  line-height: 1.8;
+
+  color: var(--muted-text);
+}
+
+/* =========================================
+   LOGO SYSTEM — SECTION 02
+   ========================================= */
+
+/* Primary logo introduction */
+
+#logo .welcome-panel {
+  margin-top: 45px;
+  min-height: 380px;
+
+  background: var(--surface-warm);
+  border: 1px solid #e9e7e2;
+}
+
+/* Individual logo guideline cards */
+
+#logo .logo-block {
+  margin-top: 18px;
+  padding: 38px 42px;
+
+  background: var(--surface-soft);
+  border: 1px solid var(--border-color);
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* More breathing room after the primary panel */
+
+#logo .welcome-panel + .logo-block {
+  margin-top: 42px;
+}
+
+/* Card headings */
+
+#logo .logo-block h3 {
+  margin: 0 0 14px;
+
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.25;
+
+  font-weight: 600;
+  letter-spacing: -0.025em;
+
+  color: var(--brand-text);
+}
+
+/* Card descriptions */
+
+#logo .logo-block p {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-size: 15px;
+  line-height: 1.8;
+
+  color: #666666;
+}
+
+/* Gentle hover feedback */
+
+@media (hover: hover) {
+  #logo .logo-block:hover {
+    border-color: #d4d4d0;
+    background: #f5f5f2;
+  }
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+   ========================================= */
 
 @media (max-width: 900px) {
-  .sidebar {
-    width: 220px;
+
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .sidebar-header {
+    padding: 28px 20px;
+  }
+
+  .sidebar-nav {
+    padding: 18px 10px;
+  }
+
+  .sidebar-footer {
+    padding: 20px;
   }
 
   .main-content {
-    margin-left: 220px;
     padding: 60px 5%;
   }
 
   .welcome-panel {
-    padding: 40px 30px;
+    padding: 45px 35px;
+  }
+
+  .guideline-section {
+    padding-top: 75px;
+    margin-top: 75px;
+  }
+
+  #logo .logo-block {
+    padding: 32px;
   }
 }
 
+/* =========================================
+   MOBILE RESPONSIVENESS — FOUNDATION
+   ========================================= */
+
 @media (max-width: 640px) {
+
+  /*
+   * Temporary mobile behavior.
+   * A collapsible mobile sidebar will be
+   * implemented in a later development step.
+   */
+
   .sidebar {
     display: none;
   }
@@ -199,7 +413,11 @@ body {
   }
 
   .main-content h1 {
-    letter-spacing: -2px;
+    font-size: clamp(42px, 12vw, 68px);
+  }
+
+  #brand-tagline {
+    font-size: 17px;
   }
 
   .welcome-panel {
@@ -207,84 +425,45 @@ body {
     padding: 40px 25px;
     min-height: 280px;
   }
-}
 
-/* GUIDELINE SECTIONS */
+  .guideline-section {
+    padding-top: 55px;
+    margin-top: 55px;
+  }
 
-.guideline-section {
-  padding-top: 100px;
-  margin-top: 100px;
-  border-top: 1px solid var(--border-color);
-}
+  .guideline-section > h2 {
+    font-size: clamp(32px, 9vw, 48px);
+  }
 
-.guideline-section > h2 {
-  font-size: clamp(36px, 5vw, 68px);
-  letter-spacing: -2px;
-  margin: 0 0 25px;
-}
-
-.guideline-section > p {
-  font-size: 17px;
-  line-height: 1.8;
-  color: var(--muted-text);
-  max-width: 650px;
-}
-
-/* =========================================
-   STEP 17.11 — LOGO SYSTEM PRESENTATION
-   ========================================= */
-
-/* Spacing between logo guideline blocks */
-#logo .logo-block {
-  margin-top: 28px;
-  padding: 36px 40px;
-  background: #f8f8f6;
-  border: 1px solid var(--border-color);
-}
-
-/* Section headings */
-#logo .logo-block h3 {
-  margin: 0 0 14px;
-  font-size: clamp(21px, 2.2vw, 30px);
-  font-weight: 600;
-  letter-spacing: -0.7px;
-  color: var(--brand-text);
-}
-
-/* Supporting descriptions */
-#logo .logo-block p {
-  margin: 0;
-  max-width: 650px;
-  color: var(--muted-text);
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-/* Primary logo presentation panel */
-#logo .welcome-panel {
-  margin-top: 45px;
-  min-height: 380px;
-  background: #f2f1ed;
-  border: 1px solid #e9e7e2;
-}
-
-/* Add space before the logo variations */
-#logo .welcome-panel + .logo-block {
-  margin-top: 45px;
-}
-
-/* Subtle separation between content blocks */
-#logo .logo-block + .logo-block {
-  margin-top: 18px;
-}
-
-/* Responsive spacing */
-@media (max-width: 640px) {
-  #logo .logo-block {
-    padding: 26px 22px;
+  .guideline-section > p {
+    font-size: 15px;
   }
 
   #logo .welcome-panel {
     min-height: 300px;
+  }
+
+  #logo .logo-block {
+    padding: 28px 24px;
+  }
+
+  #logo .logo-block h3 {
+    font-size: 23px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .nav-link,
+  #logo .logo-block {
+    transition: none;
   }
 }
