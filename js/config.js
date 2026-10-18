@@ -1225,6 +1225,187 @@ const BRAND_CONFIG = {
   },
 
   // ========================================
+  // BRAND VOICE & MESSAGING SYSTEM
+  // Concept 02 — Editorial Verbal Identity
+  // ========================================
+
+  /*
+   * TEST CONTENT — Replace with approved client messaging.
+   * Add, remove, or reorder items in each array.
+   * Empty arrays hide their corresponding feature.
+   * Voice and messaging are editable independently
+   * for every client without changing HTML or CSS.
+   */
+
+  brandVoice: {
+
+    // EDITORIAL INTRODUCTION
+    intro: {
+      eyebrow: "THE VERBAL IDENTITY",
+      headline: "Words with intention.",
+      description:
+        "A distinctive way of speaking, built around personality, clarity, and a consistent point of view."
+    },
+
+    // 01 — BRAND PERSONALITY
+    // Each entry creates one personality card.
+    personality: [
+      {
+        title: "Confident",
+        description:
+          "Speak with conviction and expertise, without sounding arrogant or overstated."
+      },
+      {
+        title: "Thoughtful",
+        description:
+          "Choose language deliberately. Every word should communicate something meaningful."
+      },
+      {
+        title: "Approachable",
+        description:
+          "Keep communication warm, natural, and easy to understand."
+      },
+      {
+        title: "Distinctive",
+        description:
+          "Use a recognizable point of view instead of generic industry phrases."
+      }
+    ],
+
+    // 02 — TONE OF VOICE
+    // category, title, description, example.
+    tone: [
+      {
+        category: "EVERYDAY COMMUNICATION",
+        title: "Clear & Human",
+        description:
+          "Be direct, friendly, and helpful when speaking to customers.",
+        example: "Made for the moments that matter."
+      },
+      {
+        category: "CAMPAIGNS & HEADLINES",
+        title: "Bold & Focused",
+        description:
+          "Use short, memorable statements with one strong idea.",
+        example: "Less noise. More meaning."
+      },
+      {
+        category: "SERVICE & SUPPORT",
+        title: "Calm & Reassuring",
+        description:
+          "Explain next steps clearly, acknowledge concerns, and avoid unnecessary jargon.",
+        example: "We're here to help you find the right solution."
+      }
+    ],
+
+    // 03 — MESSAGING PILLARS
+    // statement is the short sample brand message.
+    pillars: [
+      {
+        title: "Purposeful Design",
+        description:
+          "Every decision is made with intention, balancing beauty with usefulness.",
+        statement: "Designed with purpose."
+      },
+      {
+        title: "Lasting Quality",
+        description:
+          "We value thoughtful work, considered details, and enduring results.",
+        statement: "Made to last."
+      },
+      {
+        title: "Human Connection",
+        description:
+          "We build relationships through honesty, empathy, and shared understanding.",
+        statement: "Always people first."
+      }
+    ],
+
+    // 04 — WRITING EXAMPLES
+    // layout: "half", "full", or "wide".
+    // copy is the actual sample text to display.
+    examples: [
+      {
+        category: "BRAND HEADLINE / TEST",
+        title: "Hero Statement",
+        copy: "Made to be remembered.",
+        description:
+          "A concise, memorable statement that expresses the brand's character.",
+        layout: "full"
+      },
+      {
+        category: "SOCIAL MEDIA / TEST",
+        title: "Social Caption",
+        copy: "Good things begin with thoughtful choices.",
+        description:
+          "A warm, direct caption that communicates an idea without overexplaining.",
+        layout: "half"
+      },
+      {
+        category: "PRODUCT DESCRIPTION / TEST",
+        title: "Product Copy",
+        copy: "Every detail has a purpose. Every finish tells a story.",
+        description:
+          "A considered description that highlights value and craft.",
+        layout: "half"
+      },
+      {
+        category: "WEBSITE / TEST",
+        title: "About Statement",
+        copy: "We believe the strongest ideas are the simplest ones, expressed with care and confidence.",
+        description:
+          "An accessible introduction to the brand's point of view.",
+        layout: "wide"
+      }
+    ],
+
+    // 05 — VOICE DO / DON'T
+    // Each pair contrasts approved and unsuitable wording.
+    comparisons: [
+      {
+        title: "Clarity",
+        approved: {
+          title: "Keep It Simple",
+          copy: "A better experience, from start to finish.",
+          description: "DO — Use straightforward language with a clear benefit."
+        },
+        avoid: {
+          title: "Avoid Empty Jargon",
+          copy: "Leveraging innovative, next-generation synergies.",
+          description: "DON'T — Rely on vague corporate language."
+        }
+      },
+      {
+        title: "Confidence",
+        approved: {
+          title: "Be Assured",
+          copy: "Carefully considered. Made for everyday life.",
+          description: "DO — Express confidence through specificity and restraint."
+        },
+        avoid: {
+          title: "Avoid Exaggeration",
+          copy: "The world's most incredible product ever!",
+          description: "DON'T — Make exaggerated or unsupported claims."
+        }
+      },
+      {
+        title: "Personality",
+        approved: {
+          title: "Sound Human",
+          copy: "Have a question? We're happy to help.",
+          description: "DO — Speak naturally and with warmth."
+        },
+        avoid: {
+          title: "Avoid Robotic Language",
+          copy: "Your inquiry has been registered for processing.",
+          description: "DON'T — Sound distant or unnecessarily formal."
+        }
+      }
+    ]
+
+  },
+
+  // ========================================
   // OPTIONAL BRAND SECTIONS
   // ========================================
 
