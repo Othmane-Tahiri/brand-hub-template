@@ -2240,7 +2240,145 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 14 — ACTIVE SIDEBAR NAVIGATION
+  // 14 — BRAND VOICE & MESSAGING
+  // Concept 02 — Editorial Verbal Identity
+  // ========================================
+
+  const voiceConfig = config.brandVoice || {};
+  const voiceSection = document.getElementById("voice");
+
+  if (voiceSection && sections.voice !== false) {
+    const voiceIntro = voiceConfig.intro || {};
+    setElementText("voice-intro-eyebrow", voiceIntro.eyebrow);
+    setElementText("voice-intro-headline", voiceIntro.headline);
+    setElementText("voice-intro-description", voiceIntro.description);
+
+    function voiceItems(items) {
+      return Array.isArray(items)
+        ? items.filter(item => item && typeof item === "object")
+        : [];
+    }
+
+    function voiceFeature(featureId, gallery) {
+      const feature = document.getElementById(featureId);
+      if (feature && gallery) feature.hidden = gallery.children.length === 0;
+    }
+
+    function voiceAppend(parent, tag, className, value) {
+      if (value !== undefined && value !== null && String(value).trim()) {
+        parent.appendChild(createTextElement(tag, className, value));
+      }
+    }
+
+    // 14.1 — BRAND PERSONALITY
+    const personalityGallery = document.getElementById("voice-personality-gallery");
+    if (personalityGallery) {
+      personalityGallery.replaceChildren();
+      voiceItems(voiceConfig.personality)
+        .filter(item => item.title || item.description)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "voice-personality-card";
+          voiceAppend(card, "span", "voice-personality-number", formatIndex(index + 1));
+          voiceAppend(card, "h4", "voice-personality-title", item.title);
+          voiceAppend(card, "p", "voice-personality-description", item.description);
+          personalityGallery.appendChild(card);
+        });
+      voiceFeature("voice-personality-feature", personalityGallery);
+    }
+
+    // 14.2 — TONE OF VOICE
+    const toneGallery = document.getElementById("voice-tone-gallery");
+    if (toneGallery) {
+      toneGallery.replaceChildren();
+      const tones = voiceConfig.tone || voiceConfig.tones;
+      voiceItems(tones)
+        .filter(item => item.title || item.description || item.example)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "voice-tone-card";
+          const heading = document.createElement("div");
+          const details = document.createElement("div");
+          voiceAppend(heading, "span", "voice-tone-number", formatIndex(index + 1));
+          voiceAppend(heading, "span", "voice-tone-category", item.category);
+          voiceAppend(heading, "h4", "voice-tone-title", item.title);
+          voiceAppend(details, "p", "voice-tone-description", item.description);
+          voiceAppend(details, "blockquote", "voice-tone-example", item.example);
+          card.append(heading, details);
+          toneGallery.appendChild(card);
+        });
+      voiceFeature("voice-tone-feature", toneGallery);
+    }
+
+    // 14.3 — MESSAGING PILLARS
+    const pillarsGallery = document.getElementById("voice-pillars-gallery");
+    if (pillarsGallery) {
+      pillarsGallery.replaceChildren();
+      voiceItems(voiceConfig.pillars)
+        .filter(item => item.title || item.description || item.statement)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "voice-pillar-card";
+          voiceAppend(card, "span", "voice-pillar-number", formatIndex(index + 1));
+          voiceAppend(card, "h4", "voice-pillar-title", item.title);
+          voiceAppend(card, "p", "voice-pillar-description", item.description);
+          voiceAppend(card, "p", "voice-pillar-statement", item.statement);
+          pillarsGallery.appendChild(card);
+        });
+      voiceFeature("voice-pillars-feature", pillarsGallery);
+    }
+
+    // 14.4 — WRITING EXAMPLES
+    const examplesGallery = document.getElementById("voice-examples-gallery");
+    if (examplesGallery) {
+      examplesGallery.replaceChildren();
+      voiceItems(voiceConfig.examples)
+        .filter(item => item.copy || item.title || item.description)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "voice-example-card";
+          const layout = ["full", "half", "wide"].includes(item.layout)
+            ? item.layout : "half";
+          card.classList.add(`voice-layout-${layout}`);
+          voiceAppend(card, "span", "voice-example-number", formatIndex(index + 1));
+          voiceAppend(card, "span", "voice-example-category", item.category || item.title);
+          voiceAppend(card, "p", "voice-example-copy", item.copy);
+          voiceAppend(card, "p", "voice-example-description", item.description);
+          examplesGallery.appendChild(card);
+        });
+      voiceFeature("voice-examples-feature", examplesGallery);
+    }
+
+    // 14.5 — VOICE DO / DON'T
+    const comparisonGallery = document.getElementById("voice-comparison-gallery");
+    if (comparisonGallery) {
+      comparisonGallery.replaceChildren();
+      voiceItems(voiceConfig.comparisons)
+        .filter(item => item.approved && item.avoid)
+        .forEach(item => {
+          const pair = document.createElement("div");
+          pair.className = "voice-comparison-pair";
+          [
+            { data: item.approved, approved: true },
+            { data: item.avoid, approved: false }
+          ].forEach(({ data, approved }) => {
+            const card = document.createElement("article");
+            card.className = `voice-comparison-card ${approved ? "is-approved" : "is-avoid"}`;
+            voiceAppend(card, "span", "voice-comparison-status",
+              approved ? "DO / APPROVED" : "DON'T / AVOID");
+            voiceAppend(card, "p", "voice-comparison-copy", data.copy);
+            voiceAppend(card, "h4", "voice-comparison-title", data.title || item.title);
+            voiceAppend(card, "p", "voice-comparison-description", data.description);
+            pair.appendChild(card);
+          });
+          comparisonGallery.appendChild(pair);
+        });
+      voiceFeature("voice-comparison-feature", comparisonGallery);
+    }
+  }
+
+  // ========================================
+  // 15 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
