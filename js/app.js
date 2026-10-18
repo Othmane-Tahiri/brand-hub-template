@@ -2572,7 +2572,178 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
-  // 16 — ACTIVE SIDEBAR NAVIGATION
+  // 16 — PACKAGING DESIGN SYSTEM
+  // Concept 02 — Editorial Packaging Gallery
+  // ========================================
+
+  const packagingConfig = config.packagingDesign || {};
+  const packagingSection = document.getElementById("packaging");
+
+  if (packagingSection && sections.packaging !== false) {
+    const intro = packagingConfig.intro || {};
+    setElementText("packaging-intro-eyebrow", intro.eyebrow);
+    setElementText("packaging-intro-headline", intro.headline);
+    setElementText("packaging-intro-description", intro.description);
+
+    const supportedPackagingLayouts = new Set([
+      "full", "half", "wide", "tall", "split", "split-reverse"
+    ]);
+
+    function packagingItems(value) {
+      return Array.isArray(value)
+        ? value.filter(item => item && typeof item === "object")
+        : [];
+    }
+
+    function packagingPath(value) {
+      if (typeof value !== "string") return "";
+      const path = value.trim();
+      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (/^https:\/\//i.test(path)) return path;
+      if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
+      return path;
+    }
+
+    function packagingFeature(id, container) {
+      const feature = document.getElementById(id);
+      if (feature && container) feature.hidden = container.children.length === 0;
+    }
+
+    function packagingVisual(item, card, container, featureId, visualClass, imageClass) {
+      const visual = document.createElement("div");
+      visual.className = visualClass;
+      const img = document.createElement("img");
+      img.className = imageClass;
+      img.alt = item.alt || item.title || "Brand packaging";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.style.setProperty("--packaging-image-fit", item.fit === "contain" ? "contain" : "cover");
+      img.addEventListener("error", () => {
+        console.warn("Packaging image could not be loaded:", img.src);
+        if (card.isConnected) card.remove();
+        packagingFeature(featureId, container);
+      });
+      img.src = packagingPath(item.image);
+      visual.appendChild(img);
+      return visual;
+    }
+
+    function packagingCaption(item, contentClass, categoryClass, titleClass, descriptionClass) {
+      const content = document.createElement("div");
+      content.className = contentClass;
+      if (item.category) content.appendChild(createTextElement("span", categoryClass, item.category));
+      content.appendChild(createTextElement("h4", titleClass, item.title || "Packaging design"));
+      if (item.description) content.appendChild(createTextElement("p", descriptionClass, item.description));
+      return content;
+    }
+
+    // 16.1 — FEATURED PACKAGING
+    const hero = document.getElementById("packaging-hero-canvas");
+    if (hero) {
+      hero.replaceChildren();
+      const item = packagingConfig.featured || {};
+      if (item.enabled === true && packagingPath(item.image)) {
+        const card = document.createElement("article");
+        card.className = "packaging-hero-card";
+        card.appendChild(packagingVisual(item, card, hero, "packaging-hero-feature", "packaging-hero-visual", "packaging-hero-image"));
+        card.appendChild(packagingCaption(item, "packaging-hero-content", "packaging-hero-category", "packaging-hero-title", "packaging-hero-description"));
+        hero.appendChild(card);
+      }
+      packagingFeature("packaging-hero-feature", hero);
+    }
+
+    // 16.2 — PACKAGING COLLECTION
+    const collection = document.getElementById("packaging-collection-gallery");
+    if (collection) {
+      collection.replaceChildren();
+      packagingItems(packagingConfig.collection)
+        .filter(item => packagingPath(item.image))
+        .forEach(item => {
+          const card = document.createElement("article");
+          card.className = "packaging-collection-card";
+          const layout = supportedPackagingLayouts.has(item.layout) ? item.layout : "half";
+          card.classList.add(`packaging-layout-${layout}`);
+          card.appendChild(packagingVisual(item, card, collection, "packaging-collection-feature", "packaging-collection-visual", "packaging-collection-image"));
+          card.appendChild(packagingCaption(item, "packaging-collection-content", "packaging-collection-category", "packaging-collection-title", "packaging-collection-description"));
+          collection.appendChild(card);
+        });
+      packagingFeature("packaging-collection-feature", collection);
+    }
+
+    // 16.3 — MATERIALS AND FINISHES
+    const materials = document.getElementById("packaging-materials-gallery");
+    if (materials) {
+      materials.replaceChildren();
+      packagingItems(packagingConfig.materials)
+        .filter(item => packagingPath(item.image))
+        .forEach(item => {
+          const card = document.createElement("article");
+          card.className = "packaging-material-card";
+          card.appendChild(packagingVisual(item, card, materials, "packaging-materials-feature", "packaging-material-visual", "packaging-material-image"));
+          card.appendChild(packagingCaption(item, "packaging-material-content", "packaging-material-category", "packaging-material-title", "packaging-material-description"));
+          materials.appendChild(card);
+        });
+      packagingFeature("packaging-materials-feature", materials);
+    }
+
+    // 16.4 — PRODUCTION SPECIFICATIONS
+    const specs = document.getElementById("packaging-specifications-list");
+    if (specs) {
+      specs.replaceChildren();
+      packagingItems(packagingConfig.specifications)
+        .filter(item => item.title || item.value || item.description)
+        .forEach((item, index) => {
+          const card = document.createElement("article");
+          card.className = "packaging-specification-card";
+          card.appendChild(createTextElement("span", "packaging-specification-number", formatIndex(index + 1)));
+          if (item.category) card.appendChild(createTextElement("span", "packaging-specification-category", item.category));
+          card.appendChild(createTextElement("h4", "packaging-specification-title", item.title || "Production specification"));
+          if (item.value) card.appendChild(createTextElement("div", "packaging-specification-value", item.value));
+          if (item.description) card.appendChild(createTextElement("p", "packaging-specification-description", item.description));
+          specs.appendChild(card);
+        });
+      packagingFeature("packaging-specifications-feature", specs);
+    }
+
+    // 16.5 — PACKAGING DO / DON'T
+    const comparisons = document.getElementById("packaging-comparison-gallery");
+    if (comparisons) {
+      comparisons.replaceChildren();
+      packagingItems(packagingConfig.comparisons).forEach(pairData => {
+        if (!pairData.approved || !pairData.avoid ||
+            !packagingPath(pairData.approved.image) || !packagingPath(pairData.avoid.image)) return;
+        const pair = document.createElement("div");
+        pair.className = "packaging-comparison-pair";
+        const failPair = () => {
+          pair.remove();
+          packagingFeature("packaging-comparison-feature", comparisons);
+        };
+        [
+          { item: pairData.approved, approved: true },
+          { item: pairData.avoid, approved: false }
+        ].forEach(({ item, approved }) => {
+          const card = document.createElement("article");
+          card.className = `packaging-comparison-card ${approved ? "packaging-comparison-approved" : "packaging-comparison-avoid"}`;
+          const visual = packagingVisual(item, card, comparisons, "packaging-comparison-feature", "packaging-comparison-visual", "packaging-comparison-image");
+          const img = visual.querySelector("img");
+          if (img) img.addEventListener("error", failPair);
+          card.appendChild(visual);
+          const content = document.createElement("div");
+          content.className = "packaging-comparison-content";
+          content.appendChild(createTextElement("span", "packaging-comparison-status", approved ? "DO / APPROVED" : "DON'T / AVOID"));
+          content.appendChild(createTextElement("h4", "packaging-comparison-title", item.title || pairData.title || "Packaging example"));
+          if (item.description) content.appendChild(createTextElement("p", "packaging-comparison-description", item.description));
+          card.appendChild(content);
+          pair.appendChild(card);
+        });
+        comparisons.appendChild(pair);
+      });
+      packagingFeature("packaging-comparison-feature", comparisons);
+    }
+  }
+
+  // ========================================
+  // 17 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
   const navLinks = [
