@@ -3157,6 +3157,109 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========================================
+  // 18.5 — STUDIO SUBSECTION VISIBILITY
+  // ========================================
+  // The editor stores individual choices in config.studioSubsections.
+  // Only blocks that exist independently in index.html can be toggled.
+  // This runs after all galleries render, preserving their normal behavior.
+
+  const studioChoices = config.studioSubsections || {};
+  const subsectionBlocks = {
+    logo: {
+      "logo-0": ".logo-feature:nth-of-type(2)",
+      "logo-3": ".logo-feature:nth-of-type(3)",
+      "logo-4": ".logo-feature:nth-of-type(5)",
+      "logo-6": ".logo-feature:nth-of-type(6)"
+    },
+    colors: {
+      "colors-0": ".color-feature:nth-of-type(2)",
+      "colors-3": ".color-feature:nth-of-type(3)"
+    },
+    typography: {
+      "typography-0": "#typography-typeface-gallery",
+      "typography-1": "#typography-character-gallery",
+      "typography-2": "#typography-weights-gallery",
+      "typography-3": "#typography-context-showcase"
+    },
+    graphics: {
+      "graphics-0": "#graphics-hero-feature",
+      "graphics-1": "#graphics-gallery-feature",
+      "graphics-2": "#graphics-details-feature",
+      "graphics-3": "#graphics-guidelines-feature"
+    },
+    photography: {
+      "photography-0": "#photography-hero-feature",
+      "photography-1": "#photography-categories-feature",
+      "photography-2": "#photography-gallery-feature",
+      "photography-3": "#photography-direction-feature",
+      "photography-4": "#photography-comparison-feature"
+    },
+    layout: {
+      "layout-0": "#layout-philosophy-feature",
+      "layout-1": "#layout-grid-feature",
+      "layout-2": "#layout-spacing-feature",
+      "layout-3": "#layout-examples-feature",
+      "layout-4": "#layout-comparison-feature"
+    },
+    voice: {
+      "voice-0": "#voice-personality-feature",
+      "voice-1": "#voice-tone-feature",
+      "voice-2": "#voice-pillars-feature",
+      "voice-3": "#voice-examples-feature",
+      "voice-4": "#voice-comparison-feature"
+    },
+    applications: {
+      "applications-0": "#applications-hero-feature",
+      "applications-1": "#applications-categories-feature",
+      "applications-2": "#applications-gallery-feature",
+      "applications-3": "#applications-details-feature",
+      "applications-4": "#applications-guidelines-feature"
+    },
+    packaging: {
+      "packaging-0": "#packaging-hero-feature",
+      "packaging-1": "#packaging-collection-feature",
+      "packaging-2": "#packaging-materials-feature",
+      "packaging-3": "#packaging-specifications-feature",
+      "packaging-4": "#packaging-comparison-feature"
+    },
+    motion: {
+      "motion-0": "#motion-philosophy-feature",
+      "motion-1": "#motion-logo-feature",
+      "motion-2": "#motion-behaviors-feature",
+      "motion-3": "#motion-applications-feature",
+      "motion-4": "#motion-comparison-feature"
+    },
+    resources: {
+      "resources-0": "#resources-featured-feature",
+      "resources-1": "#resources-library-feature",
+      "resources-2": "#resources-formats-feature",
+      "resources-3": "#resources-instructions-feature",
+      "resources-4": "#resources-delivery-feature"
+    }
+  };
+
+  Object.entries(studioChoices).forEach(([sectionId, choices]) => {
+    if (!choices || typeof choices !== "object") return;
+    const sectionElement = document.getElementById(sectionId);
+    if (!sectionElement) return;
+    const selectors = subsectionBlocks[sectionId] || {};
+
+    Object.entries(choices).forEach(([subsectionId, enabled]) => {
+      if (enabled !== false) return;
+      const selector = selectors[subsectionId];
+      if (!selector) return; // No standalone HTML block yet.
+      const block = sectionElement.querySelector(selector);
+      if (block) {
+        const target = sectionId === "typography"
+          ? (block.closest(".typography-feature") || block)
+          : block;
+        target.hidden = true;
+        target.style.display = "none";
+      }
+    });
+  });
+
+  // ========================================
   // 19 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
