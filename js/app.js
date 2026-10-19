@@ -3300,6 +3300,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+  const studioLogo = config.logoSystem || {};
+  const logoSelectors = {
+    primary: '#logo [data-studio-item="logo-0"] .logo-placeholder',
+    variation: '#logo [data-studio-item="logo-3"] .logo-preview-light:first-child .logo-placeholder',
+    symbol: '#logo [data-studio-item="logo-3"] .logo-preview-light:nth-child(2) .logo-placeholder',
+    black: '#logo [data-studio-item="logo-3"] .logo-preview .logo-placeholder',
+    white: '#logo [data-studio-item="logo-3"] .logo-preview-dark .logo-placeholder'
+  };
+  Object.entries(logoSelectors).forEach(([name, selector]) => {
+    const entry = studioLogo[name];
+    const target = document.querySelector(selector);
+    if (!target || !entry || typeof entry.image !== "string") return;
+    if (!/^https:\/\//i.test(entry.image) && !/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(entry.image)) return;
+    const img = document.createElement("img");
+    img.src = entry.image;
+    img.alt = entry.title || name + " logo";
+    img.style.cssText = "max-width:80%;max-height:75%;object-fit:contain;display:block;margin:auto";
+    target.replaceWith(img);
+  });
+
   // ========================================
   // 19 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
