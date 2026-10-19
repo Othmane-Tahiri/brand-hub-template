@@ -73,7 +73,7 @@ $("contentGroup").onchange=renderContentTree;
 function renderAssetUploader(root){
  config.studioFiles??={};
  const resource=config.resourcesDownloads??={};
- resource.selectedFormats??={};resource.categories??=[];
+ resource.selectedFormats??={};resource.formatDescriptions??={};resource.categories??=[];
  let category=resource.categories.find(c=>c.studioFormatUploads);
  if(!category){category={title:"Uploaded brand deliverables",studioFormatUploads:true,assets:[]};resource.categories.push(category)}
  const groups=[["Editable Source Files",["AI","EPS","PSD","INDD","ZIP"]],["Print Files",["PDF","TIFF"]],["Digital Files",["SVG","PNG","JPG","WEBP"]]];
@@ -87,6 +87,10 @@ function renderAssetUploader(root){
    const label=document.createElement("label");label.style.display="flex";label.style.gap="10px";label.style.alignItems="center";
    const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=resource.selectedFormats[ext]===true;
    label.append(checkbox,document.createTextNode(ext+" download box"));wrap.append(label);
+   const defaults={AI:"Editable Illustrator artwork for updating logos and production files.",EPS:"Scalable vector artwork for professional printing.",PSD:"Layered Photoshop source files for editing images.",INDD:"Editable InDesign layouts for brand documents.",ZIP:"A compressed package of approved brand files.",PDF:"Print-ready documents and artwork for professional printing.",TIFF:"High-resolution imagery for print production.",SVG:"Scalable vector graphics for websites and digital use.",PNG:"Graphics with optional transparent backgrounds.",JPG:"Images for websites, presentations and social media.",WEBP:"Lightweight images optimized for websites."};
+   const purpose=document.createElement("textarea");purpose.rows=2;purpose.placeholder="Describe what this file is used for";purpose.value=resource.formatDescriptions[ext]??defaults[ext]??"";
+   purpose.oninput=()=>{resource.formatDescriptions[ext]=purpose.value;change()};
+   const purposeLabel=document.createElement("label");purposeLabel.textContent="Purpose / short description";wrap.append(purposeLabel,purpose);
    const input=document.createElement("input");input.type="file";input.accept="."+ext.toLowerCase()+(ext==="JPG"?",.jpeg":ext==="TIFF"?",.tif":"");
    const detail=document.createElement("p");detail.className="hint";
    const attached=()=>category.assets.filter(a=>a.studioFormat===ext);
