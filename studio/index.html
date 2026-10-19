@@ -202,15 +202,36 @@ $("saveProject").onclick=()=>{if(!config)return;saveFile((config.brand.name||"br
 $("loadProject").onclick=()=>$("projectInput").click();
 $("projectInput").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=await f.text();loadProjectObject(f.name.endsWith(".js")||raw.includes("const BRAND_CONFIG")?getConfig(raw):JSON.parse(raw))}catch(err){status("Import failed: "+err.message)}e.target.value=""};
 function htmlForPreview(){let html=sourceFiles["index.html"];if(!html)throw Error("Website template unavailable.");const base=new URL("../",location.href).href;html=html.replace(/<head([^>]*)>/i,'<head$1><base href="'+base+'">');const script='<script>'+configJS().replace(/<\/script/gi,"<\\/script")+'<\/script>';html=html.replace(/<script\s+src=["']js\/config\.js["']>\s*<\/script>/i,script);return html}
-function refreshPreview(){if(!config)return;try{
- if(config.sections?.resources!==false&&config.publishingMode==="showcase"){
-  config.publishingMode="client";$("mode").value="client";dirty=true;
-  status("Resources & Downloads is enabled. Switched to Client delivery mode so it appears in preview and exports.");
- }
- $("previewFrame").srcdoc=htmlForPreview();
- if(config.sections?.resources===false)status("Resources & Downloads is disabled under Sections. Enable it to show in preview.");
- else status("Preview refreshed. Resources & Downloads appears in Client delivery mode. No changes have been published.");
-}catch(err){status("Preview unavailable: "+err.message)}}
+function refreshPreview(){
+ if(!config)return;
+ try{
+  const resourcesEnabled=config.sections?.resources!==false;
+  if(resourcesEnabled){
+   config.publishingMode="client";$("mode").value="client";
+   config.studioSubsections??={};config.studioSubsections.resources??={};
+   const formats=config.resourcesDownloads?.selectedFormats||{};
+   if(Object.values(formats).some(Boolean))config.studioSubsections.resources["resources-1"]=true;
+  }
+  const frame=$("previewFrame");
+  frame.onload=()=>{
+   try{
+    const doc=frame.contentDocument;
+    const section=doc?.getElementById("resources");
+    const library=doc?.getElementById("resources-library-feature");
+    const cards=doc?.querySelectorAll(".resources-download-format-card").length||0;
+    if(!resourcesEnabled){status("Resources is unchecked in Sections. Enable it first.");return}
+    if(!section){status("Preview error: Resources section was not found in the website template.");return}
+    if(section.hidden||getComputedStyle(section).display==="none"){status("Preview error: Resources is hidden by the website. Please report this status.");return}
+    if(!library||library.hidden||getComputedStyle(library).display==="none"){
+     status("Resources section loaded, but Asset Library is hidden. Check the Asset Library subsection and select download formats.");return;
+    }
+    status("Resources & Downloads loaded: "+cards+" file-format boxes. Scroll down to the Resources section, or use the sidebar link.");
+   }catch(err){status("Preview loaded, but could not inspect it: "+err.message)}
+  };
+  frame.srcdoc=htmlForPreview();
+  status("Loading website preview…");
+ }catch(err){status("Preview unavailable: "+err.message)}
+}
 $("refreshPreview").onclick=refreshPreview;
 function utf8(s){return new TextEncoder().encode(s)}
 const crcTable=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
