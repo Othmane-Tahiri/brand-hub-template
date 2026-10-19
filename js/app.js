@@ -506,10 +506,15 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     : [];
 
+  function resolvedFontName(font) {
+    const raw = String(font?.family || font?.name || "").trim();
+    // Common spelling mistake in older saved Studio projects.
+    return /^Cormprant Garamond$/i.test(raw) ? "Cormorant Garamond" : raw;
+  }
+
   function getFontFamily(font) {
-    return font && (font.family || font.name)
-      ? "'" + String(font.family || font.name).replace(/'/g, "") + "', Arial, sans-serif"
-      : "Arial, sans-serif";
+    const name = resolvedFontName(font);
+    return name ? '"' + name.replace(/"/g, "") + '", ' + (/serif/i.test(font?.category || "") && !/sans/i.test(font?.category || "") ? "Georgia, serif" : "Arial, sans-serif") : "Arial, sans-serif";
   }
 
   function getFontWeight(font) {
@@ -541,6 +546,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadTypographyFonts() {
     const loadedSources = new Set();
+
+    // When Studio stores a font name but no stylesheet URL, load the
+    // corresponding Google Font so preview and exported sites show real specimens.
+    const knownGoogleFonts = new Set(["Bodoni Moda", "Cormorant Garamond", "Inter"]);
+    const googleFamilies = [...new Set(typographyFonts
+      .filter(font => !String(font.source || "").trim())
+      .map(resolvedFontName)
+      .filter(name => knownGoogleFonts.has(name)))];
+    if (googleFamilies.length) {
+      const preconnect = document.createElement("link");
+      preconnect.rel = "preconnect";
+      preconnect.href = "https://fonts.googleapis.com";
+      document.head.appendChild(preconnect);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?" + googleFamilies.map(name => "family=" + encodeURIComponent(name).replace(/%20/g, "+") + ":ital,wght@0,400;0,500;0,600;0,700;1,400").join("&") + "&display=swap";
+      link.addEventListener("error", () => console.warn("Could not load Google Fonts. Check internet access."));
+      document.head.appendChild(link);
+    }
 
     typographyFonts.forEach(font => {
       const source = typeof font.source === "string"
