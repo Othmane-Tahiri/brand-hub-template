@@ -3322,6 +3322,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========================================
+  document.querySelectorAll("section[id]").forEach(section => {
+    let sequence = 0;
+    section.querySelectorAll("[data-studio-item]").forEach(block => {
+      if (block.hidden || getComputedStyle(block).display === "none") return;
+      const label = block.querySelector(".panel-label");
+      if (!label) return;
+      const value = label.textContent.trim();
+      if (value.length < 4 || value.charAt(2) !== " " || value.charAt(3) !== "/") return;
+      sequence += 1;
+      label.textContent = String(sequence).padStart(2,"0") + value.slice(2);
+    });
+  });
   // 19 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 
