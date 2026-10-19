@@ -3079,79 +3079,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========================================
   // 18.5 — MOBILE SIDEBAR NAVIGATION
-  // Creates the controls automatically, so no HTML edits are needed.
+  // Reuse the existing controls from index.html.
+  // Do NOT generate another header, overlay or close button.
   // ========================================
 
   const mobileSidebar = document.querySelector(".sidebar");
+  const mobileMenuButton = document.getElementById("mobile-menu-toggle");
+  const mobileCloseButton = document.getElementById("mobile-sidebar-close");
+  const mobileOverlay = document.getElementById("mobile-sidebar-overlay");
+  const mobileBrandLink = document.querySelector(".mobile-header-brand");
 
-  if (mobileSidebar) {
-    if (!mobileSidebar.id) mobileSidebar.id = "brand-hub-sidebar";
-
-    const mobileHeader = document.createElement("header");
-    mobileHeader.className = "mobile-header";
-
-    const mobileBrand = document.createElement("a");
-    mobileBrand.className = "mobile-header-brand";
-    mobileBrand.href = "#overview";
-    mobileBrand.textContent = brand.name || "Brand Hub";
-
-    const menuButton = document.createElement("button");
-    menuButton.type = "button";
-    menuButton.className = "mobile-menu-toggle";
-    menuButton.setAttribute("aria-label", "Open navigation menu");
-    menuButton.setAttribute("aria-controls", mobileSidebar.id);
-    menuButton.setAttribute("aria-expanded", "false");
-
-    const menuText = createTextElement("span", "mobile-menu-text", "MENU");
-    const menuIcon = document.createElement("span");
-    menuIcon.className = "mobile-menu-icon";
-    menuIcon.setAttribute("aria-hidden", "true");
-    for (let i = 0; i < 3; i++) menuIcon.appendChild(document.createElement("span"));
-    menuButton.append(menuText, menuIcon);
-    mobileHeader.append(mobileBrand, menuButton);
-
-    const overlay = document.createElement("div");
-    overlay.className = "mobile-sidebar-overlay";
-    overlay.setAttribute("aria-hidden", "true");
-
-    const closeButton = document.createElement("button");
-    closeButton.type = "button";
-    closeButton.className = "mobile-sidebar-close";
-    closeButton.setAttribute("aria-label", "Close navigation menu");
-    closeButton.textContent = "×";
-    mobileSidebar.prepend(closeButton);
-
-    const appLayout = document.querySelector(".app-layout");
-    if (appLayout) {
-      appLayout.before(mobileHeader);
-      appLayout.before(overlay);
-    } else {
-      document.body.prepend(mobileHeader, overlay);
-    }
-
+  if (mobileSidebar && mobileMenuButton && mobileCloseButton && mobileOverlay) {
     const mobileQuery = window.matchMedia("(max-width: 640px)");
+    const mobileMenuText = mobileMenuButton.querySelector(".mobile-menu-text");
     let previouslyFocused = null;
 
     function setMobileMenuOpen(open, restoreFocus = false) {
       const shouldOpen = Boolean(open && mobileQuery.matches);
       const wasOpen = document.body.classList.contains("mobile-nav-open");
+
       if (shouldOpen && !wasOpen) previouslyFocused = document.activeElement;
+
       document.body.classList.toggle("mobile-nav-open", shouldOpen);
-      menuButton.setAttribute("aria-expanded", String(shouldOpen));
-      menuButton.setAttribute("aria-label", shouldOpen ? "Close navigation menu" : "Open navigation menu");
-      menuText.textContent = shouldOpen ? "CLOSE" : "MENU";
-      if (shouldOpen) closeButton.focus();
-      else if (wasOpen && restoreFocus && previouslyFocused && previouslyFocused.isConnected) {
+      mobileMenuButton.setAttribute("aria-expanded", String(shouldOpen));
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        shouldOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+      mobileOverlay.setAttribute("aria-hidden", String(!shouldOpen));
+      if (mobileMenuText) mobileMenuText.textContent = shouldOpen ? "CLOSE" : "MENU";
+
+      if (shouldOpen) {
+        mobileCloseButton.focus();
+      } else if (wasOpen && restoreFocus && previouslyFocused && previouslyFocused.isConnected) {
         previouslyFocused.focus();
       }
     }
 
-    menuButton.addEventListener("click", () => {
-      setMobileMenuOpen(!document.body.classList.contains("mobile-nav-open"));
+    mobileMenuButton.addEventListener("click", () => {
+      setMobileMenuOpen(!document.body.classList.contains("mobile-nav-open"), true);
     });
-    closeButton.addEventListener("click", () => setMobileMenuOpen(false, true));
-    overlay.addEventListener("click", () => setMobileMenuOpen(false, true));
-    mobileBrand.addEventListener("click", () => setMobileMenuOpen(false));
+    mobileCloseButton.addEventListener("click", () => setMobileMenuOpen(false, true));
+    mobileOverlay.addEventListener("click", () => setMobileMenuOpen(false, true));
+    if (mobileBrandLink) {
+      mobileBrandLink.addEventListener("click", () => setMobileMenuOpen(false));
+    }
     mobileSidebar.querySelectorAll(".nav-link").forEach(link => {
       link.addEventListener("click", () => setMobileMenuOpen(false));
     });
