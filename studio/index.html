@@ -5,13 +5,18 @@
 :root{font:15px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;color:#242424;background:#f5f4f1}*{box-sizing:border-box}body{margin:0}header{background:#171717;color:white;padding:23px clamp(18px,4vw,60px);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}h1{font-size:23px;letter-spacing:-.04em;margin:0}header p{margin:3px 0 0;color:#bbb;font-size:13px}.header-actions{display:flex;gap:8px;flex-wrap:wrap}button,.filebtn{border:0;border-radius:8px;background:#202020;color:white;padding:11px 15px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;display:inline-block}button:hover,.filebtn:hover{opacity:.84}.light{background:#e9e8e5;color:#222}.accent{background:#7350e6}.shell{max-width:1520px;margin:auto;padding:22px;display:grid;grid-template-columns:265px minmax(0,1fr);gap:20px}.sidebar,.panel{background:#fff;border:1px solid #e5e3df;border-radius:14px}.sidebar{padding:16px;align-self:start;position:sticky;top:16px}.sidebar h2{font-size:12px;letter-spacing:.1em;color:#888;text-transform:uppercase;margin:8px 10px 14px}.tab{width:100%;display:block;text-align:left;background:transparent;color:#444;margin:2px 0;padding:11px 13px}.tab.active{background:#f0edff;color:#4f33ad}.panel{padding:25px;min-height:520px}h2{font-size:22px;letter-spacing:-.035em;margin:0 0 7px}h3{font-size:15px;margin:24px 0 12px}.hint{color:#777;font-size:13px;margin:0 0 20px}.field{margin:0 0 17px}.field label,.item-label{display:block;font-size:12px;font-weight:650;margin:0 0 7px;color:#555}input:not([type=checkbox]):not([type=file]),textarea,select{width:100%;padding:11px 12px;border:1px solid #d7d6d3;border-radius:8px;background:#fff;color:#242424;font:inherit}textarea{min-height:85px;resize:vertical}input[type=color]{height:44px;padding:5px!important}.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.sectionrow{padding:13px 0;border-bottom:1px solid #eee}.sectionrow strong{font-size:14px}.sectionrow .items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 0 26px}.sectionrow label{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer}.sectionrow input{accent-color:#7350e6}.tree-group{border:1px solid #e8e6e2;border-radius:9px;margin:9px 0;overflow:hidden}.tree-group summary{padding:12px 14px;cursor:pointer;font-weight:650;background:#faf9f7}.tree-body{padding:14px}.tree-array{margin-left:10px;border-left:2px solid #e8e5f6;padding-left:12px}.array-item{padding:10px 0;border-bottom:1px solid #eee}.array-title{font-size:12px;font-weight:700;color:#666}.preview{width:100%;height:76vh;min-height:520px;border:1px solid #ddd;border-radius:9px;background:#fff}.status{margin:0 auto;max-width:1520px;padding:0 24px 20px;color:#666;font-size:13px}.assetthumb{display:block;max-width:210px;max-height:110px;object-fit:contain;margin:9px 0;border:1px solid #ddd;border-radius:5px}.assetrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.assetrow input[type=file]{max-width:260px}.pill{display:inline-block;font-size:11px;padding:3px 8px;border-radius:50px;background:#f0edff;color:#5332b0}.hidden{display:none!important}@media(max-width:900px){.shell{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow-x:auto;gap:4px}.sidebar h2{display:none}.tab{white-space:nowrap;width:auto}.cols,.sectionrow .items{grid-template-columns:1fr}.panel{padding:17px}}
 </style></head><body>
 <header><div><h1>BRAND HUB <span style="color:#a897ff">/ STUDIO</span></h1><p>Customize, preview and export a client-ready brand guidelines website.</p></div><div class="header-actions"><button class="light" id="saveProject">Save project</button><button class="light" id="loadProject">Open project</button><button class="accent" id="exportWebsite">Export website ZIP</button></div></header>
-<div class="shell"><aside class="sidebar" aria-label="Studio navigation"><h2>Workspace</h2><button class="tab active" data-tab="brand">01 / Brand setup</button><button class="tab" data-tab="sections">02 / Sections</button><button class="tab" data-tab="content">03 / Content & assets</button><button class="tab" data-tab="preview">04 / Live preview</button></aside>
+<div class="shell"><aside class="sidebar" aria-label="Studio navigation"><h2>Workspace</h2><button class="tab active" data-tab="brand">01 / Brand setup</button><button class="tab" data-tab="sections">02 / Sections</button><button class="tab" data-tab="content">03 / Content & assets</button><button class="tab" data-tab="preview">04 / Live preview</button><button class="tab" data-tab="publish">05 / Publish to GitHub</button></aside>
 <main>
 <div class="panel" id="panel-brand"><h2>Brand setup</h2><p class="hint">Edit client information and visual identity colors. Your original template content is preserved.</p><div class="cols"><div class="field"><label for="brandName">Brand name</label><input id="brandName"></div><div class="field"><label for="brandTagline">Tagline</label><input id="brandTagline"></div></div><div class="field"><label for="brandDescription">Brand description</label><textarea id="brandDescription"></textarea></div><h3>Brand colors</h3><div class="cols" id="colorFields"></div><div class="cols"><div class="field"><label for="theme">Theme</label><select id="theme"><option value="swiss">Minimal Swiss</option></select></div><div class="field"><label for="mode">Publishing mode</label><select id="mode"><option value="showcase">Showcase</option><option value="client">Client delivery</option></select></div></div><button id="refreshFromRepo" class="light">Reset to repository example</button></div>
 <div class="panel hidden" id="panel-sections"><h2>Sections & subsections</h2><p class="hint">Turn sections on or off. Only existing website content blocks can be shown; unsupported subsections are marked.</p><div id="sectionList"></div></div>
 <div class="panel hidden" id="panel-content"><h2>Content & assets</h2><p class="hint">Edit headlines, copy, galleries, fonts, and image fields. Image uploads are embedded in the exported website, so use optimized web images.</p><div id="selectionSummary" class="hint"></div><div class="field"><label for="contentGroup">Selected section to edit</label><select id="contentGroup"></select></div><div id="contentTree"></div></div>
 <div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin"></iframe></div>
-</main></div><div class="status" id="status" role="status">Loading repository configuration…</div><input type="file" id="projectInput" accept=".json,.js,.txt" hidden>
+<div class="panel hidden" id="panel-publish"><h2>Publish to GitHub</h2><p class="hint">Create a separate public GitHub repository for this client and upload the website directly. This is an optional advanced workflow; Export website ZIP remains available.</p>
+<div class="field"><label for="githubToken">GitHub fine-grained personal access token</label><input id="githubToken" type="password" autocomplete="off" spellcheck="false" placeholder="Paste token for this publishing session"></div>
+<p class="hint">Create a fine-grained token in GitHub Settings → Developer settings → Personal access tokens. Give it permission to create repositories and write repository Contents and Pages. The token is used only for direct requests from your browser to GitHub, and is not saved in Studio, project files or exported websites. Never share it with clients.</p>
+<div class="cols"><div class="field"><label for="githubRepo">New client repository name</label><input id="githubRepo" placeholder="noir-coffee-brand-hub"></div><div class="field"><label for="githubVisibility">Repository visibility</label><select id="githubVisibility"><option value="public">Public (GitHub Pages)</option></select></div></div>
+<p class="hint"><strong>Privacy:</strong> GitHub Pages is not a secure private client portal. Publishing this way makes the client files publicly accessible. For confidential projects, do not use this button; use a private authenticated hosting service instead.</p>
+<button id="githubPublish" class="accent">Create & publish client website</button><p id="githubResult" class="hint" role="status"></p></div></main></div><div class="status" id="status" role="status">Loading repository configuration…</div><input type="file" id="projectInput" accept=".json,.js,.txt" hidden>
 <script>
 "use strict";
 const NAMES={overview:["Brand Introduction","Welcome"],strategy:["Purpose","Mission","Vision","Values","Positioning","Audience"],logo:["Primary Logo","Secondary Logo","Logo Symbol","Logo Variations","Clear Space","Minimum Size","Color Compatibility","Incorrect Usage"],colors:["Brand Palette","Color Values","Color Roles","Tonal Scales","Color Accessibility"],typography:["Typefaces","Character Sets","Approved Weights","Typography in Context"],graphics:["Signature Artwork","Graphic Gallery","Details","Usage Guidelines"],photography:["Signature Photography","Categories","Gallery","Art Direction","Do and Don't"],layout:["Layout Philosophy","Grid System","Spacing and Hierarchy","Composition Examples","Do and Don't"],voice:["Personality","Tone of Voice","Messaging Pillars","Writing Examples","Do and Don't"],applications:["Featured Application","Categories","Gallery","Details","Guidelines"],packaging:["Featured Packaging","Collection","Materials","Specifications","Do and Don't"],motion:["Motion Philosophy","Logo Animation","Motion Behaviors","Applications","Do and Don't"],resources:["Featured Download","Asset Library","Formats","Usage","Delivery"]};
@@ -192,5 +197,58 @@ function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255
 function zip(entries){const local=[],central=[];let offset=0;const u16=n=>[n&255,(n>>>8)&255],u32=n=>[n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255];for(const [name,content] of Object.entries(entries)){const nb=utf8(name),bytes=content instanceof Uint8Array?content:utf8(content),crc=crc32(bytes),len=bytes.length;const lh=Uint8Array.from([...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(len),...u32(len),...u16(nb.length),...u16(0)]);local.push(lh,nb,bytes);const ch=Uint8Array.from([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(len),...u32(len),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)]);central.push(ch,nb);offset+=lh.length+nb.length+len}const size=central.reduce((n,b)=>n+b.length,0),count=Object.keys(entries).length,end=Uint8Array.from([...u32(0x06054b50),...u16(0),...u16(0),...u16(count),...u16(count),...u32(size),...u32(offset),...u16(0)]);return new Blob([...local,...central,end],{type:"application/zip"})}
 $("exportWebsite").onclick=async()=>{if(!config)return;try{status("Building your client website ZIP…");const files={...sourceFiles,"js/config.js":configJS()};
 for(const [key,asset] of Object.entries(config.studioFiles||{})){if(!asset?.base64||!asset.filename)continue;const binary=atob(asset.base64);const bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);files["assets/downloads/"+key+"-"+asset.filename]=bytes;}files["README.txt"]="BRAND HUB — CLIENT WEBSITE\n\n1. Unzip this package.\n2. Open index.html in a browser to view your brand guidelines.\n3. To publish, upload index.html plus the css and js folders to a static website host such as GitHub Pages.\n4. Keep the folder structure unchanged.\n\nEdit a future version using the saved Brand Hub Studio project JSON.\n";const blob=zip(files);const name=(config.brand.name||"client").toLowerCase().replace(/[^a-z0-9-]+/g,"-")+"-brand-hub.zip";saveFile(name,blob,"application/zip");dirty=false;status("Export complete: "+name+" ("+(blob.size/1048576).toFixed(1)+" MB).")}catch(err){status("Export failed: "+err.message)}};
+
+function publishFiles(){
+ if(!config)throw Error("No project loaded");
+ const result={...sourceFiles,"js/config.js":configJS()};
+ for(const [key,asset] of Object.entries(config.studioFiles||{})){
+  if(!asset?.base64||!asset.filename)continue;
+  const raw=atob(asset.base64),bytes=new Uint8Array(raw.length);
+  for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+  result["assets/downloads/"+key+"-"+asset.filename]=bytes;
+ }
+ return result;
+}
+function base64Bytes(bytes){
+ let out="";for(let i=0;i<bytes.length;i+=8192)out+=String.fromCharCode(...bytes.subarray(i,i+8192));
+ return btoa(out);
+}
+async function ghRequest(path,token,method="GET",body){
+ const response=await fetch("https://api.github.com"+path,{method,headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+token,"X-GitHub-Api-Version":"2022-11-28",...(body?{"Content-Type":"application/json"}:{})},body:body?JSON.stringify(body):undefined,cache:"no-store"});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw Error((data.message||"GitHub API error")+" (HTTP "+response.status+")");
+ return data;
+}
+$("githubPublish").onclick=async()=>{
+ const output=$("githubResult"),button=$("githubPublish");
+ const token=$("githubToken").value.trim(),name=$("githubRepo").value.trim();
+ if(!token){output.textContent="Enter your GitHub token first.";return}
+ if(!/^[a-zA-Z0-9._-]{1,100}$/.test(name)||name.startsWith(".")){output.textContent="Use a simple repository name with letters, numbers, hyphens or underscores.";return}
+ if(!confirm("Create a PUBLIC GitHub repository called "+name+" and upload this client's brand files? Anyone will be able to access them."))return;
+ button.disabled=true;
+ try{
+  output.textContent="Checking GitHub account…";
+  const me=await ghRequest("/user",token);
+  output.textContent="Creating new public repository…";
+  const repository=await ghRequest("/user/repos",token,"POST",{name,description:"Client brand guidelines website generated by Brand Hub Studio",private:false,auto_init:true});
+  const owner=encodeURIComponent(me.login),repoName=encodeURIComponent(repository.name);
+  const files=publishFiles();
+  for(const [path,content] of Object.entries(files)){
+   output.textContent="Uploading "+path+"…";
+   const bytes=content instanceof Uint8Array?content:utf8(content);
+   await ghRequest("/repos/"+owner+"/"+repoName+"/contents/"+path.split("/").map(encodeURIComponent).join("/"),token,"PUT",{message:"Publish Brand Hub: "+path,content:base64Bytes(bytes),branch:repository.default_branch||"main"});
+  }
+  output.textContent="Enabling GitHub Pages…";
+  let pagesNotice="";
+  try{await ghRequest("/repos/"+owner+"/"+repoName+"/pages",token,"POST",{source:{branch:repository.default_branch||"main",path:"/"}})}
+  catch(err){pagesNotice=" GitHub Pages may need to be enabled manually under repository Settings → Pages: "+err.message}
+  const url="https://"+me.login.toLowerCase()+".github.io/"+repository.name+"/";
+  output.replaceChildren(document.createTextNode("Files uploaded. Website: "));
+  const link=document.createElement("a");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.textContent=url;output.append(link,document.createTextNode(". It can take a few minutes to deploy."+pagesNotice));
+  dirty=false;
+ }catch(err){output.textContent="Publishing stopped: "+err.message+". If a repository was created, check GitHub before trying again."}
+ finally{button.disabled=false;$("githubToken").value=""}
+};
+
 loadRepo().catch(err=>status("Studio could not load the repository files. Open it on a web server (such as GitHub Pages). "+err.message));
 </script></body></html>
