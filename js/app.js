@@ -34,6 +34,46 @@ document.addEventListener("DOMContentLoaded", () => {
   if (sidebarBrand) sidebarBrand.textContent = brand.name || "";
   if (brandTagline) brandTagline.textContent = brand.tagline || "";
 
+  // Editable Overview and Brand Strategy content from Studio.
+  const pages = config.brandPages || {};
+  const setText = (selector, value) => {
+    const node = document.querySelector(selector);
+    if (node && typeof value === "string") node.textContent = value;
+  };
+  if (pages.overview) {
+    setText("#overview > .page-eyebrow", pages.overview.eyebrow);
+    setText("#overview .welcome-panel .panel-label", pages.overview.welcomeLabel);
+    setText("#overview .welcome-panel h2", pages.overview.headline);
+    setText("#overview .welcome-panel p", pages.overview.description);
+  }
+  if (pages.strategy) {
+    const page = pages.strategy;
+    setText("#strategy > .page-eyebrow", page.eyebrow);
+    setText("#strategy > p", page.intro);
+    const originalPanel = document.querySelector("#strategy .welcome-panel");
+    if (originalPanel) {
+      const topics = ["Purpose","Mission","Vision","Values","Positioning","Audience"];
+      const selection = config.studioSubsections?.strategy || {};
+      originalPanel.replaceChildren();
+      topics.forEach((name, index) => {
+        if (selection["strategy-" + index] === false) return;
+        const data = page.items?.[index] || {};
+        const card = document.createElement("div");
+        card.style.cssText = "padding:20px 0;border-bottom:1px solid currentColor;";
+        const label = document.createElement("span");
+        label.className = "panel-label";
+        label.textContent = name.toUpperCase();
+        const title = document.createElement("h2");
+        title.textContent = data.headline || name;
+        const description = document.createElement("p");
+        description.textContent = data.description || "";
+        card.append(label,title,description);
+        originalPanel.append(card);
+      });
+      originalPanel.hidden = !originalPanel.childElementCount;
+    }
+  }
+
   // ========================================
   // 03 — WEBSITE THEME
   // ========================================

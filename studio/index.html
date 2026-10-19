@@ -68,7 +68,35 @@ function renderContentTree(){
  const root=$("contentTree");root.replaceChildren();
  const key=$("contentGroup").value;if(!key){root.textContent="No sections selected. Go to Sections and enable the content you need.";return}
  if(key==="overview"||key==="strategy"){
-  const info=document.createElement("p");info.className="hint";info.textContent="This section uses introductory copy in the website template. You can edit the main brand information in Brand setup. Dedicated editable blocks for this section are not yet available.";root.append(info);return
+  config.brandPages??={};
+  const defaults={
+   overview:{eyebrow:"BRAND IDENTITY SYSTEM",welcomeLabel:"WELCOME TO YOUR BRAND HUB",headline:"Every detail, thoughtfully designed.",description:"Explore the thinking, principles, and visual elements behind this brand identity."},
+   strategy:{eyebrow:"BRAND FOUNDATION",intro:"A strong brand starts with a clear purpose.",items:[
+    {title:"Purpose",headline:"Why we exist",description:"Describe the reason the brand exists."},
+    {title:"Mission",headline:"What we do",description:"Explain the mission and how it is delivered."},
+    {title:"Vision",headline:"Where we are going",description:"Describe the long-term ambition."},
+    {title:"Values",headline:"What we believe",description:"Define the principles guiding decisions."},
+    {title:"Positioning",headline:"Our place in the market",description:"Explain the distinctive position of the brand."},
+    {title:"Audience",headline:"Who we serve",description:"Describe the intended customers."}
+   ]}
+  };
+  if(!config.brandPages[key])config.brandPages[key]=clone(defaults[key]);
+  const page=config.brandPages[key];
+  const intro=document.createElement("p");intro.className="hint";intro.textContent=key==="overview"?"Edit the actual welcome text displayed on your Brand Hub website.":"Edit your brand strategy. Only the strategy topics checked in Sections appear below and on the website.";root.append(intro);
+  if(key==="overview"){
+   for(const k of ["eyebrow","welcomeLabel","headline","description"])root.append(field(k,page[k]||"",v=>page[k]=v,k==="description"?"textarea":"text"));
+  }else{
+   for(const k of ["eyebrow","intro"])root.append(field(k,page[k]||"",v=>page[k]=v,k==="intro"?"textarea":"text"));
+   for(let i=0;i<6;i++){if(!enabledItem("strategy",i))continue;
+    page.items??=[];page.items[i]??=clone(defaults.strategy.items[i]);
+    const block=document.createElement("details");block.className="tree-group";block.open=true;
+    const title=document.createElement("summary");title.textContent=NAMES.strategy[i];block.append(title);
+    const body=document.createElement("div");body.className="tree-body";
+    for(const k of ["headline","description"])body.append(field(k,page.items[i][k]||"",v=>page.items[i][k]=v,k==="description"?"textarea":"text"));
+    block.append(body);root.append(block)
+   }
+  }
+  return
  }
  if(key==="colors"){
   const intro=document.createElement("p");intro.className="hint";intro.textContent="Add or edit the actual brand palette below. You can also adjust the main website colors in Brand setup.";root.append(intro);
