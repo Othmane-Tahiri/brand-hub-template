@@ -103,7 +103,26 @@ function renderContentTree(){
   const basic=document.createElement("div");basic.className="cols";for(const color of ["primary","secondary","accent","background","text"])basic.append(field(color,config.colors[color]||"#ffffff",v=>config.colors[color]=v,"color"));root.append(basic);
  }
  if(key==="logo"){
-  const info=document.createElement("p");info.className="hint";info.textContent="Logo files can be edited in logo-related configuration fields below. Logo System currently uses placeholder markup for some logo variants; not every logo upload has a dedicated rendering field.";root.append(info)
+  config.logoSystem??={};
+  const defs=[
+   ["primary","Primary logo","logo-0"],
+   ["secondary","Secondary logo","logo-1"],
+   ["symbol","Symbol / icon","logo-2"],
+   ["variation","Logo variation","logo-3"],
+   ["black","Black logo","logo-3"],
+   ["white","White logo","logo-3"]
+  ];
+  const hint=document.createElement("p");hint.className="hint";hint.textContent="Upload the approved logo artwork for each variant. Use transparent PNG or SVG files. These images replace the BRAND placeholders in preview and export.";root.append(hint);
+  for(const [id,label,sub] of defs){
+   if(!enabledItem("logo",Number(sub.split("-")[1])))continue;
+   config.logoSystem[id]??={image:"",title:label,description:""};
+   const item=config.logoSystem[id],group=document.createElement("details");group.className="tree-group";group.open=true;
+   const summary=document.createElement("summary");summary.textContent=label;group.append(summary);
+   const body=document.createElement("div");body.className="tree-body";
+   for(const k of ["title","description"])body.append(field(k,item[k],v=>item[k]=v,k==="description"?"textarea":"text"));
+   appendEditor(body,item,"image",item.image||"",0);group.append(body);root.append(group);
+  }
+  const info=document.createElement("p");info.className="hint";info.textContent="Color combinations are editable below. Other existing logo rules remain in the website template.";root.append(info)
  }
  const names=SECTION_DATA[key]||[];
  if(!names.length){const p=document.createElement("p");p.className="hint";p.textContent="This section does not have dedicated editable data yet.";root.append(p);return}
@@ -137,6 +156,7 @@ if(typeof value==="boolean"){const row=document.createElement("label");row.class
 if(value===null)return;
 const isImage=/^(image|src|thumbnail|poster)$/i.test(String(key)),long=typeof value==="string"&&(value.length>110||/description|notes|copy|headline/i.test(String(key)));
 const node=field(String(key),value,v=>{obj[key]=typeof value==="number"?(Number(v)||0):v},long?"textarea":typeof value==="number"?"number":"text");parent.append(node);
+if(key==="name"&&obj&&typeof obj==="object"&&"family" in obj&&"source" in obj){const note=document.createElement("p");note.className="hint";note.textContent="To change the visible typeface, update Family and Source too. Font Name alone only changes the label.";parent.append(note)}
 if(isImage){const wrap=document.createElement("div");wrap.className="assetrow field";const upload=document.createElement("input");upload.type="file";upload.accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml";const preview=document.createElement("img");preview.className="assetthumb";preview.alt="Current asset";preview.onerror=()=>preview.style.display="none";preview.src=String(value||"");upload.onchange=async()=>{const f=upload.files?.[0];if(!f)return;if(f.size>4*1024*1024){status("Please use an image under 4 MB for a manageable export.");return}if(!/^image\/(png|jpeg|webp|gif|svg\+xml)$/.test(f.type)){status("Unsupported image format.");return}const url=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(f)});obj[key]=url;node.querySelector("input,textarea").value=url;preview.src=url;preview.style.display="block";change()};wrap.append(upload,preview);parent.append(wrap)}
 }
 function loadProjectObject(data){if(!data||typeof data!=="object"||Array.isArray(data))throw Error("Invalid project");config=clone(data);normalize();renderBrand();renderSections();renderContentList();dirty=false;status("Project loaded. Edit your content, preview and export when ready.")}
