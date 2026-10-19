@@ -4959,3 +4959,16 @@ span:last-child {
   .sidebar,
   .mobile-sidebar-overlay { transition: none; }
 }
+
+/* Nested download format tiles: one large box per use, one small box per file type. */
+#resources .resources-library-gallery { grid-template-columns: minmax(0, 1fr); }
+#resources .resources-format-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px; }
+#resources .resources-download-format-card { min-width:0;background:#fff;border:1px solid var(--resources-line);padding:22px; }
+#resources .resources-download-format-badge { display:inline-flex;align-items:center;justify-content:center;min-width:58px;min-height:45px;padding:8px 12px;background:var(--resources-soft);border:1px solid var(--resources-line);font-weight:750;font-size:17px;letter-spacing:.04em;color:var(--resources-ink); }
+#resources .resources-download-format-title { font-size:17px;margin:16px 0 12px; }
+#resources .resources-download-file-list { display:grid;gap:14px; }
+#resources .resources-download-file + .resources-download-file { border-top:1px solid var(--resources-line);padding-top:14px; }
+#resources .resources-download-file-name { margin:0 0 6px;font-weight:600;overflow-wrap:anywhere; }
+#resources .resources-download-file .resources-asset-link { display:inline-flex; }
+@media(max-width:900px){#resources .resources-format-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){#resources .resources-format-grid{grid-template-columns:minmax(0,1fr);}}
