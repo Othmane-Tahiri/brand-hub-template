@@ -3082,10 +3082,13 @@ document.addEventListener("DOMContentLoaded", () => {
           if (selections && typeof selections === "object" && selections[ext] !== true) return;
           const formatCard = document.createElement("article");
           formatCard.className = "resources-download-format-card";
-          formatCard.appendChild(text("span", "resources-download-format-badge", ext));
+          const headingRow = document.createElement("div");
+          headingRow.className = "resources-format-heading-row";
+          headingRow.appendChild(text("span", "resources-download-format-badge", ext));
+          const description = resourcesConfig.formatDescriptions?.[ext]?.trim() || formatPurpose[ext] || "Approved brand asset.";
+          headingRow.appendChild(text("p", "resources-download-format-description", description));
+          formatCard.appendChild(headingRow);
           const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext);
-          formatCard.appendChild(text("h5", "resources-download-format-title", ext + " files"));
-          formatCard.appendChild(text("p", "resources-download-format-description", resourcesConfig.formatDescriptions?.[ext] || formatPurpose[ext] || "Approved brand asset."));
           formatCard.appendChild(text("span", files.length ? "resources-file-available" : "resources-file-pending", files.length ? "Available · " + files.length + (files.length===1?" file":" files") : "Not available yet"));
           const fileList = document.createElement("div");
           fileList.className = "resources-download-file-list";
