@@ -3034,53 +3034,61 @@ document.addEventListener("DOMContentLoaded", () => {
       show("resources-featured-feature", featuredCanvas.children.length > 0);
     }
 
-    // Asset categories are unlimited, and empty categories are skipped.
+    // Group downloadable deliverables by how clients use them.
     const library = document.getElementById("resources-library-gallery");
     if (library) {
       library.replaceChildren();
+      const groups = [
+        {title:"Editable Source Files",label:"01 / SOURCE FILES",description:"Original editable artwork for designers and production teams.",assets:[]},
+        {title:"Print Files",label:"02 / PRINT READY",description:"Approved PDF artwork and documents for printing.",assets:[]},
+        {title:"Digital Files",label:"03 / DIGITAL ASSETS",description:"Approved logos and graphics for websites, social media and screens.",assets:[]}
+      ];
+      const extOf = asset => {
+        const file = String(asset.fileName || asset.url || "").split("?")[0].split("#")[0];
+        const match = file.match(/\.([a-z0-9]+)$/i);
+        return (match ? match[1] : String(asset.format || "").split(/[\s/]+/)[0]).toLowerCase();
+      };
       list(resourcesConfig.categories).forEach(category => {
-        const assets = list(category.assets).filter(asset => asset.title || asset.description || asset.fileName);
-        if (!assets.length) return;
+        list(category.assets).forEach(asset => {
+          if (!asset.url || !validUrl(asset.url)) return;
+          const ext = extOf(asset);
+          const group = ["ai","eps","psd","indd","zip","ase","afdesign"].includes(ext) ? groups[0] :
+            ["pdf","tif","tiff"].includes(ext) ? groups[1] : groups[2];
+          group.assets.push(asset);
+        });
+      });
+      groups.forEach(group => {
         const card = document.createElement("section");
         card.className = "resources-category-card";
-        if (category.category) card.appendChild(text("span", "resources-category-label", category.category));
-        card.appendChild(text("h4", "resources-category-title", category.title || "Brand assets"));
-        if (category.description) card.appendChild(text("p", "resources-category-description", category.description));
+        card.appendChild(text("span", "resources-category-label", group.label));
+        card.appendChild(text("h4", "resources-category-title", group.title));
+        card.appendChild(text("p", "resources-category-description", group.description));
         const assetList = document.createElement("div");
         assetList.className = "resources-assets-list";
-        assets.forEach(asset => {
+        if (!group.assets.length) assetList.appendChild(text("p", "resources-asset-unavailable", "No files uploaded yet."));
+        group.assets.forEach(asset => {
           const item = document.createElement("article");
           item.className = "resources-asset-card";
-          if (asset.format) item.appendChild(text("span", "resources-asset-format", asset.format));
+          const ext = extOf(asset);
+          if (ext) item.appendChild(text("span", "resources-asset-format", ext.toUpperCase()));
           item.appendChild(text("h5", "resources-asset-title", asset.title || asset.fileName || "Brand asset"));
           if (asset.description) item.appendChild(text("p", "resources-asset-description", asset.description));
-          const meta = [asset.fileName, asset.fileSize, asset.version].filter(Boolean);
+          const meta = [asset.fileName, asset.fileSize].filter(Boolean);
           if (meta.length) item.appendChild(text("p", "resources-asset-meta", meta.join("  ·  ")));
-          const link = downloadLink(asset.url, asset.buttonLabel || "Download asset", "resources-asset-link");
+          const link = downloadLink(asset.url, asset.buttonLabel || "Download "+ext.toUpperCase(), "resources-asset-link");
           if (link) item.appendChild(link);
-          else item.appendChild(text("span", "resources-asset-unavailable", "Not yet available"));
           assetList.appendChild(item);
         });
         card.appendChild(assetList);
         library.appendChild(card);
       });
-      show("resources-library-feature", library.children.length > 0);
+      show("resources-library-feature", true);
     }
 
+    // File types are indicated inside the three download groups, not as disconnected cards.
     const formats = document.getElementById("resources-formats-list");
-    if (formats) {
-      formats.replaceChildren();
-      list(resourcesConfig.formats).filter(item => item.extension || item.title).forEach(item => {
-        const card = document.createElement("article");
-        card.className = "resources-format-card";
-        if (item.extension) card.appendChild(text("span", "resources-format-extension", item.extension));
-        if (item.category) card.appendChild(text("span", "resources-category-label", item.category));
-        card.appendChild(text("h4", "resources-format-title", item.title || "File format"));
-        if (item.description) card.appendChild(text("p", "resources-format-description", item.description));
-        formats.appendChild(card);
-      });
-      show("resources-formats-feature", formats.children.length > 0);
-    }
+    if (formats) formats.replaceChildren();
+    show("resources-formats-feature", false);
 
     const instructions = document.getElementById("resources-instructions-list");
     if (instructions) {
