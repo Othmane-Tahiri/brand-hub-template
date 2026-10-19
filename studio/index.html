@@ -9,7 +9,7 @@
 <main>
 <div class="panel" id="panel-brand"><h2>Brand setup</h2><p class="hint">Edit client information and visual identity colors. Your original template content is preserved.</p><div class="cols"><div class="field"><label for="brandName">Brand name</label><input id="brandName"></div><div class="field"><label for="brandTagline">Tagline</label><input id="brandTagline"></div></div><div class="field"><label for="brandDescription">Brand description</label><textarea id="brandDescription"></textarea></div><h3>Brand colors</h3><div class="cols" id="colorFields"></div><div class="cols"><div class="field"><label for="theme">Theme</label><select id="theme"><option value="swiss">Minimal Swiss</option></select></div><div class="field"><label for="mode">Publishing mode</label><select id="mode"><option value="showcase">Showcase</option><option value="client">Client delivery</option></select></div></div><button id="refreshFromRepo" class="light">Reset to repository example</button></div>
 <div class="panel hidden" id="panel-sections"><h2>Sections & subsections</h2><p class="hint">Turn sections on or off. Only existing website content blocks can be shown; unsupported subsections are marked.</p><div id="sectionList"></div></div>
-<div class="panel hidden" id="panel-content"><h2>Content & assets</h2><p class="hint">Edit headlines, copy, galleries, fonts, and image fields. Image uploads are embedded in the exported website, so use optimized web images.</p><div class="field"><label for="contentGroup">Content category</label><select id="contentGroup"></select></div><div id="contentTree"></div></div>
+<div class="panel hidden" id="panel-content"><h2>Content & assets</h2><p class="hint">Edit headlines, copy, galleries, fonts, and image fields. Image uploads are embedded in the exported website, so use optimized web images.</p><div id="selectionSummary" class="hint"></div><div class="field"><label for="contentGroup">Selected section to edit</label><select id="contentGroup"></select></div><div id="contentTree"></div></div>
 <div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin"></iframe></div>
 </main></div><div class="status" id="status" role="status">Loading repository configuration…</div><input type="file" id="projectInput" accept=".json,.js,.txt" hidden>
 <script>
@@ -28,18 +28,82 @@ function saveFile(name,bytes,type){const url=URL.createObjectURL(new Blob([bytes
 async function fetchFile(path){const r=await fetch("../"+path,{cache:"no-store"});if(!r.ok)throw Error("Unable to load "+path+" (HTTP "+r.status+")");return await r.text()}
 function normalize(){config.brand??={};config.colors??={};config.sections??={};config.studioSubsections??={};for(const [key,items] of Object.entries(NAMES)){if(typeof config.sections[key]!=="boolean")config.sections[key]=true;config.studioSubsections[key]??={};for(let i=0;i<items.length;i++){const id=key+"-"+i;if(typeof config.studioSubsections[key][id]!=="boolean")config.studioSubsections[key][id]=true}}}
 function change(){dirty=true;status("Unsaved changes — use Save project or Export website ZIP when ready.")}
-function showTab(tab){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("hidden",p.id!=="panel-"+tab));if(tab==="preview")refreshPreview()}
+function showTab(tab){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("hidden",p.id!=="panel-"+tab));if(tab==="preview")refreshPreview();if(tab==="content"&&config)renderContentList()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 function field(label,value,onchange,type="text"){const box=document.createElement("div");box.className="field";const l=document.createElement("label");l.textContent=label;const el=document.createElement(type==="textarea"?"textarea":"input");if(type!=="textarea")el.type=type;el.value=value??"";el.addEventListener("input",()=>{onchange(el.value);change()});box.append(l,el);return box}
 function renderBrand(){$("brandName").value=config.brand.name||"";$("brandTagline").value=config.brand.tagline||"";$("brandDescription").value=config.brand.description||"";$("theme").value=config.theme||"swiss";$("mode").value=config.publishingMode||"showcase";$("colorFields").replaceChildren();for(const key of ["primary","secondary","accent","background","text"]){const color=config.colors[key]||"#ffffff";const el=field(key.charAt(0).toUpperCase()+key.slice(1),color,v=>{config.colors[key]=v},"color");$("colorFields").append(el)}}
 [["brandName","name"],["brandTagline","tagline"],["brandDescription","description"]].forEach(([id,key])=>$(id).addEventListener("input",e=>{if(config){config.brand[key]=e.target.value;change()}}));
 $("theme").onchange=e=>{config.theme=e.target.value;change()};$("mode").onchange=e=>{config.publishingMode=e.target.value;change()};
-function renderSections(){const root=$("sectionList");root.replaceChildren();for(const [key,items] of Object.entries(NAMES)){const wrap=document.createElement("div");wrap.className="sectionrow";const label=document.createElement("label"),main=document.createElement("input");main.type="checkbox";main.checked=config.sections[key];main.onchange=()=>{config.sections[key]=main.checked;change()};const strong=document.createElement("strong");strong.textContent=key.charAt(0).toUpperCase()+key.slice(1);label.append(main,strong);wrap.append(label);const children=document.createElement("div");children.className="items";items.forEach((name,i)=>{const id=key+"-"+i,l=document.createElement("label"),c=document.createElement("input");c.type="checkbox";c.checked=config.studioSubsections[key][id];c.onchange=()=>{config.studioSubsections[key][id]=c.checked;change()};const txt=document.createElement("span");txt.textContent=name+" ";l.append(c,txt);if(!SUPPORTED[key]||!SUPPORTED[key].includes(i)){const tag=document.createElement("span");tag.className="pill";tag.textContent="No standalone block";l.append(tag)}children.append(l)});wrap.append(children);root.append(wrap)}}
-const OMIT=new Set(["sections","studioSubsections","theme","publishingMode","brand","colors"]);
-function renderContentList(){const sel=$("contentGroup");const previous=sel.value;sel.replaceChildren();for(const key of Object.keys(config)){if(OMIT.has(key)||config[key]===null||typeof config[key]!=="object")continue;const option=document.createElement("option");option.value=key;option.textContent=key.replace(/([A-Z])/g," $1").replace(/^./,s=>s.toUpperCase());sel.append(option)}if([...sel.options].some(o=>o.value===previous))sel.value=previous;renderContentTree()}
+function renderSections(){const root=$("sectionList");root.replaceChildren();for(const [key,items] of Object.entries(NAMES)){const wrap=document.createElement("div");wrap.className="sectionrow";const label=document.createElement("label"),main=document.createElement("input");main.type="checkbox";main.checked=config.sections[key];main.onchange=()=>{config.sections[key]=main.checked;change();renderContentList()};const strong=document.createElement("strong");strong.textContent=key.charAt(0).toUpperCase()+key.slice(1);label.append(main,strong);wrap.append(label);const children=document.createElement("div");children.className="items";items.forEach((name,i)=>{const id=key+"-"+i,l=document.createElement("label"),c=document.createElement("input");c.type="checkbox";c.checked=config.studioSubsections[key][id];c.onchange=()=>{config.studioSubsections[key][id]=c.checked;change();renderContentList()};const txt=document.createElement("span");txt.textContent=name+" ";l.append(c,txt);if(!SUPPORTED[key]||!SUPPORTED[key].includes(i)){const tag=document.createElement("span");tag.className="pill";tag.textContent="No standalone block";l.append(tag)}children.append(l)});wrap.append(children);root.append(wrap)}}
+
+const SECTION_DATA={
+ overview:[],strategy:[],logo:["logoColorCombinations"],colors:["brandPalette","tonalScales","logoColorCombinations"],typography:["typography"],graphics:["graphicElements"],photography:["photography"],layout:["layoutComposition"],voice:["brandVoice"],applications:["brandApplications"],packaging:["packagingDesign"],motion:["motionGuidelines"],resources:["resourcesDownloads"]
+};
+const SUBSECTION_DATA={
+ colors:{"brandPalette":[0,2,4],"tonalScales":[3]},
+ typography:{"intro":[0],"fonts":[0,1,2],"characterSet":[1],"context":[3]},
+ graphics:{"featured":[0],"assets":[1],"details":[2],"guidelines":[3]},
+ photography:{"featured":[0],"categories":[1],"gallery":[2],"artDirection":[3],"comparisons":[4]},
+ layout:{"principles":[0],"grids":[1],"spacing":[2],"examples":[3],"comparisons":[4]},
+ voice:{"personality":[0],"tone":[1],"pillars":[2],"examples":[3],"comparisons":[4]},
+ applications:{"featured":[0],"categories":[1],"gallery":[2],"details":[3],"guidelines":[4]},
+ packaging:{"featured":[0],"collection":[1],"materials":[2],"specifications":[3],"comparisons":[4]},
+ motion:{"principles":[0],"logoAnimations":[1],"behaviors":[2],"applications":[3],"comparisons":[4]},
+ resources:{"featured":[0],"library":[1],"formats":[2],"instructions":[3],"delivery":[4]}
+};
+function sectionLabel(key){return {overview:"Overview",strategy:"Brand Strategy",logo:"Logo System",colors:"Color System",typography:"Typography",graphics:"Graphic Elements",photography:"Photography",layout:"Layout & Composition",voice:"Brand Voice",applications:"Brand Applications",packaging:"Packaging Design",motion:"Motion Guidelines",resources:"Resources & Downloads"}[key]||key}
+function enabledItem(section,index){return config.studioSubsections?.[section]?.[section+"-"+index]!==false}
+function selectedSections(){return Object.keys(NAMES).filter(k=>config.sections[k]!==false)}
+
+function renderContentList(){
+ const sel=$("contentGroup"),previous=sel.value;sel.replaceChildren();
+ const enabled=selectedSections();
+ $("selectionSummary").textContent="Your selected sections: "+enabled.map(sectionLabel).join(" · ")+".";
+ for(const key of enabled){const option=document.createElement("option");option.value=key;option.textContent=sectionLabel(key);sel.append(option)}
+ if(enabled.includes(previous))sel.value=previous;
+ renderContentTree();
+}
 $("contentGroup").onchange=renderContentTree;
-function renderContentTree(){const root=$("contentTree");root.replaceChildren();const key=$("contentGroup").value;if(!key)return;appendEditor(root,config,key,config[key],0)}
-function appendEditor(parent,obj,key,value,depth){if(depth>8)return;if(Array.isArray(value)){const group=document.createElement("details");group.className="tree-group";group.open=depth<2;const sum=document.createElement("summary");sum.textContent=key+" ("+value.length+" items)";group.append(sum);const body=document.createElement("div");body.className="tree-body tree-array";value.forEach((v,i)=>{const item=document.createElement("div");item.className="array-item";const title=document.createElement("div");title.className="array-title";title.textContent="ITEM "+(i+1);item.append(title);appendEditor(item,value,i,v,depth+1);body.append(item)});group.append(body);parent.append(group);return}
+function renderContentTree(){
+ const root=$("contentTree");root.replaceChildren();
+ const key=$("contentGroup").value;if(!key){root.textContent="No sections selected. Go to Sections and enable the content you need.";return}
+ if(key==="overview"||key==="strategy"){
+  const info=document.createElement("p");info.className="hint";info.textContent="This section uses introductory copy in the website template. You can edit the main brand information in Brand setup. Dedicated editable blocks for this section are not yet available.";root.append(info);return
+ }
+ if(key==="colors"){
+  const intro=document.createElement("p");intro.className="hint";intro.textContent="Add or edit the actual brand palette below. You can also adjust the main website colors in Brand setup.";root.append(intro);
+  const basic=document.createElement("div");basic.className="cols";for(const color of ["primary","secondary","accent","background","text"])basic.append(field(color,config.colors[color]||"#ffffff",v=>config.colors[color]=v,"color"));root.append(basic);
+ }
+ if(key==="logo"){
+  const info=document.createElement("p");info.className="hint";info.textContent="Logo files can be edited in logo-related configuration fields below. Logo System currently uses placeholder markup for some logo variants; not every logo upload has a dedicated rendering field.";root.append(info)
+ }
+ const names=SECTION_DATA[key]||[];
+ if(!names.length){const p=document.createElement("p");p.className="hint";p.textContent="This section does not have dedicated editable data yet.";root.append(p);return}
+ let shown=0;
+ for(const dataKey of names){
+  if(!(dataKey in config))continue;
+  if(key==="colors"&&dataKey==="logoColorCombinations"&&!enabledItem("colors",4))continue;
+  const data=config[dataKey];
+  if(data&&typeof data==="object"&&!Array.isArray(data)&&SUBSECTION_DATA[key]){
+   const filtered=Object.keys(data).filter(child=>{const ids=SUBSECTION_DATA[key][child];return !ids||ids.some(i=>enabledItem(key,i))});
+   if(!filtered.length)continue;
+   const group=document.createElement("details");group.className="tree-group";group.open=true;
+   const heading=document.createElement("summary");heading.textContent=dataKey.replace(/([A-Z])/g," $1");group.append(heading);
+   const body=document.createElement("div");body.className="tree-body";
+   for(const child of filtered)appendEditor(body,data,child,data[child],0);
+   group.append(body);root.append(group);shown++;
+  }else{
+   if(key==="colors"&&dataKey==="brandPalette"&&!enabledItem(key,0)&&!enabledItem(key,2))continue;
+   if(key==="colors"&&dataKey==="tonalScales"&&!enabledItem(key,3))continue;
+   appendEditor(root,config,dataKey,data,0);shown++
+  }
+ }
+ if(!shown){const p=document.createElement("p");p.className="hint";p.textContent="No editable blocks are enabled for this section. Enable a relevant subsection under Sections.";root.append(p)}
+}
+function appendEditor(parent,obj,key,value,depth){if(depth>8)return;if(Array.isArray(value)){const group=document.createElement("details");group.className="tree-group";group.open=depth<2;const sum=document.createElement("summary");sum.textContent=key+" ("+value.length+" items)";group.append(sum);const body=document.createElement("div");body.className="tree-body tree-array";value.forEach((v,i)=>{const item=document.createElement("div");item.className="array-item";const title=document.createElement("div");title.className="array-title";title.textContent="ITEM "+(i+1);item.append(title);appendEditor(item,value,i,v,depth+1);const remove=document.createElement("button");remove.className="light";remove.textContent="Remove item";remove.onclick=()=>{value.splice(i,1);change();renderContentTree()};item.append(remove);body.append(item)});const actions=document.createElement("div");actions.style.marginTop="12px";
+ const add=document.createElement("button");add.className="light";add.textContent="+ Add item";
+ add.onclick=()=>{const template=value.length?clone(value[value.length-1]):{title:"New item",description:""};value.push(template);change();renderContentTree()};
+ actions.append(add);body.append(actions);group.append(body);parent.append(group);return}
 if(value&&typeof value==="object"){const group=document.createElement("details");group.className="tree-group";group.open=depth<2;const sum=document.createElement("summary");sum.textContent=String(key).replace(/([A-Z])/g," $1");group.append(sum);const body=document.createElement("div");body.className="tree-body";for(const [k,v] of Object.entries(value))appendEditor(body,value,k,v,depth+1);group.append(body);parent.append(group);return}
 if(typeof value==="boolean"){const row=document.createElement("label");row.className="field";const c=document.createElement("input");c.type="checkbox";c.checked=value;c.onchange=()=>{obj[key]=c.checked;change()};row.append(c,document.createTextNode(" "+key));parent.append(row);return}
 if(value===null)return;
