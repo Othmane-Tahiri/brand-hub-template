@@ -11,13 +11,28 @@
 
 <body>
 
+  <!-- Mobile navigation: controlled by js/app.js and styled in css/style.css -->
+  <header class="mobile-header" id="mobile-header">
+    <a class="mobile-header-brand" href="#overview" aria-label="Go to brand overview">BRAND HUB</a>
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" type="button"
+            aria-label="Open navigation menu" aria-controls="brand-sidebar" aria-expanded="false">
+      <span class="mobile-menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="mobile-menu-text">MENU</span>
+    </button>
+  </header>
+
+  <div class="mobile-sidebar-overlay" id="mobile-sidebar-overlay" aria-hidden="true"></div>
+
   <div class="app-layout">
 
     <!-- ====================================
          SIDEBAR NAVIGATION
          ==================================== -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="brand-sidebar" aria-label="Brand guidelines navigation">
+
+      <button class="mobile-sidebar-close" id="mobile-sidebar-close" type="button"
+              aria-label="Close navigation menu">&times;</button>
 
       <div class="sidebar-header">
         <span class="sidebar-label">BRAND GUIDELINES</span>
