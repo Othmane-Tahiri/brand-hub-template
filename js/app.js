@@ -2029,7 +2029,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function layoutImagePath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
-      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (!path || /^(?:javascript|blob):/i.test(path)) return "";
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
       return path;
