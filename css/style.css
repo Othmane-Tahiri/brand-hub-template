@@ -4978,3 +4978,11 @@ span:last-child {
 #resources .resources-file-available {color:#26744c;}
 #resources .resources-file-pending {color:#846b4d;}
 #resources .resources-download-file-description {font-size:13px;line-height:1.5;margin:5px 0;color:var(--resources-ink);opacity:.8;}
+
+/* Purpose text sits immediately alongside the format badge, not below it. */
+#resources .resources-format-heading-row {display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+#resources .resources-format-heading-row .resources-download-format-badge {flex:0 0 auto;}
+#resources .resources-format-heading-row .resources-download-format-description {flex:1;min-width:0;margin:0;font-size:14px;line-height:1.5;opacity:1;color:var(--resources-ink);}
+#resources .resources-download-format-card .resources-file-available,
+#resources .resources-download-format-card .resources-file-pending {display:block;margin:0 0 16px;}
+@media(max-width:420px){#resources .resources-format-heading-row{gap:10px;}}
