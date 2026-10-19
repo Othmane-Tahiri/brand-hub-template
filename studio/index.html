@@ -103,26 +103,10 @@ function renderContentTree(){
   const basic=document.createElement("div");basic.className="cols";for(const color of ["primary","secondary","accent","background","text"])basic.append(field(color,config.colors[color]||"#ffffff",v=>config.colors[color]=v,"color"));root.append(basic);
  }
  if(key==="logo"){
-  config.logoSystem??={};
-  const defs=[
-   ["primary","Primary logo","logo-0"],
-   ["secondary","Secondary logo","logo-1"],
-   ["symbol","Symbol / icon","logo-2"],
-   ["variation","Logo variation","logo-3"],
-   ["black","Black logo","logo-3"],
-   ["white","White logo","logo-3"]
-  ];
-  const hint=document.createElement("p");hint.className="hint";hint.textContent="Upload the approved logo artwork for each variant. Use transparent PNG or SVG files. These images replace the BRAND placeholders in preview and export.";root.append(hint);
-  for(const [id,label,sub] of defs){
-   if(!enabledItem("logo",Number(sub.split("-")[1])))continue;
-   config.logoSystem[id]??={image:"",title:label,description:""};
-   const item=config.logoSystem[id],group=document.createElement("details");group.className="tree-group";group.open=true;
-   const summary=document.createElement("summary");summary.textContent=label;group.append(summary);
-   const body=document.createElement("div");body.className="tree-body";
-   for(const k of ["title","description"])body.append(field(k,item[k],v=>item[k]=v,k==="description"?"textarea":"text"));
-   appendEditor(body,item,"image",item.image||"",0);group.append(body);root.append(group);
-  }
-  const info=document.createElement("p");info.className="hint";info.textContent="Color combinations are editable below. Other existing logo rules remain in the website template.";root.append(info)
+ config.logoSystem??={};
+ const choices=[["primary","Primary logo",0],["variation","Logo variation",3],["symbol","Symbol",3],["black","Black version",3],["white","White version",3]];
+ for(const [id,label,index] of choices){if(!enabledItem("logo",index))continue;const item=config.logoSystem[id]??={image:"",title:label,description:""};const box=document.createElement("details");box.className="tree-group";box.open=true;const heading=document.createElement("summary");heading.textContent=label;box.append(heading);const body=document.createElement("div");body.className="tree-body";body.append(field("Title",item.title,v=>item.title=v));body.append(field("Description",item.description,v=>item.description=v,"textarea"));appendEditor(body,item,"image",item.image,0);box.append(body);root.append(box)}
+ const info=document.createElement("p");info.className="hint";info.textContent="Upload transparent PNG or SVG logo files. The image fields are connected to the logo previews.";root.append(info)
  }
  const names=SECTION_DATA[key]||[];
  if(!names.length){const p=document.createElement("p");p.className="hint";p.textContent="This section does not have dedicated editable data yet.";root.append(p);return}
