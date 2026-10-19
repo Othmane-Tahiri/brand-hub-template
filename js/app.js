@@ -3078,7 +3078,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         extensions.forEach(ext => {
           const selections = resourcesConfig.selectedFormats;
-          if (selections && typeof selections === "object" && Object.keys(selections).length && selections[ext] !== true) return;
+          if (selections && typeof selections === "object" && selections[ext] !== true) return;
           const formatCard = document.createElement("article");
           formatCard.className = "resources-download-format-card";
           formatCard.appendChild(text("span", "resources-download-format-badge", ext));
