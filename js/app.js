@@ -502,14 +502,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ? typographyConfig.fonts.filter(font =>
         font &&
         typeof font === "object" &&
-        typeof font.family === "string" &&
-        font.family.trim() !== ""
+        ((typeof font.family === "string" && font.family.trim() !== "") || (typeof font.name === "string" && font.name.trim() !== ""))
       )
     : [];
 
   function getFontFamily(font) {
-    return font && font.family
-      ? font.family
+    return font && (font.family || font.name)
+      ? "'" + String(font.family || font.name).replace(/'/g, "") + "', Arial, sans-serif"
       : "Arial, sans-serif";
   }
 
@@ -3340,14 +3339,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const studioLogo = config.logoSystem || {};
   const logoSelectors = {
     primary: '#logo [data-studio-item="logo-0"] .logo-placeholder',
-    variation: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:first-child .logo-placeholder',
-    symbol: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:nth-child(2) .logo-placeholder',
-    black: '#logo .logo-feature:nth-of-type(3) .logo-preview-light .logo-placeholder',
-    white: '#logo .logo-feature:nth-of-type(3) .logo-preview-dark .logo-placeholder'
+    variation: '#logo .logo-feature[data-studio-item="logo-3"] .logo-preview-grid .logo-preview-light:first-child .logo-placeholder',
+    symbol: '#logo .logo-feature[data-studio-item="logo-3"] .logo-preview-grid .logo-preview-light:nth-child(2) .logo-placeholder',
+    black: '#logo .logo-feature[data-studio-item="logo-3"] .logo-preview-grid .logo-preview-light .logo-placeholder',
+    white: '#logo .logo-feature[data-studio-item="logo-3"] .logo-preview-grid .logo-preview-dark .logo-placeholder'
   };
   Object.entries(logoSelectors).forEach(([name, selector]) => {
     const entry = studioLogo[name];
-    const target = document.querySelector(selector);
+    const target = name === "variation" ? document.querySelectorAll('#logo .logo-feature .logo-preview-grid')[0]?.querySelector(".logo-preview-light:first-child .logo-placeholder") : name === "symbol" ? document.querySelectorAll('#logo .logo-feature .logo-preview-grid')[0]?.querySelector(".logo-preview-light:nth-child(2) .logo-placeholder") : name === "black" ? document.querySelectorAll('#logo .logo-feature .logo-preview-grid')[1]?.querySelector(".logo-preview-light .logo-placeholder") : name === "white" ? document.querySelectorAll('#logo .logo-feature .logo-preview-grid')[1]?.querySelector(".logo-preview-dark .logo-placeholder") : document.querySelector(selector);
     if (!target || !entry || typeof entry.image !== "string") return;
     if (!/^https:\/\//i.test(entry.image) && !/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(entry.image)) return;
     const img = document.createElement("img");
