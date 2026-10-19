@@ -3304,10 +3304,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const studioLogo = config.logoSystem || {};
   const logoSelectors = {
     primary: '#logo [data-studio-item="logo-0"] .logo-placeholder',
-    variation: '#logo [data-studio-item="logo-3"] .logo-preview-light:first-child .logo-placeholder',
-    symbol: '#logo [data-studio-item="logo-3"] .logo-preview-light:nth-child(2) .logo-placeholder',
-    black: '#logo [data-studio-item="logo-3"] .logo-preview .logo-placeholder',
-    white: '#logo [data-studio-item="logo-3"] .logo-preview-dark .logo-placeholder'
+    variation: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:first-child .logo-placeholder',
+    symbol: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:nth-child(2) .logo-placeholder',
+    black: '#logo .logo-feature:nth-of-type(3) .logo-preview-light .logo-placeholder',
+    white: '#logo .logo-feature:nth-of-type(3) .logo-preview-dark .logo-placeholder'
   };
   Object.entries(logoSelectors).forEach(([name, selector]) => {
     const entry = studioLogo[name];
