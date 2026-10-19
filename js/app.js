@@ -3077,6 +3077,8 @@ document.addEventListener("DOMContentLoaded", () => {
           if (ext && !extensions.includes(ext)) extensions.push(ext);
         });
         extensions.forEach(ext => {
+          const selections = resourcesConfig.selectedFormats;
+          if (selections && typeof selections === "object" && Object.keys(selections).length && selections[ext] !== true) return;
           const formatCard = document.createElement("article");
           formatCard.className = "resources-download-format-card";
           formatCard.appendChild(text("span", "resources-download-format-badge", ext));
@@ -3099,10 +3101,9 @@ document.addEventListener("DOMContentLoaded", () => {
           formatCard.appendChild(fileList);
           formatGrid.appendChild(formatCard);
         });
-        card.appendChild(formatGrid);
-        library.appendChild(card);
+        if (formatGrid.children.length) { card.appendChild(formatGrid); library.appendChild(card); }
       });
-      show("resources-library-feature", true);
+      show("resources-library-feature", library.children.length > 0);
     }
 
     // File types are indicated inside the three download groups, not as disconnected cards.
