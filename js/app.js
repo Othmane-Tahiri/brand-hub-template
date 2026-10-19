@@ -2029,7 +2029,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function layoutImagePath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
-      if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
+      if (!path || /^(?:javascript|blob):/i.test(path)) return "";
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
       return path;
@@ -3299,7 +3300,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+  const studioLogo = config.logoSystem || {};
+  const logoSelectors = {
+    primary: '#logo [data-studio-item="logo-0"] .logo-placeholder',
+    variation: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:first-child .logo-placeholder',
+    symbol: '#logo .logo-feature:nth-of-type(2) .logo-preview-light:nth-child(2) .logo-placeholder',
+    black: '#logo .logo-feature:nth-of-type(3) .logo-preview-light .logo-placeholder',
+    white: '#logo .logo-feature:nth-of-type(3) .logo-preview-dark .logo-placeholder'
+  };
+  Object.entries(logoSelectors).forEach(([name, selector]) => {
+    const entry = studioLogo[name];
+    const target = document.querySelector(selector);
+    if (!target || !entry || typeof entry.image !== "string") return;
+    if (!/^https:\/\//i.test(entry.image) && !/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(entry.image)) return;
+    const img = document.createElement("img");
+    img.src = entry.image;
+    img.alt = entry.title || name + " logo";
+    img.style.cssText = "max-width:80%;max-height:75%;object-fit:contain;display:block;margin:auto";
+    target.replaceWith(img);
+  });
+
   // ========================================
+  document.querySelectorAll("section[id]").forEach(section => {
+    let sequence = 0;
+    section.querySelectorAll("[data-studio-item]").forEach(block => {
+      if (block.hidden || getComputedStyle(block).display === "none") return;
+      const label = block.querySelector(".panel-label");
+      if (!label) return;
+      const value = label.textContent.trim();
+      if (value.length < 4 || value.charAt(2) !== " " || value.charAt(3) !== "/") return;
+      sequence += 1;
+      label.textContent = String(sequence).padStart(2,"0") + value.slice(2);
+    });
+  });
   // 19 — ACTIVE SIDEBAR NAVIGATION
   // ========================================
 

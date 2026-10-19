@@ -1813,5 +1813,23 @@
     })();
   </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Keep subsection numbers sequential after Studio hides any blocks.
+  document.querySelectorAll("section[id]").forEach(function(section) {
+    var number = 0;
+    section.querySelectorAll("[data-studio-item]").forEach(function(block) {
+      if (block.hidden || getComputedStyle(block).display === "none") return;
+      var heading = block.querySelector(".panel-label");
+      if (!heading) return;
+      var text = heading.textContent.trim();
+      if (!/^\d{2}\s*\//.test(text)) return;
+      number++;
+      heading.textContent = String(number).padStart(2,"0") + text.replace(/^\d{2}/,"");
+    });
+  });
+});
+</script>
 </body>
 </html>
