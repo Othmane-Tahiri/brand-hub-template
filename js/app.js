@@ -3063,6 +3063,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ["SVG","PNG","JPG","WEBP"]
       ];
       const normalizeExt = ext => ({jpeg:"JPG",tif:"TIFF"}[ext] || ext.toUpperCase());
+      const formatPurpose = {AI:"Editable Illustrator artwork for updating logos and production files.",EPS:"Scalable vector artwork for professional printing.",PSD:"Layered Photoshop source files for editing images.",INDD:"Editable InDesign layouts for brand documents.",ZIP:"A compressed package of approved brand files.",PDF:"Print-ready documents and artwork for professional printing.",TIFF:"High-resolution imagery for print production.",SVG:"Scalable vector graphics for websites and digital use.",PNG:"Graphics with optional transparent backgrounds.",JPG:"Images for websites, presentations and social media.",WEBP:"Lightweight images optimized for websites."};
       groups.forEach((group,groupIndex) => {
         const card = document.createElement("section");
         card.className = "resources-category-card";
@@ -3084,6 +3085,8 @@ document.addEventListener("DOMContentLoaded", () => {
           formatCard.appendChild(text("span", "resources-download-format-badge", ext));
           const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext);
           formatCard.appendChild(text("h5", "resources-download-format-title", ext + " files"));
+          formatCard.appendChild(text("p", "resources-download-format-description", resourcesConfig.formatDescriptions?.[ext] || formatPurpose[ext] || "Approved brand asset."));
+          formatCard.appendChild(text("span", files.length ? "resources-file-available" : "resources-file-pending", files.length ? "Available · " + files.length + (files.length===1?" file":" files") : "Not available yet"));
           const fileList = document.createElement("div");
           fileList.className = "resources-download-file-list";
           if (!files.length) {
@@ -3093,6 +3096,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const file = document.createElement("div");
             file.className = "resources-download-file";
             file.appendChild(text("p", "resources-download-file-name", asset.title || asset.fileName || ext + " asset"));
+            if (asset.description) file.appendChild(text("p", "resources-download-file-description", asset.description));
             if (asset.fileName) file.appendChild(text("p", "resources-asset-meta", [asset.fileName,asset.fileSize].filter(Boolean).join("  ·  ")));
             const link = downloadLink(asset.url, "Download " + ext, "resources-asset-link");
             if (link) file.appendChild(link);

@@ -4972,3 +4972,9 @@ span:last-child {
 #resources .resources-download-file .resources-asset-link { display:inline-flex; }
 @media(max-width:900px){#resources .resources-format-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:640px){#resources .resources-format-grid{grid-template-columns:minmax(0,1fr);}}
+
+#resources .resources-download-format-description {font-size:14px;line-height:1.55;margin:0 0 12px;color:var(--resources-ink);opacity:.78;}
+#resources .resources-file-available,#resources .resources-file-pending {display:inline-block;font-size:12px;font-weight:650;margin:0 0 16px;}
+#resources .resources-file-available {color:#26744c;}
+#resources .resources-file-pending {color:#846b4d;}
+#resources .resources-download-file-description {font-size:13px;line-height:1.5;margin:5px 0;color:var(--resources-ink);opacity:.8;}
