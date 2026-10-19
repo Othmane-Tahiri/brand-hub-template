@@ -3057,29 +3057,49 @@ document.addEventListener("DOMContentLoaded", () => {
           group.assets.push(asset);
         });
       });
-      groups.forEach(group => {
+      const formatsByGroup = [
+        ["AI","EPS","PSD","INDD","ZIP"],
+        ["PDF","TIFF"],
+        ["SVG","PNG","JPG","WEBP"]
+      ];
+      const normalizeExt = ext => ({jpeg:"JPG",tif:"TIFF"}[ext] || ext.toUpperCase());
+      groups.forEach((group,groupIndex) => {
         const card = document.createElement("section");
         card.className = "resources-category-card";
         card.appendChild(text("span", "resources-category-label", group.label));
         card.appendChild(text("h4", "resources-category-title", group.title));
         card.appendChild(text("p", "resources-category-description", group.description));
-        const assetList = document.createElement("div");
-        assetList.className = "resources-assets-list";
-        if (!group.assets.length) assetList.appendChild(text("p", "resources-asset-unavailable", "No files uploaded yet."));
+        const formatGrid = document.createElement("div");
+        formatGrid.className = "resources-format-grid";
+        const extensions = [...formatsByGroup[groupIndex]];
         group.assets.forEach(asset => {
-          const item = document.createElement("article");
-          item.className = "resources-asset-card";
-          const ext = extOf(asset);
-          if (ext) item.appendChild(text("span", "resources-asset-format", ext.toUpperCase()));
-          item.appendChild(text("h5", "resources-asset-title", asset.title || asset.fileName || "Brand asset"));
-          if (asset.description) item.appendChild(text("p", "resources-asset-description", asset.description));
-          const meta = [asset.fileName, asset.fileSize].filter(Boolean);
-          if (meta.length) item.appendChild(text("p", "resources-asset-meta", meta.join("  ·  ")));
-          const link = downloadLink(asset.url, asset.buttonLabel || "Download "+ext.toUpperCase(), "resources-asset-link");
-          if (link) item.appendChild(link);
-          assetList.appendChild(item);
+          const ext = normalizeExt(extOf(asset));
+          if (ext && !extensions.includes(ext)) extensions.push(ext);
         });
-        card.appendChild(assetList);
+        extensions.forEach(ext => {
+          const formatCard = document.createElement("article");
+          formatCard.className = "resources-download-format-card";
+          formatCard.appendChild(text("span", "resources-download-format-badge", ext));
+          const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext);
+          formatCard.appendChild(text("h5", "resources-download-format-title", ext + " files"));
+          const fileList = document.createElement("div");
+          fileList.className = "resources-download-file-list";
+          if (!files.length) {
+            fileList.appendChild(text("p", "resources-asset-unavailable", "No " + ext + " file uploaded yet."));
+          }
+          files.forEach(asset => {
+            const file = document.createElement("div");
+            file.className = "resources-download-file";
+            file.appendChild(text("p", "resources-download-file-name", asset.title || asset.fileName || ext + " asset"));
+            if (asset.fileName) file.appendChild(text("p", "resources-asset-meta", [asset.fileName,asset.fileSize].filter(Boolean).join("  ·  ")));
+            const link = downloadLink(asset.url, "Download " + ext, "resources-asset-link");
+            if (link) file.appendChild(link);
+            fileList.appendChild(file);
+          });
+          formatCard.appendChild(fileList);
+          formatGrid.appendChild(formatCard);
+        });
+        card.appendChild(formatGrid);
         library.appendChild(card);
       });
       show("resources-library-feature", true);
