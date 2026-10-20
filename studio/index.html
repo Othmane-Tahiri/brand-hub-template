@@ -97,10 +97,11 @@ function renderAssetUploader(root){
   change();renderBrand();renderSections();renderContentList();updateVisibility();
   status("Client downloads enabled. Open Live Preview to verify the Asset Library.");
  };
- visibility.append(visibilityStatus,reveal);panel.append(visibility);
+ visibility.append(visibilityStatus,reveal);
  updateVisibility();
  const groups=[["Editable Source Files",["AI","EPS","PSD","INDD","ZIP"]],["Print Files",["PDF","TIFF"]],["Digital Files",["SVG","PNG","JPG","WEBP"]]];
  const panel=document.createElement("div");panel.className="tree-group";panel.style.padding="16px";
+ panel.append(visibility);
  const title=document.createElement("h3");title.textContent="Select download formats and upload actual files";panel.append(title);
  const hint=document.createElement("p");hint.className="hint";hint.textContent="Check the formats your client needs. Each selected format appears as its own box inside the large Source, Print or Digital category. Uploaded files become downloadable on the published website.";panel.append(hint);
  groups.forEach(([group,formats])=>{
