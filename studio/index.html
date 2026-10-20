@@ -205,10 +205,19 @@ $("refreshFromRepo").onclick=async()=>{if(dirty&&!confirm("Discard current chang
 $("saveProject").onclick=()=>{if(!config)return;saveFile((config.brand.name||"brand").toLowerCase().replace(/[^a-z0-9-]+/g,"-")+"-project.json",JSON.stringify(config,null,2),"application/json");dirty=false;status("Project JSON saved. Reopen it anytime with Open project.")};
 $("loadProject").onclick=()=>$("projectInput").click();
 $("projectInput").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=await f.text();loadProjectObject(f.name.endsWith(".js")||raw.includes("const BRAND_CONFIG")?getConfig(raw):JSON.parse(raw))}catch(err){status("Import failed: "+err.message)}e.target.value=""};
-function htmlForPreview(){let html=sourceFiles["index.html"];if(!html)throw Error("Website template unavailable.");const base=new URL("../",location.href).href;html=html.replace(/<head([^>]*)>/i,'<head$1><base href="'+base+'">');const script='<script>'+configJS().replace(/<\/script/gi,"<\\/script")+'<\/script>';html=html.replace(/<script\s+src=["']js\/config\.js["']>\s*<\/script>/i,script);const appCode=sourceFiles["js/app.js"]||"";
-const safeAppCode=appCode.replace(/<\\/script/gi,"<\\\\/script");
-html=html.replace('<script src="js/app.js"><\\/script>','<script>'+safeAppCode+'<\\/script>');
-return html}
+function htmlForPreview(){
+ let html=sourceFiles["index.html"];
+ if(!html)throw Error("Website template unavailable.");
+ const base=new URL("../",location.href).href;
+ html=html.replace(/<head([^>]*)>/i,'<head$1><base href="'+base+'">');
+ const safeScript=text=>text.replace(new RegExp("<"+"/script","gi"),"<"+"\\\\/"+"script");
+ const configTag='<script src="js/config.js"></'+'script>';
+ const appTag='<script src="js/app.js"></'+'script>';
+ if(!html.includes(configTag)||!html.includes(appTag))throw Error("Website script tags not found.");
+ html=html.replace(configTag,'<script>'+safeScript(configJS())+'</'+'script>');
+ html=html.replace(appTag,'<script>'+safeScript(sourceFiles["js/app.js"]||"")+'</'+'script>');
+ return html;
+}
 function refreshPreview(){
  if(!config)return;
  try{
