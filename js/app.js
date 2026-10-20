@@ -549,20 +549,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // When Studio stores a font name but no stylesheet URL, load the
     // corresponding Google Font so preview and exported sites show real specimens.
-    const knownGoogleFonts = new Set(["Bodoni Moda", "Cormorant Garamond", "Inter"]);
+    // Google Fonts CSS endpoint supports any published family name.
+    // Custom/self-hosted fonts should supply a source URL instead.
     const googleFamilies = [...new Set(typographyFonts
       .filter(font => !String(font.source || "").trim())
       .map(resolvedFontName)
-      .filter(name => knownGoogleFonts.has(name)))];
+      .filter(name => name && /^[a-zA-Z0-9 .-]{2,90}$/.test(name)))];
     if (googleFamilies.length) {
-      const preconnect = document.createElement("link");
-      preconnect.rel = "preconnect";
-      preconnect.href = "https://fonts.googleapis.com";
-      document.head.appendChild(preconnect);
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "https://fonts.googleapis.com/css2?" + googleFamilies.map(name => "family=" + encodeURIComponent(name).replace(/%20/g, "+") + ":ital,wght@0,400;0,500;0,600;0,700;1,400").join("&") + "&display=swap";
-      link.addEventListener("error", () => console.warn("Could not load Google Fonts. Check internet access."));
+      link.href = "https://fonts.googleapis.com/css2?" +
+        googleFamilies.map(name => "family=" + encodeURIComponent(name).replace(/%20/g, "+")).join("&") +
+        "&display=swap";
+      link.addEventListener("error", () => console.warn("Could not load one or more Google Font families."));
       document.head.appendChild(link);
     }
 
