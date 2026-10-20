@@ -10,7 +10,7 @@
 <div class="panel" id="panel-brand"><h2>Brand setup</h2><p class="hint">Edit client information and visual identity colors. Your original template content is preserved.</p><div class="cols"><div class="field"><label for="brandName">Brand name</label><input id="brandName"></div><div class="field"><label for="brandTagline">Tagline</label><input id="brandTagline"></div></div><div class="field"><label for="brandDescription">Brand description</label><textarea id="brandDescription"></textarea></div><h3>Brand colors</h3><div class="cols" id="colorFields"></div><div class="cols"><div class="field"><label for="theme">Theme</label><select id="theme"><option value="swiss">Minimal Swiss</option></select></div><div class="field"><label for="mode">Publishing mode</label><select id="mode"><option value="showcase">Showcase</option><option value="client">Client delivery</option></select></div></div><button id="refreshFromRepo" class="light">Reset to repository example</button></div>
 <div class="panel hidden" id="panel-sections"><h2>Sections & subsections</h2><p class="hint">Turn sections on or off. Only existing website content blocks can be shown; unsupported subsections are marked.</p><div id="sectionList"></div></div>
 <div class="panel hidden" id="panel-content"><h2>Content & assets</h2><p class="hint">Edit headlines, copy, galleries, fonts, and image fields. Image uploads are embedded in the exported website, so use optimized web images.</p><div id="selectionSummary" class="hint"></div><div class="field"><label for="contentGroup">Selected section to edit</label><select id="contentGroup"></select></div><div id="contentTree"></div></div>
-<div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button> <button id="jumpResources" class="light">Jump to Resources & Downloads</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin"></iframe></div>
+<div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button> <button id="jumpResources" class="light">Jump to Resources & Downloads</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin allow-downloads"></iframe></div>
 <div class="panel hidden" id="panel-publish"><h2>Publish to GitHub</h2><p class="hint">Create a separate public GitHub repository for this client and upload the website directly. This is an optional advanced workflow; Export website ZIP remains available.</p>
 <div class="field"><label for="githubToken">GitHub fine-grained personal access token</label><input id="githubToken" type="password" autocomplete="off" spellcheck="false" placeholder="Paste token for this publishing session"></div>
 <p class="hint">Create a fine-grained token in GitHub Settings → Developer settings → Personal access tokens. Give it permission to create repositories and write repository Contents and Pages. The token is used only for direct requests from your browser to GitHub, and is not saved in Studio, project files or exported websites. Never share it with clients.</p>
@@ -229,6 +229,19 @@ $("refreshFromRepo").onclick=async()=>{if(dirty&&!confirm("Discard current chang
 $("saveProject").onclick=()=>{if(!config)return;saveFile((config.brand.name||"brand").toLowerCase().replace(/[^a-z0-9-]+/g,"-")+"-project.json",JSON.stringify(config,null,2),"application/json");dirty=false;status("Project JSON saved. Reopen it anytime with Open project.")};
 $("loadProject").onclick=()=>$("projectInput").click();
 $("projectInput").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=await f.text();loadProjectObject(f.name.endsWith(".js")||raw.includes("const BRAND_CONFIG")?getConfig(raw):JSON.parse(raw))}catch(err){status("Import failed: "+err.message)}e.target.value=""};
+function previewConfigJS(){
+ const preview=clone(config);
+ const uploaded=preview.studioFiles||{};
+ for(const category of preview.resourcesDownloads?.categories||[]){
+  for(const asset of category.assets||[]){
+   if(!asset.studioFormat||!asset.url)continue;
+   const key=Object.keys(uploaded).find(k=>asset.url==="assets/downloads/"+k+"-"+uploaded[k].filename);
+   if(key&&uploaded[key]?.base64)asset.url="data:application/octet-stream;base64,"+uploaded[key].base64;
+  }
+ }
+ delete preview.studioFiles;
+ return "/* Studio preview only */"+String.fromCharCode(10)+"const BRAND_CONFIG = "+JSON.stringify(preview)+";";
+}
 function htmlForPreview(){
  let html=sourceFiles["index.html"];
  if(!html)throw Error("Website template unavailable.");
@@ -238,7 +251,7 @@ function htmlForPreview(){
  const configTag='<script src="js/config.js"></'+'script>';
  const appTag='<script src="js/app.js"></'+'script>';
  if(!html.includes(configTag)||!html.includes(appTag))throw Error("Website script tags not found.");
- html=html.replace(configTag,'<script>'+safeScript(configJS())+'</'+'script>');
+ html=html.replace(configTag,'<script>'+safeScript(previewConfigJS())+'</'+'script>');
  html=html.replace(appTag,'<script>'+safeScript(sourceFiles["js/app.js"]||"")+'</'+'script>');
  return html;
 }
