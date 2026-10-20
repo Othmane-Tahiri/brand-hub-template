@@ -209,28 +209,19 @@ function htmlForPreview(){let html=sourceFiles["index.html"];if(!html)throw Erro
 function refreshPreview(){
  if(!config)return;
  try{
-  const resourcesEnabled=config.sections?.resources!==false;
-  if(resourcesEnabled){
-   config.publishingMode="client";$("mode").value="client";
-   config.studioSubsections??={};config.studioSubsections.resources??={};
-   const formats=config.resourcesDownloads?.selectedFormats||{};
-   if(Object.values(formats).some(Boolean))config.studioSubsections.resources["resources-1"]=true;
-  }
+  const enabled=config.sections?.resources!==false;
+  // Preview is read-only: never change publishing mode or subsection choices.
   const frame=$("previewFrame");
   frame.onload=()=>{
    try{
     const doc=frame.contentDocument;
     const section=doc?.getElementById("resources");
-    const library=doc?.getElementById("resources-library-feature");
     const cards=doc?.querySelectorAll(".resources-download-format-card").length||0;
-    if(!resourcesEnabled){status("Resources is unchecked in Sections. Enable it first.");return}
-    if(!section){status("Preview error: Resources section was not found in the website template.");return}
-    if(section.hidden||getComputedStyle(section).display==="none"){status("Preview error: Resources is hidden by the website. Please report this status.");return}
-    if(!library||library.hidden||getComputedStyle(library).display==="none"){
-     status("Resources section loaded, but Asset Library is hidden. Check the Asset Library subsection and select download formats.");return;
-    }
-    status("Resources & Downloads loaded: "+cards+" file-format boxes. Scroll down to the Resources section, or use the sidebar link.");
-   }catch(err){status("Preview loaded, but could not inspect it: "+err.message)}
+    if(!enabled)status("Preview ready. Resources & Downloads is unchecked in Sections.");
+    else if(config.publishingMode!=="client")status("Preview ready. Resources & Downloads is hidden in Showcase mode. Select Client delivery to display it.");
+    else if(!section||section.hidden||frame.contentWindow.getComputedStyle(section).display==="none")status("Preview loaded, but Resources is hidden. Check its section and subsection selections.");
+    else status("Preview ready. Resources & Downloads has "+cards+" format boxes. No changes published.");
+   }catch(err){status("Preview loaded. Could not inspect resources: "+err.message)}
   };
   frame.srcdoc=htmlForPreview();
   status("Loading website preview…");
