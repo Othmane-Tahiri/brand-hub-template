@@ -3117,7 +3117,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const description = resourcesConfig.formatDescriptions?.[ext]?.trim() || formatPurpose[ext] || "Approved brand asset.";
           headingRow.appendChild(text("p", "resources-download-format-description", description));
           formatCard.appendChild(headingRow);
-          const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext);
+          const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext && validUrl(asset.url));
           formatCard.appendChild(text("span", files.length ? "resources-file-available" : "resources-file-pending", files.length ? "Available · " + files.length + (files.length===1?" file":" files") : "Not available yet"));
           const fileList = document.createElement("div");
           fileList.className = "resources-download-file-list";
