@@ -253,10 +253,11 @@ function refreshPreview(){
     const doc=frame.contentDocument;
     const section=doc?.getElementById("resources");
     const cards=doc?.querySelectorAll(".resources-download-format-card").length||0;
+    const links=doc?.querySelectorAll("#resources a.resources-asset-link[href]").length||0;
     if(!enabled)status("Preview ready. Resources & Downloads is unchecked in Sections.");
     else if(config.publishingMode!=="client")status("Preview ready. Resources & Downloads is hidden in Showcase mode. Select Client delivery to display it.");
     else if(!section||section.hidden||frame.contentWindow.getComputedStyle(section).display==="none")status("Preview loaded, but Resources is hidden. Check its section and subsection selections.");
-    else status("Preview ready. Resources & Downloads has "+cards+" format boxes. No changes published.");
+    else status("Preview ready. Resources & Downloads has "+cards+" format boxes and "+links+" downloadable file links."+(links===0?" Upload files and enable their formats in Resources to display downloads.":"")+" No changes published.");
    }catch(err){status("Preview loaded. Could not inspect resources: "+err.message)}
   };
   frame.srcdoc=htmlForPreview();
