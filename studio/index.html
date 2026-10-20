@@ -234,7 +234,7 @@ function htmlForPreview(){
  if(!html)throw Error("Website template unavailable.");
  const base=new URL("../",location.href).href;
  html=html.replace(/<head([^>]*)>/i,'<head$1><base href="'+base+'">');
- const safeScript=text=>text.replace(new RegExp("<"+"/script","gi"),"<"+"\\\\/"+"script");
+ const safeScript=text=>text.replace(new RegExp("<"+"/script","gi"),"<"+"\\/"+"script");
  const configTag='<script src="js/config.js"></'+'script>';
  const appTag='<script src="js/app.js"></'+'script>';
  if(!html.includes(configTag)||!html.includes(appTag))throw Error("Website script tags not found.");
