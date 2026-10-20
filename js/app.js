@@ -2468,6 +2468,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function applicationPath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
+      if (path.startsWith("data:image/") && path.includes(";base64,") && ["png","jpeg","webp","gif","svg+xml"].includes(path.slice(11,path.indexOf(";")))) return path;
       if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
@@ -2662,6 +2663,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function packagingPath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
+      if (path.startsWith("data:image/") && path.includes(";base64,") && ["png","jpeg","webp","gif","svg+xml"].includes(path.slice(11,path.indexOf(";")))) return path;
       if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
