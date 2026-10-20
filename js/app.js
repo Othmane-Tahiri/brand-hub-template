@@ -1037,6 +1037,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!path) return "";
 
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
+
       if (/^(?:javascript|data|blob):/i.test(path)) {
         return "";
       }
@@ -1491,6 +1493,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const path = value.trim();
 
       if (!path) return "";
+
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
 
       if (/^(?:javascript|data|blob):/i.test(path)) {
         return "";
