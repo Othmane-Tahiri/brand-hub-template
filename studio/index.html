@@ -76,6 +76,29 @@ function renderAssetUploader(root){
  resource.selectedFormats??={};resource.formatDescriptions??={};resource.categories??=[];
  let category=resource.categories.find(c=>c.studioFormatUploads);
  if(!category){category={title:"Uploaded brand deliverables",studioFormatUploads:true,assets:[]};resource.categories.push(category)}
+ const visibility=document.createElement("div");
+ visibility.className="field";
+ const visibilityStatus=document.createElement("p");
+ visibilityStatus.className="hint";
+ const reveal=document.createElement("button");
+ reveal.type="button";
+ reveal.className="light";
+ reveal.textContent="Enable client downloads in preview and export";
+ const updateVisibility=()=>{
+  const ready=config.publishingMode==="client"&&config.sections?.resources!==false&&config.studioSubsections?.resources?.["resources-1"]===true;
+  visibilityStatus.textContent=ready?"Client downloads are enabled in the Asset Library.":"Client downloads are hidden. Enable Client delivery, Resources, and Asset Library to show uploaded files.";
+  reveal.hidden=ready;
+ };
+ reveal.onclick=()=>{
+  config.publishingMode="client";
+  config.sections??={};config.sections.resources=true;
+  config.studioSubsections??={};config.studioSubsections.resources??={};
+  config.studioSubsections.resources["resources-1"]=true;
+  change();renderBrand();renderSections();updateVisibility();
+  status("Client downloads enabled. Open Live Preview to verify the Asset Library.");
+ };
+ visibility.append(visibilityStatus,reveal);panel.append(visibility);
+ updateVisibility();
  const groups=[["Editable Source Files",["AI","EPS","PSD","INDD","ZIP"]],["Print Files",["PDF","TIFF"]],["Digital Files",["SVG","PNG","JPG","WEBP"]]];
  const panel=document.createElement("div");panel.className="tree-group";panel.style.padding="16px";
  const title=document.createElement("h3");title.textContent="Select download formats and upload actual files";panel.append(title);
