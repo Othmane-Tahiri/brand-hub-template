@@ -94,7 +94,7 @@ function renderAssetUploader(root){
   config.sections??={};config.sections.resources=true;
   config.studioSubsections??={};config.studioSubsections.resources??={};
   config.studioSubsections.resources["resources-1"]=true;
-  change();renderBrand();renderSections();updateVisibility();
+  change();renderBrand();renderSections();renderContentList();updateVisibility();
   status("Client downloads enabled. Open Live Preview to verify the Asset Library.");
  };
  visibility.append(visibilityStatus,reveal);panel.append(visibility);
