@@ -507,7 +507,8 @@ document.addEventListener("DOMContentLoaded", () => {
     : [];
 
   function resolvedFontName(font) {
-    const raw = String(font?.family || font?.name || "").trim();
+    const family = String(font?.family || "").split(",")[0].trim().replace(/^['"]|['"]$/g, "");
+    const raw = family || String(font?.name || "").trim();
     // Common spelling mistake in older saved Studio projects.
     return /^Cormprant Garamond$/i.test(raw) ? "Cormorant Garamond" : raw;
   }
