@@ -507,7 +507,8 @@ document.addEventListener("DOMContentLoaded", () => {
     : [];
 
   function resolvedFontName(font) {
-    const raw = String(font?.family || font?.name || "").trim();
+    const family = String(font?.family || "").split(",")[0].trim().replace(/^['"]|['"]$/g, "");
+    const raw = family || String(font?.name || "").trim();
     // Common spelling mistake in older saved Studio projects.
     return /^Cormprant Garamond$/i.test(raw) ? "Cormorant Garamond" : raw;
   }
@@ -549,20 +550,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // When Studio stores a font name but no stylesheet URL, load the
     // corresponding Google Font so preview and exported sites show real specimens.
-    const knownGoogleFonts = new Set(["Bodoni Moda", "Cormorant Garamond", "Inter"]);
+    // Google Fonts CSS endpoint supports any published family name.
+    // Custom/self-hosted fonts should supply a source URL instead.
     const googleFamilies = [...new Set(typographyFonts
       .filter(font => !String(font.source || "").trim())
       .map(resolvedFontName)
-      .filter(name => knownGoogleFonts.has(name)))];
+      .filter(name => name && /^[a-zA-Z0-9 .-]{2,90}$/.test(name)))];
     if (googleFamilies.length) {
-      const preconnect = document.createElement("link");
-      preconnect.rel = "preconnect";
-      preconnect.href = "https://fonts.googleapis.com";
-      document.head.appendChild(preconnect);
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "https://fonts.googleapis.com/css2?" + googleFamilies.map(name => "family=" + encodeURIComponent(name).replace(/%20/g, "+") + ":ital,wght@0,400;0,500;0,600;0,700;1,400").join("&") + "&display=swap";
-      link.addEventListener("error", () => console.warn("Could not load Google Fonts. Check internet access."));
+      link.href = "https://fonts.googleapis.com/css2?" +
+        googleFamilies.map(name => "family=" + encodeURIComponent(name).replace(/%20/g, "+")).join("&") +
+        "&display=swap";
+      link.addEventListener("error", () => console.warn("Could not load one or more Google Font families."));
       document.head.appendChild(link);
     }
 
@@ -1037,6 +1037,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!path) return "";
 
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
+
       if (/^(?:javascript|data|blob):/i.test(path)) {
         return "";
       }
@@ -1491,6 +1493,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const path = value.trim();
 
       if (!path) return "";
+
+      if (/^data:image\/(?:png|jpeg|webp|gif|svg\+xml);base64,/i.test(path)) return path;
 
       if (/^(?:javascript|data|blob):/i.test(path)) {
         return "";
@@ -2468,6 +2472,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function applicationPath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
+      if (path.startsWith("data:image/") && path.includes(";base64,") && ["png","jpeg","webp","gif","svg+xml"].includes(path.slice(11,path.indexOf(";")))) return path;
       if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
@@ -2662,6 +2667,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function packagingPath(value) {
       if (typeof value !== "string") return "";
       const path = value.trim();
+      if (path.startsWith("data:image/") && path.includes(";base64,") && ["png","jpeg","webp","gif","svg+xml"].includes(path.slice(11,path.indexOf(";")))) return path;
       if (!path || /^(?:javascript|data|blob):/i.test(path)) return "";
       if (/^https:\/\//i.test(path)) return path;
       if (/^(?:\/\/|\/|[a-z][a-z\d+.-]*:)/i.test(path)) return "";
@@ -3111,7 +3117,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const description = resourcesConfig.formatDescriptions?.[ext]?.trim() || formatPurpose[ext] || "Approved brand asset.";
           headingRow.appendChild(text("p", "resources-download-format-description", description));
           formatCard.appendChild(headingRow);
-          const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext);
+          const files = group.assets.filter(asset => normalizeExt(extOf(asset)) === ext && validUrl(asset.url));
           formatCard.appendChild(text("span", files.length ? "resources-file-available" : "resources-file-pending", files.length ? "Available · " + files.length + (files.length===1?" file":" files") : "Not available yet"));
           const fileList = document.createElement("div");
           fileList.className = "resources-download-file-list";
