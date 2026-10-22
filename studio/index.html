@@ -10,7 +10,7 @@
 <div class="panel" id="panel-brand"><h2>Brand setup</h2><p class="hint">Edit client information and visual identity colors. Your original template content is preserved.</p><div class="cols"><div class="field"><label for="brandName">Brand name</label><input id="brandName"></div><div class="field"><label for="brandTagline">Tagline</label><input id="brandTagline"></div></div><div class="field"><label for="brandDescription">Brand description</label><textarea id="brandDescription"></textarea></div><h3>Brand colors</h3><div class="cols" id="colorFields"></div><div class="cols"><div class="field"><label for="theme">Theme</label><select id="theme"><option value="swiss">Minimal Swiss</option></select></div><div class="field"><label for="mode">Publishing mode</label><select id="mode"><option value="showcase">Showcase</option><option value="client">Client delivery</option></select></div></div><button id="refreshFromRepo" class="light">Reset to repository example</button></div>
 <div class="panel hidden" id="panel-sections"><h2>Sections & subsections</h2><p class="hint">Turn sections on or off. Only existing website content blocks can be shown; unsupported subsections are marked.</p><div id="sectionList"></div></div>
 <div class="panel hidden" id="panel-content"><h2>Content & assets</h2><p class="hint">Edit headlines, copy, galleries, fonts, and image fields. Image uploads are embedded in the exported website, so use optimized web images.</p><div id="selectionSummary" class="hint"></div><div class="field"><label for="contentGroup">Selected section to edit</label><select id="contentGroup"></select></div><div id="contentTree"></div></div>
-<div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button> <button id="jumpResources" class="light">Jump to Resources & Downloads</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin allow-downloads"></iframe></div>
+<div class="panel hidden" id="panel-preview"><h2>Live preview</h2><p class="hint">This renders the actual Brand Hub layout with your current edits. It does not publish your work.</p><button id="refreshPreview">Refresh preview</button><div style="height:12px"></div><iframe id="previewFrame" class="preview" title="Client Brand Hub preview" sandbox="allow-scripts allow-same-origin allow-downloads"></iframe></div>
 <div class="panel hidden" id="panel-publish"><h2>Publish to GitHub</h2><p class="hint">Create a separate public GitHub repository for this client and upload the website directly. This is an optional advanced workflow; Export website ZIP remains available.</p>
 <div class="field"><label for="githubToken">GitHub fine-grained personal access token</label><input id="githubToken" type="password" autocomplete="off" spellcheck="false" placeholder="Paste token for this publishing session"></div>
 <p class="hint">Create a fine-grained token in GitHub Settings → Developer settings → Personal access tokens. Give it permission to create repositories and write repository Contents and Pages. The token is used only for direct requests from your browser to GitHub, and is not saved in Studio, project files or exported websites. Never share it with clients.</p>
@@ -19,15 +19,15 @@
 <button id="githubPublish" class="accent">Create & publish client website</button><p id="githubResult" class="hint" role="status"></p></div></main></div><div class="status" id="status" role="status">Loading repository configuration…</div><input type="file" id="projectInput" accept=".json,.js,.txt" hidden>
 <script>
 "use strict";
-const NAMES={overview:["Brand Introduction","Welcome"],strategy:["Purpose","Mission","Vision","Values","Positioning","Audience"],logo:["Primary Logo","Secondary Logo","Logo Symbol","Logo Variations","Clear Space","Minimum Size","Color Compatibility","Incorrect Usage"],colors:["Brand Palette","Color Values","Color Roles","Tonal Scales","Color Accessibility"],typography:["Typefaces","Character Sets","Approved Weights","Typography in Context"],graphics:["Signature Artwork","Graphic Gallery","Details","Usage Guidelines"],photography:["Signature Photography","Categories","Gallery","Art Direction","Do and Don't"],layout:["Layout Philosophy","Grid System","Spacing and Hierarchy","Composition Examples","Do and Don't"],voice:["Personality","Tone of Voice","Messaging Pillars","Writing Examples","Do and Don't"],applications:["Featured Application","Categories","Gallery","Details","Guidelines"],packaging:["Featured Packaging","Collection","Materials","Specifications","Do and Don't"],motion:["Motion Philosophy","Logo Animation","Motion Behaviors","Applications","Do and Don't"],resources:["Featured Download","Asset Library","Formats","Usage","Delivery"]};
-const SUPPORTED={logo:[0,3,4,6],colors:[0,3],typography:[0,1,2,3],graphics:[0,1,2,3],photography:[0,1,2,3,4],layout:[0,1,2,3,4],voice:[0,1,2,3,4],applications:[0,1,2,3,4],packaging:[0,1,2,3,4],motion:[0,1,2,3,4],resources:[0,1,2,3,4]};
+const NAMES={overview:["Brand Introduction","Welcome"],strategy:["Purpose","Mission","Vision","Values","Positioning","Audience"],logo:["Primary Logo","Secondary Logo","Logo Symbol","Logo Variations","Clear Space","Minimum Size","Color Compatibility","Incorrect Usage"],colors:["Brand Palette","Color Values","Color Roles","Tonal Scales","Color Accessibility"],typography:["Typefaces","Character Sets","Approved Weights","Typography in Context"],graphics:["Signature Artwork","Graphic Gallery","Details","Usage Guidelines"],photography:["Signature Photography","Categories","Gallery","Art Direction","Do and Don't"],layout:["Layout Philosophy","Grid System","Spacing and Hierarchy","Composition Examples","Do and Don't"],voice:["Personality","Tone of Voice","Messaging Pillars","Writing Examples","Do and Don't"],applications:["Featured Application","Categories","Gallery","Details","Guidelines"],packaging:["Featured Packaging","Collection","Materials","Specifications","Do and Don't"],motion:["Motion Philosophy","Logo Animation","Motion Behaviors","Applications","Do and Don't"]};
+const SUPPORTED={logo:[0,3,4,6],colors:[0,3],typography:[0,1,2,3],graphics:[0,1,2,3],photography:[0,1,2,3,4],layout:[0,1,2,3,4],voice:[0,1,2,3,4],applications:[0,1,2,3,4],packaging:[0,1,2,3,4],motion:[0,1,2,3,4]};
 const SITE_FILES=["index.html","css/style.css","js/app.js"];
 let config=null,sourceFiles={},lastPreviewUrl=null,dirty=false;
 const $=id=>document.getElementById(id);
 function status(s){$("status").textContent=s}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function clone(v){return JSON.parse(JSON.stringify(v))}
-function configJS(){const published=clone(config);delete published.studioFiles;return "/* Generated by Brand Hub Studio */\nconst BRAND_CONFIG = "+JSON.stringify(published,null,2).replace(/</g,"\\u003c")+";\n"}
+function configJS(){const published=clone(config);published.sections.resources=false;delete published.studioFiles;return "/* Generated by Brand Hub Studio */\nconst BRAND_CONFIG = "+JSON.stringify(published,null,2).replace(/</g,"\\u003c")+";\n"}
 function getConfig(text){const m=text.match(/\b(?:const|let|var)\s+BRAND_CONFIG\s*=\s*([\s\S]*?)\s*;\s*$/);if(!m)throw Error("Not a compatible config.js");return JSON.parse(m[1])}
 function saveFile(name,bytes,type){const url=URL.createObjectURL(new Blob([bytes],{type})),a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}
 async function fetchFile(path){const r=await fetch("../"+path,{cache:"no-store"});if(!r.ok)throw Error("Unable to load "+path+" (HTTP "+r.status+")");return await r.text()}
@@ -70,79 +70,6 @@ function renderContentList(){
 }
 $("contentGroup").onchange=renderContentTree;
 
-function renderAssetUploader(root){
- config.studioFiles??={};
- const resource=config.resourcesDownloads??={};
- resource.selectedFormats??={};resource.formatDescriptions??={};resource.categories??=[];
- let category=resource.categories.find(c=>c.studioFormatUploads);
- if(!category){category={title:"Uploaded brand deliverables",studioFormatUploads:true,assets:[]};resource.categories.push(category)}
- const visibility=document.createElement("div");
- visibility.className="field";
- const visibilityStatus=document.createElement("p");
- visibilityStatus.className="hint";
- const reveal=document.createElement("button");
- reveal.type="button";
- reveal.className="light";
- reveal.textContent="Enable client downloads in preview and export";
- const updateVisibility=()=>{
-  const ready=config.publishingMode==="client"&&config.sections?.resources!==false&&config.studioSubsections?.resources?.["resources-1"]===true;
-  visibilityStatus.textContent=ready?"Client downloads are enabled in the Asset Library.":"Client downloads are hidden. Enable Client delivery, Resources, and Asset Library to show uploaded files.";
-  reveal.hidden=ready;
- };
- reveal.onclick=()=>{
-  config.publishingMode="client";
-  config.sections??={};config.sections.resources=true;
-  config.studioSubsections??={};config.studioSubsections.resources??={};
-  config.studioSubsections.resources["resources-1"]=true;
-  change();renderBrand();renderSections();renderContentList();updateVisibility();
-  status("Client downloads enabled. Open Live Preview to verify the Asset Library.");
- };
- visibility.append(visibilityStatus,reveal);
- updateVisibility();
- const groups=[["Editable Source Files",["AI","EPS","PSD","INDD","ZIP"]],["Print Files",["PDF","TIFF"]],["Digital Files",["SVG","PNG","JPG","WEBP"]]];
- const panel=document.createElement("div");panel.className="tree-group";panel.style.padding="16px";
- panel.append(visibility);
- const title=document.createElement("h3");title.textContent="Select download formats and upload actual files";panel.append(title);
- const hint=document.createElement("p");hint.className="hint";hint.textContent="Check the formats your client needs. Each selected format appears as its own box inside the large Source, Print or Digital category. Uploaded files become downloadable on the published website.";panel.append(hint);
- groups.forEach(([group,formats])=>{
-  const heading=document.createElement("h3");heading.textContent=group;panel.append(heading);
-  formats.forEach(ext=>{
-   const wrap=document.createElement("div");wrap.className="field";wrap.style.padding="12px";wrap.style.borderBottom="1px solid #eee";
-   const label=document.createElement("label");label.style.display="flex";label.style.gap="10px";label.style.alignItems="center";
-   const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=resource.selectedFormats[ext]===true;
-   label.append(checkbox,document.createTextNode(ext+" download box"));wrap.append(label);
-   const defaults={AI:"Editable Illustrator artwork for updating logos and production files.",EPS:"Scalable vector artwork for professional printing.",PSD:"Layered Photoshop source files for editing images.",INDD:"Editable InDesign layouts for brand documents.",ZIP:"A compressed package of approved brand files.",PDF:"Print-ready documents and artwork for professional printing.",TIFF:"High-resolution imagery for print production.",SVG:"Scalable vector graphics for websites and digital use.",PNG:"Graphics with optional transparent backgrounds.",JPG:"Images for websites, presentations and social media.",WEBP:"Lightweight images optimized for websites."};
-   const purpose=document.createElement("textarea");purpose.rows=2;purpose.placeholder="Describe what this file is used for";purpose.value=resource.formatDescriptions[ext]??defaults[ext]??"";
-   purpose.oninput=()=>{resource.formatDescriptions[ext]=purpose.value;change()};
-   const purposeLabel=document.createElement("label");purposeLabel.textContent="Purpose / short description";wrap.append(purposeLabel,purpose);
-   const input=document.createElement("input");input.type="file";input.accept="."+ext.toLowerCase()+(ext==="JPG"?",.jpeg":ext==="TIFF"?",.tif":"");
-   const detail=document.createElement("p");detail.className="hint";
-   const attached=()=>category.assets.filter(a=>a.studioFormat===ext);
-   const refresh=()=>{input.disabled=!checkbox.checked;detail.textContent=attached().length?attached().map(a=>a.fileName).join(", "):"No "+ext+" files uploaded";};
-   checkbox.onchange=()=>{resource.selectedFormats[ext]=checkbox.checked;refresh();change()};
-   input.onchange=async()=>{
-    const file=input.files?.[0];if(!file)return;
-    const raw=(file.name.split(".").pop()||"").toUpperCase();
-    const actual=raw==="JPEG"?"JPG":raw==="TIF"?"TIFF":raw;
-    if(actual!==ext){status("Choose a "+ext+" file.");input.value="";return}
-    if(file.size>35*1024*1024){status("File exceeds the 35 MB limit.");input.value="";return}
-    const filename=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-    const key="format-"+ext.toLowerCase()+"-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
-    const bytes=new Uint8Array(await file.arrayBuffer());let binary="";
-    for(let p=0;p<bytes.length;p+=8192)binary+=String.fromCharCode(...bytes.subarray(p,p+8192));
-    config.studioFiles[key]={filename,base64:btoa(binary)};
-    category.assets.push({title:filename,format:ext,fileName:filename,fileSize:(file.size/1048576).toFixed(2)+" MB",url:"assets/downloads/"+key+"-"+filename,studioFormat:ext});
-    resource.selectedFormats[ext]=true;checkbox.checked=true;refresh();change();input.value="";
-   };
-   wrap.append(input,detail);
-   const remove=document.createElement("button");remove.className="light";remove.textContent="Remove "+ext+" uploads";
-   remove.onclick=()=>{category.assets=category.assets.filter(a=>{if(a.studioFormat!==ext)return true;const prefix="assets/downloads/";const suffix="-"+a.fileName;if(a.url.startsWith(prefix)&&a.url.endsWith(suffix)){delete config.studioFiles[a.url.slice(prefix.length,-suffix.length)]}return false});refresh();change()};
-   wrap.append(remove);refresh();panel.append(wrap);
-  });
- });
- root.append(panel);
-}
-
 function renderContentTree(){
  const root=$("contentTree");root.replaceChildren();
  const key=$("contentGroup").value;if(!key){root.textContent="No sections selected. Go to Sections and enable the content you need.";return}
@@ -177,7 +104,7 @@ function renderContentTree(){
   }
   return
  }
- if(key==="resources"){renderAssetUploader(root);}
+
  if(key==="colors"){
   const intro=document.createElement("p");intro.className="hint";intro.textContent="Add or edit the actual brand palette below. You can also adjust the main website colors in Brand setup.";root.append(intro);
   const basic=document.createElement("div");basic.className="cols";for(const color of ["primary","secondary","accent","background","text"])basic.append(field(color,config.colors[color]||"#ffffff",v=>config.colors[color]=v,"color"));root.append(basic);
@@ -229,19 +156,6 @@ $("refreshFromRepo").onclick=async()=>{if(dirty&&!confirm("Discard current chang
 $("saveProject").onclick=()=>{if(!config)return;saveFile((config.brand.name||"brand").toLowerCase().replace(/[^a-z0-9-]+/g,"-")+"-project.json",JSON.stringify(config,null,2),"application/json");dirty=false;status("Project JSON saved. Reopen it anytime with Open project.")};
 $("loadProject").onclick=()=>$("projectInput").click();
 $("projectInput").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const raw=await f.text();loadProjectObject(f.name.endsWith(".js")||raw.includes("const BRAND_CONFIG")?getConfig(raw):JSON.parse(raw))}catch(err){status("Import failed: "+err.message)}e.target.value=""};
-function previewConfigJS(){
- const preview=clone(config);
- const uploaded=preview.studioFiles||{};
- for(const category of preview.resourcesDownloads?.categories||[]){
-  for(const asset of category.assets||[]){
-   if(!asset.studioFormat||!asset.url)continue;
-   const key=Object.keys(uploaded).find(k=>asset.url==="assets/downloads/"+k+"-"+uploaded[k].filename);
-   if(key&&uploaded[key]?.base64)asset.url="data:application/octet-stream;base64,"+uploaded[key].base64;
-  }
- }
- delete preview.studioFiles;
- return "/* Studio preview only */"+String.fromCharCode(10)+"const BRAND_CONFIG = "+JSON.stringify(preview)+";";
-}
 function htmlForPreview(){
  let html=sourceFiles["index.html"];
  if(!html)throw Error("Website template unavailable.");
@@ -251,42 +165,20 @@ function htmlForPreview(){
  const configTag='<script src="js/config.js"></'+'script>';
  const appTag='<script src="js/app.js"></'+'script>';
  if(!html.includes(configTag)||!html.includes(appTag))throw Error("Website script tags not found.");
- html=html.replace(configTag,'<script>'+safeScript(previewConfigJS())+'</'+'script>');
+ html=html.replace(configTag,'<script>'+safeScript(configJS())+'</'+'script>');
  html=html.replace(appTag,'<script>'+safeScript(sourceFiles["js/app.js"]||"")+'</'+'script>');
  return html;
 }
 function refreshPreview(){
  if(!config)return;
  try{
-  const enabled=config.sections?.resources!==false;
-  // Preview is read-only: never change publishing mode or subsection choices.
   const frame=$("previewFrame");
-  frame.onload=()=>{
-   try{
-    const doc=frame.contentDocument;
-    const section=doc?.getElementById("resources");
-    const cards=doc?.querySelectorAll(".resources-download-format-card").length||0;
-    const links=doc?.querySelectorAll("#resources a.resources-asset-link[href]").length||0;
-    if(!enabled)status("Preview ready. Resources & Downloads is unchecked in Sections.");
-    else if(config.publishingMode!=="client")status("Preview ready. Resources & Downloads is hidden in Showcase mode. Select Client delivery to display it.");
-    else if(!section||section.hidden||frame.contentWindow.getComputedStyle(section).display==="none")status("Preview loaded, but Resources is hidden. Check its section and subsection selections.");
-    else status("Preview ready. Resources & Downloads has "+cards+" format boxes and "+links+" downloadable file links."+(links===0?" Upload files and enable their formats in Resources to display downloads.":"")+" No changes published.");
-   }catch(err){status("Preview loaded. Could not inspect resources: "+err.message)}
-  };
+  frame.onload=()=>status("Preview ready. No changes published.");
   frame.srcdoc=htmlForPreview();
   status("Loading website preview…");
  }catch(err){status("Preview unavailable: "+err.message)}
 }
 $("refreshPreview").onclick=refreshPreview;
-$("jumpResources").onclick=()=>{
- const frame=$("previewFrame");
- const doc=frame.contentDocument;
- const section=doc?.getElementById("resources");
- if(!section){status("Resources section is not loaded yet. Refresh the preview.");return}
- if(section.hidden){status("Resources is hidden. Enable it under Sections.");return}
- section.scrollIntoView({behavior:"smooth",block:"start"});
- status("Jumped to Resources & Downloads. If you see no format boxes, check the Asset Library subsection and format checkboxes.");
-};
 function utf8(s){return new TextEncoder().encode(s)}
 const crcTable=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return(c^0xffffffff)>>>0}
